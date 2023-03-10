@@ -11,7 +11,7 @@ import java.util.Date;
  * -Date
 
  *  @author Lars Mikkel Nilsen, Trygve Jørgensen, Ingar Aasheim, Ari Maman
- *  @since 10.02.2023
+ *  @since 10.03.2023
  */
 public interface Transaction {
 
@@ -42,25 +42,29 @@ public interface Transaction {
 
   /**
    * Method that sets a new description for a transaction.
+   * @param newDescription The new description of the transaction.
    * @throws IllegalArgumentException if newDescription is null or blank.
    */
   void setDescription(String newDescription) throws IllegalArgumentException;
 
   /**
    * Method that sets a new category for a transaction.
+   * @param newCategory The new category of the transaction.
    * @throws IllegalArgumentException if newCategory is null or blank.
    */
   void setCategory(String newCategory) throws IllegalArgumentException;
 
   /**
    * Method that sets a new price for a transaction.
+   * @param newPrice The new price of the transaction.
    * @throws IllegalArgumentException if price is less than zero.
    */
   void setPrice(double newPrice) throws IllegalArgumentException;
 
   /**
    * Method that sets a new date for a transaction.
+   * @param newDate The new date of the transaction.
    * @throws IllegalArgumentException if date is not valid.
    */
-  void setDate(Date newDate) throws IllegalArgumentException;
+  void setDate(Date newDate);
 }

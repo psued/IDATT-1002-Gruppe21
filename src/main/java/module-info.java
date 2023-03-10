@@ -1,4 +1,4 @@
-open module TDT4100_project {
+open module no.ntnu.idatt1002.app {
     requires javafx.base;
     requires javafx.controls;
     requires javafx.graphics;

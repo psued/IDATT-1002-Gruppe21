@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Class for accounting
+ * 
  * @author Ari Maman, Lars Mikkel Lødeng Nilsen, Trygve Jørgensen, Ingar Asheim
  */
 
@@ -65,6 +66,7 @@ public class Accounting {
 
   /**
    * Method for getting the total income
+   * 
    * @return the total income
    */
 
@@ -78,6 +80,7 @@ public class Accounting {
 
   /**
    * Method for getting the total expense
+   * 
    * @return the total expense
    */
 
@@ -88,5 +91,5 @@ public class Accounting {
     }
     return totalExpense;
 
-
+  }
 }

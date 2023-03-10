@@ -1,6 +1,6 @@
 package no.ntnu.idatt1002.app.data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Interface for a transaction.
@@ -35,9 +35,9 @@ public interface Transaction {
 
   /**
    * Method that gets the date of a transaction.
-   * @return Date as Date.
+   * @return Date as LocalDate.
    */
-  Date getDate();
+  LocalDate getDate();
 
 
   /**
@@ -66,5 +66,5 @@ public interface Transaction {
    * @param newDate The new date of the transaction.
    * @throws IllegalArgumentException if date is not valid.
    */
-  void setDate(Date newDate);
+  void setDate(LocalDate newDate);
 }

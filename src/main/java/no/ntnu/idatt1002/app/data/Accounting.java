@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  * Class for accounting
  * 
+ * 
  * @author Ari Maman, Lars Mikkel Lødeng Nilsen, Trygve Jørgensen, Ingar Asheim
  */
 
@@ -67,13 +68,14 @@ public class Accounting {
   /**
    * Method for getting the total income
    * 
+   * 
    * @return the total income
    */
 
   public double getTotalIncome() {
     double totalIncome = 0;
     for (Income income : incomeList) {
-      totalIncome += income.getAmount();
+      totalIncome += income.getPrice();
     }
     return totalIncome;
   }
@@ -81,15 +83,16 @@ public class Accounting {
   /**
    * Method for getting the total expense
    * 
+   * 
    * @return the total expense
    */
 
   public double getTotalExpense() {
     double totalExpense = 0;
     for (Expense expense : expenseList) {
-      totalExpense += expense.getAmount();
+      totalExpense += expense.getPrice();
     }
     return totalExpense;
 
-  }
+  }  }
 }

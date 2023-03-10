@@ -1,6 +1,6 @@
 package no.ntnu.idatt1002.app.data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Class that represents an income that implements the Transaction interface.
@@ -13,7 +13,7 @@ public class Income implements Transaction {
   String description;
   String category;
   double price;
-  Date date;
+  LocalDate date;
 
   /**
    * Creates an income that is an instance of Transaction.
@@ -23,7 +23,7 @@ public class Income implements Transaction {
    * @param date The date of the Income.
    * @throws IllegalArgumentException if description or category is null or blank or if price is less than zero.
    */
-  public Income(String description, String category, double price, Date date) throws IllegalArgumentException {
+  public Income(String description, String category, double price, LocalDate date) throws IllegalArgumentException {
     if (description == null) throw new IllegalArgumentException("description cannot be null.");
     if (description.isBlank()) throw new IllegalArgumentException("description cannot be blank");
     if (category == null) throw new IllegalArgumentException("category cannot be null.");
@@ -65,10 +65,10 @@ public class Income implements Transaction {
 
   /**
    * Method that gets the date of the Income.
-   * @return date as Date.
+   * @return date as LocalDate.
    */
   @Override
-  public Date getDate() {
+  public LocalDate getDate() {
     return this.date;
   }
 
@@ -112,7 +112,7 @@ public class Income implements Transaction {
    * @param newDate The new date of the Income.
    */
   @Override
-  public void setDate(Date newDate) {
+  public void setDate(LocalDate newDate) {
     this.date = newDate;
   }
 }

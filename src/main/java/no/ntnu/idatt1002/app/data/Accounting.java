@@ -75,7 +75,7 @@ public class Accounting {
   public double getTotalIncome() {
     double totalIncome = 0;
     for (Income income : incomeList) {
-      totalIncome += income.getPrice();
+      totalIncome += income.getAmount();
     }
     return totalIncome;
   }
@@ -90,7 +90,7 @@ public class Accounting {
   public double getTotalExpense() {
     double totalExpense = 0;
     for (Expense expense : expenseList) {
-      totalExpense += expense.getPrice();
+      totalExpense += expense.getAmount();
     }
     return totalExpense;
 

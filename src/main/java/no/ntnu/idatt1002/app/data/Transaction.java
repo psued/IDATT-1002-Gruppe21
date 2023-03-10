@@ -7,7 +7,7 @@ import java.time.LocalDate;
  * A transaction consists of the following attributes:
  * -Description
  * -Category
- * -Price
+ * -Amount
  * -Date
 
  *  @author Lars Mikkel Nilsen, Trygve Jørgensen, Ingar Aasheim, Ari Maman
@@ -28,10 +28,10 @@ public interface Transaction {
   String getCategory();
 
   /**
-   * Method that gets the price of a transaction.
-   * @return Price as double.
+   * Method that gets the amount of a transaction.
+   * @return Amount as double.
    */
-  double getPrice();
+  double getAmount();
 
   /**
    * Method that gets the date of a transaction.
@@ -55,11 +55,11 @@ public interface Transaction {
   void setCategory(String newCategory) throws IllegalArgumentException;
 
   /**
-   * Method that sets a new price for a transaction.
-   * @param newPrice The new price of the transaction.
-   * @throws IllegalArgumentException if price is less than zero.
+   * Method that sets a new amount for a transaction.
+   * @param newAmount The new amount of the transaction.
+   * @throws IllegalArgumentException if amount is less than zero.
    */
-  void setPrice(double newPrice) throws IllegalArgumentException;
+  void setAmount(double newAmount) throws IllegalArgumentException;
 
   /**
    * Method that sets a new date for a transaction.

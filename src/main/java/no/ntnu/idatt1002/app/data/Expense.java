@@ -1,6 +1,6 @@
 package no.ntnu.idatt1002.app.data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Class that represents an expense that implements the Transaction interface.
@@ -13,7 +13,7 @@ public class Expense implements Transaction {
   String description;
   String category;
   double price;
-  Date date;
+  LocalDate date;
 
   /**
    * Creates an expense that is an instance of Transaction.
@@ -23,7 +23,7 @@ public class Expense implements Transaction {
    * @param date The date of the Expense.
    * @throws IllegalArgumentException if description or category is null or blank or if price is less than zero.
    */
-  public Expense(String description, String category, double price, Date date) throws IllegalArgumentException {
+  public Expense(String description, String category, double price, LocalDate date) throws IllegalArgumentException {
     if (description == null) throw new IllegalArgumentException("description cannot be null.");
     if (description.isBlank()) throw new IllegalArgumentException("description cannot be blank");
     if (category == null) throw new IllegalArgumentException("category cannot be null.");
@@ -65,10 +65,10 @@ public class Expense implements Transaction {
 
   /**
    * Method that gets the date of the Expense.
-   * @return date as Date.
+   * @return date as LocalDate.
    */
   @Override
-  public Date getDate() {
+  public LocalDate getDate() {
     return this.date;
   }
 
@@ -112,7 +112,7 @@ public class Expense implements Transaction {
    * @param newDate The new date of the Expense.
    */
   @Override
-  public void setDate(Date newDate) {
+  public void setDate(LocalDate newDate) {
     this.date = newDate;
   }
 }

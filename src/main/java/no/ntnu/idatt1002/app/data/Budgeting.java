@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Class for accounting
+ * 
  * @author Ari Maman, Lars Mikkel Lødeng Nilsen, Trygve Jørgensen, Ingar Asheim
  */
 
@@ -11,6 +12,7 @@ public class Budgeting {
 
   /**
    * Class for accounting
+   * 
    * @author Ari Maman, Lars Mikkel Lødeng Nilsen, Trygve Jørgensen, Ingar Asheim
    */
   ArrayList<Income> incomeList = new ArrayList<Income>();
@@ -20,7 +22,7 @@ public class Budgeting {
    * The constructor for this class
    */
 
-  public Accounting() {
+  public Budgeting() {
   }
 
   /**
@@ -72,7 +74,7 @@ public class Budgeting {
   public double getTotalIncome() {
     double totalIncome = 0;
     for (Income income : incomeList) {
-      totalIncome += income.getAmount();
+      totalIncome += income.getPrice();
     }
     return totalIncome;
   }
@@ -86,7 +88,7 @@ public class Budgeting {
   public double getTotalExpense() {
     double totalExpense = 0;
     for (Expense expense : expenseList) {
-      totalExpense += expense.getAmount();
+      totalExpense += expense.getPrice();
     }
     return totalExpense;
   }

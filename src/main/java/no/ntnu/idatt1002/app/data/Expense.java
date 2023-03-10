@@ -12,27 +12,27 @@ public class Expense implements Transaction {
 
   String description;
   String category;
-  double price;
+  double amount;
   LocalDate date;
 
   /**
    * Creates an expense that is an instance of Transaction.
    * @param description The description of the Expense.
    * @param category The category of the Expense.
-   * @param price The price of the Expense.
+   * @param amount The amount of the Expense.
    * @param date The date of the Expense.
-   * @throws IllegalArgumentException if description or category is null or blank or if price is less than zero.
+   * @throws IllegalArgumentException if description or category is null or blank or if amount is less than zero.
    */
-  public Expense(String description, String category, double price, LocalDate date) throws IllegalArgumentException {
+  public Expense(String description, String category, double amount, LocalDate date) throws IllegalArgumentException {
     if (description == null) throw new IllegalArgumentException("description cannot be null.");
     if (description.isBlank()) throw new IllegalArgumentException("description cannot be blank");
     if (category == null) throw new IllegalArgumentException("category cannot be null.");
     if (category.isBlank()) throw new IllegalArgumentException("category cannot be blank");
-    if (price < 0) throw new IllegalArgumentException("price cannot be less than zero");
+    if (amount < 0) throw new IllegalArgumentException("amount cannot be less than zero");
 
     this.description = description;
     this.category = category;
-    this.price = price;
+    this.amount = amount;
     this.date = date;
   }
 
@@ -55,12 +55,12 @@ public class Expense implements Transaction {
   }
 
   /**
-   * Method that gets the price of the Expense.
-   * @return price as int.
+   * Method that gets the amount of the Expense.
+   * @return amount as int.
    */
   @Override
-  public double getPrice() {
-    return this.price;
+  public double getAmount() {
+    return this.amount;
   }
 
   /**
@@ -97,14 +97,14 @@ public class Expense implements Transaction {
   }
 
   /**
-   * Method that sets a new price for the Expense.
-   * @param newPrice The new price of the Expense.
-   * @throws IllegalArgumentException if price is less than zero.
+   * Method that sets a new amount for the Expense.
+   * @param newAmount The new amount of the Expense.
+   * @throws IllegalArgumentException if amount is less than zero.
    */
   @Override
-  public void setPrice(double newPrice) throws IllegalArgumentException {
-    if (newPrice < 0) throw new IllegalArgumentException("newPrice cannot be less than zero");
-    this.price = newPrice;
+  public void setAmount(double newAmount) throws IllegalArgumentException {
+    if (newAmount < 0) throw new IllegalArgumentException("newAmount cannot be less than zero");
+    this.amount = newAmount;
   }
 
   /**

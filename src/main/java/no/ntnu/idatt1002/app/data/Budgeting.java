@@ -9,20 +9,16 @@ import java.util.ArrayList;
  */
 
 public class Budgeting {
-
-  /**
-   * Class for accounting
-   * 
-   * @author Ari Maman, Lars Mikkel Lødeng Nilsen, Trygve Jørgensen, Ingar Asheim
-   */
-  ArrayList<Income> incomeList = new ArrayList<Income>();
-  ArrayList<Expense> expenseList = new ArrayList<Expense>();
+  
+  ArrayList<Income> incomeList;
+  ArrayList<Expense> expenseList;
 
   /**
    * The constructor for this class
    */
-
   public Budgeting() {
+    incomeList = new ArrayList<>();
+    expenseList = new ArrayList<>();
   }
 
   /**
@@ -30,7 +26,6 @@ public class Budgeting {
    *
    * @param income the income to be added
    */
-
   public void addIncome(Income income) {
     incomeList.add(income);
   }
@@ -40,7 +35,6 @@ public class Budgeting {
    *
    * @param expense the expense to be added
    */
-
   public void addExpense(Expense expense) {
     expenseList.add(expense);
   }
@@ -50,7 +44,6 @@ public class Budgeting {
    *
    * @return the income list
    */
-
   public ArrayList<Income> getIncomeList() {
     return incomeList;
   }
@@ -60,7 +53,6 @@ public class Budgeting {
    *
    * @return the expense list
    */
-
   public ArrayList<Expense> getExpenseList() {
     return expenseList;
   }
@@ -70,13 +62,8 @@ public class Budgeting {
    *
    * @return the total income
    */
-
   public double getTotalIncome() {
-    double totalIncome = 0;
-    for (Income income : incomeList) {
-      totalIncome += income.getAmount();
-    }
-    return totalIncome;
+    return incomeList.stream().mapToDouble(Income::getAmount).sum();
   }
 
   /**
@@ -84,12 +71,7 @@ public class Budgeting {
    *
    * @return the total expense
    */
-
   public double getTotalExpense() {
-    double totalExpense = 0;
-    for (Expense expense : expenseList) {
-      totalExpense += expense.getAmount();
-    }
-    return totalExpense;
+    return expenseList.stream().mapToDouble(Expense::getAmount).sum();
   }
 }

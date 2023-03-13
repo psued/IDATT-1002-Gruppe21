@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author Ari Maman, Lars Mikkel Lødeng Nilsen, Trygve Jørgensen, Ingar Asheim
  */
 
-public class Budgeting {
+public class Budgeting implements Bookkeeping {
   
   ArrayList<Income> incomeList;
   ArrayList<Expense> expenseList;
@@ -19,6 +19,7 @@ public class Budgeting {
   public Budgeting() {
     incomeList = new ArrayList<>();
     expenseList = new ArrayList<>();
+
   }
 
   /**

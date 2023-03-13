@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author Ari Maman, Lars Mikkel Lødeng Nilsen, Trygve Jørgensen, Ingar Asheim
  */
 
-public class Accounting {
+public class Accounting implements Bookkeeping {
   
   ArrayList<Income> incomeList;
   ArrayList<Expense> expenseList;

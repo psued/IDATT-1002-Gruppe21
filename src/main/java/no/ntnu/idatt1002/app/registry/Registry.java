@@ -2,35 +2,37 @@ package no.ntnu.idatt1002.app.registry;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import no.ntnu.idatt1002.app.data.Bookkeeping;
 
 
 /**
- * The registry interface tracks all data that is created in the application. Different
- * registries will track different types of data.
+ * A registry is used to keep track of all Bookkeeping objects. A registry will either represent
+ * all projects or all monthly transactions records.
  */
 public interface Registry {
+
   /**
-   * Add an object to the registry. The dateTime key chosen for the object can be a reference to
-   * a specific time relative to the object, or a time when the object was created. This is
-   * decided in the registry class.
+   * Add a Bookkeeping object to the registry.
    *
-   * @param key  the date and time corresponding to the object
-   * @param object    the object to be added
+   * @param key       the date and time corresponding to the object
+   * @param bookkeeping the object to be added to the registry
+   * @throws IllegalArgumentException if the object is null
    */
-  void addToRegistry(LocalDateTime key, Object object);
+  void addToRegistry(LocalDateTime key, Bookkeeping bookkeeping) throws IllegalArgumentException;
   
   /**
-   * Get an object from the registry.
+   * Get a Bookkeeping object from the registry.
    *
    * @param key the date and time corresponding to the object
-   * @return the specific object from the registry
+   * @return the bookkeeping object from the registry
    */
-  Object getFromRegistry(LocalDateTime key);
+  Bookkeeping getFromRegistry(LocalDateTime key);
+  
   
   /**
-   * Gets the entire registry.
+   * Gets the entire registry of bookkeeping objects.
    *
-   * @return the entire registry
+   * @return the entire registry of bookkeeping objects
    */
-  HashMap<LocalDateTime, Object> getRegistry();
+  HashMap<LocalDateTime, Bookkeeping> getRegistry();
 }

@@ -15,11 +15,11 @@ import javafx.util.Builder;
 
 public class ScreenBuilder implements Builder<Region> {
 
-    private ModelViewController model;
+    private GUIController model;
     private Runnable saveAction;
 
 
-    public ScreenBuilder(ModelViewController model, Runnable saveAction) {
+    public ScreenBuilder(GUIController model, Runnable saveAction) {
         this.model = model;
         this.saveAction = saveAction;
     }

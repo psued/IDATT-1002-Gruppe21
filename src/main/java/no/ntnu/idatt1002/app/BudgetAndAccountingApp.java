@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import no.ntnu.idatt1002.app.gui.ModelViewController;
+import no.ntnu.idatt1002.app.gui.GUIController;
 import no.ntnu.idatt1002.app.gui.ScreenBuilder;
 
 public class BudgetAndAccountingApp extends Application {
@@ -15,7 +15,7 @@ public class BudgetAndAccountingApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Region sceneRoot = new ScreenBuilder(new ModelViewController(), () -> {
+        Region sceneRoot = new ScreenBuilder(new GUIController(), () -> {
         }).build();
         Scene scene = new Scene(sceneRoot);
         primaryStage.setScene(scene);

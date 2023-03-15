@@ -3,7 +3,7 @@ package no.ntnu.idatt1002.app.gui;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ModelViewController {
+public class GUIController {
 
     private final StringProperty firstName = new SimpleStringProperty("Alloysius");
     private final StringProperty LastName = new SimpleStringProperty("Smith");

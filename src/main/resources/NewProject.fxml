@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@css/default.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.NewProjectController">
+   <children>
+      <VBox layoutX="12.0" layoutY="14.0" maxWidth="-Infinity" prefHeight="526.0" prefWidth="746.0" spacing="30.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Project">
+               <font>
+                  <Font name="System Bold" size="32.0" />
+               </font>
+            </Text>
+            <HBox prefHeight="413.0" prefWidth="774.0" spacing="20.0">
+               <children>
+                  <VBox prefHeight="465.0" prefWidth="530.0" spacing="20.0">
+                     <children>
+                        <HBox prefHeight="198.0" prefWidth="258.0" spacing="20.0">
+                           <children>
+                              <VBox prefHeight="198.0" prefWidth="170.0" spacing="6.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <MenuButton mnemonicParsing="false" prefHeight="23.0" prefWidth="233.0" text="MenuButton">
+                                      <items>
+                                        <MenuItem mnemonicParsing="false" text="Action 1" />
+                                        <MenuItem mnemonicParsing="false" text="Action 2" />
+                                      </items>
+                                    </MenuButton>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <DatePicker />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="198.0" prefWidth="331.0" spacing="6.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <TextArea prefHeight="200.0" prefWidth="200.0" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <VBox maxWidth="1000.0" prefHeight="244.0" prefWidth="530.0" spacing="6.0">
+                           <children>
+                              <HBox prefHeight="44.0" prefWidth="508.0">
+                                 <children>
+                                    <VBox alignment="CENTER_LEFT" prefHeight="16.0" prefWidth="284.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Income">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </VBox>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="290.0">
+                                       <children>
+                                          <ToggleButton alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Accounting" textAlignment="CENTER" />
+                                          <ToggleButton alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Budgetting" textAlignment="CENTER" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <TableView editable="true" maxHeight="120.0" minHeight="120.0" prefHeight="50.0" prefWidth="380.0" tableMenuButtonVisible="true">
+                                <columns>
+                                  <TableColumn prefWidth="75.0" text="C1" />
+                                  <TableColumn prefWidth="75.0" text="C2" />
+                                </columns>
+                              </TableView>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Expence">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <TableView maxHeight="120.0" minHeight="120.0" prefHeight="149.0" prefWidth="508.0">
+                                 <columns>
+                                    <TableColumn prefWidth="75.0" text="C1" />
+                                    <TableColumn prefWidth="75.0" text="C2" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="BOTTOM_CENTER" prefHeight="442.0" prefWidth="226.0">
+                     <children>
+                        <VBox prefHeight="94.0" prefWidth="189.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" wrappingWidth="86.984375">
+                                 <font>
+                                    <Font name="System Bold Italic" size="32.0" />
+                                 </font>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0kr" wrappingWidth="49.21875">
+                                 <font>
+                                    <Font name="System Bold Italic" size="32.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </VBox>
+                        <VBox alignment="BASELINE_LEFT" prefHeight="0.0" prefWidth="189.0" spacing="10.0">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="38.0" prefWidth="189.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" style="-fx-background-color: Red;" text="Delete" textFill="WHITE">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: Blue;" text="Save" textFill="WHITE">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

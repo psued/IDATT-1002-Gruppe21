@@ -32,7 +32,7 @@ public class Income implements Transaction {
 
     this.description = description;
     this.category = category;
-    this.amount = amount;
+    this.amount = amount; 
     this.date = date;
   }
 

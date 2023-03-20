@@ -15,8 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@css/default.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.NewProjectController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../../css/default.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.NewProjectController">
    <children>
       <VBox layoutX="12.0" layoutY="14.0" maxWidth="-Infinity" prefHeight="526.0" prefWidth="746.0" spacing="30.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
          <children>
@@ -38,7 +37,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField />
+                                    <TextField fx:id="name" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category">
                                        <font>
                                           <Font size="18.0" />
@@ -65,7 +64,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextArea prefHeight="200.0" prefWidth="200.0" />
+                                    <TextArea fx:id="description" prefHeight="200.0" prefWidth="200.0" />
                                  </children>
                               </VBox>
                            </children>
@@ -143,7 +142,7 @@
                                     </VBox>
                                     <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: Blue;" text="Save" textFill="WHITE">
+                                          <Button fx:id="save" mnemonicParsing="false" onAction="#saveProject" onMouseClicked="#saveProject" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: Blue;" text="Save" textFill="WHITE">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>

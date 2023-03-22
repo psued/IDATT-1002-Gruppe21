@@ -1,5 +1,6 @@
 package no.ntnu.idatt1002.app.registry;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,7 +11,7 @@ import no.ntnu.idatt1002.app.data.Project;
 /**
  * Class for registering all the projects
  */
-public class ProjectRegistry {
+public class ProjectRegistry implements Serializable {
   
   private final HashMap<LocalDateTime, Project> projects;
   private final List<String> categories = new ArrayList<>();
@@ -71,5 +72,13 @@ public class ProjectRegistry {
       throw new IllegalArgumentException("Category cannot be null");
     }
     categories.add(category);
+  }
+
+  @Override
+  public String toString() {
+    return "ProjectRegistry{" +
+      "projects=" + projects +
+      ", categories=" + categories +
+      '}';
   }
 }

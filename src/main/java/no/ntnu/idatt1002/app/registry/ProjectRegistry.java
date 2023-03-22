@@ -30,6 +30,9 @@ public class ProjectRegistry {
    * @param project the project to be added
    */
   public void addProject(Project project) {
+    // TODO(ingar): This needs to be double checked to see if it works
+    // since the LocalDateTime in the project is saved to the nanosecond
+    // it might be impossible to use it as a key in the HashMap
     projects.put(project.getCreationDate(), project);
   }
   

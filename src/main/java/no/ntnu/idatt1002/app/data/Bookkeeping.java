@@ -13,7 +13,7 @@ public interface Bookkeeping {
    *
    * @param income the income to be added
    */
-  void addIncome(Income income);
+  void addEquity(Income income);
   
   /**
    * Method for adding an expense to the expense list

@@ -26,8 +26,17 @@ public class Accounting implements Bookkeeping {
    *
    * @param income the income to be added
    */
-  public void addIncome(Income income) {
+  public void addEquity(Income income) {
     incomeList.add(income);
+  }
+
+  /**
+   * Method for adding incomes to the income list
+   * 
+   * @param incomes the incomes to be added
+   */
+  public void addEquities(ArrayList<Income> incomes) {
+    incomeList.addAll(incomes);
   }
 
   /**
@@ -37,6 +46,15 @@ public class Accounting implements Bookkeeping {
    */
   public void addExpense(Expense expense) {
     expenseList.add(expense);
+  }
+
+  /**
+   * Method for adding expenses to the expense list
+   * 
+   * @param expenses the expenses to be added
+   */
+  public void addExpenses(ArrayList<Expense> expenses) {
+    expenseList.addAll(expenses);
   }
 
   /**

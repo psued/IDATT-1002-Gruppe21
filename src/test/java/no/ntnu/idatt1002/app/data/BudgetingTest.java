@@ -29,7 +29,7 @@ public class BudgetingTest {
     @Test
     public void testAddIncome() {
         Income income = new Income("test", "test", 100, LocalDate.now());
-        budgeting.addIncome(income);
+        budgeting.addEquity(income);
         assertEquals(1, budgeting.getIncomeList().size());
 
         Income addedIncome = budgeting.getIncomeList().get(0);
@@ -56,11 +56,11 @@ public class BudgetingTest {
     @Test
     public void testGetIncomeList() {
         Income expense1 = new Income("test1", "test1", 100, LocalDate.now());
-        budgeting.addIncome(expense1);
+        budgeting.addEquity(expense1);
         assertEquals(1, budgeting.getIncomeList().size());
         
         Income expense2 = new Income("test2", "test2", 100, LocalDate.now());
-        budgeting.addIncome(expense2);
+        budgeting.addEquity(expense2);
         assertEquals(2, budgeting.getIncomeList().size());
 
         Income addedIncome1 = budgeting.getIncomeList().get(0);
@@ -84,8 +84,8 @@ public class BudgetingTest {
     public void testGetTotalIncome() {
         Income expense1 = new Income("test1", "test1", 100, LocalDate.now());
         Income expense2 = new Income("test2", "test2", 100, LocalDate.now());
-        budgeting.addIncome(expense1);
-        budgeting.addIncome(expense2);
+        budgeting.addEquity(expense1);
+        budgeting.addEquity(expense2);
 
         assertEquals(200, budgeting.getTotalIncome());
     }

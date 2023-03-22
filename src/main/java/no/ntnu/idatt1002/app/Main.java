@@ -1,7 +1,7 @@
 package no.ntnu.idatt1002.app;
 
 import no.ntnu.idatt1002.app.fileHandling.FileHandling;
-import no.ntnu.idatt1002.app.registry.ProjectRegistry;
+import no.ntnu.idatt1002.app.data.ProjectRegistry;
 
 import java.io.IOException;
 

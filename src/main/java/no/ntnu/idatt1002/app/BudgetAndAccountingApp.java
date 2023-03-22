@@ -8,10 +8,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import no.ntnu.idatt1002.app.data.User;
 import no.ntnu.idatt1002.app.gui.GUIController;
 import no.ntnu.idatt1002.app.gui.ScreenBuilder;
 
 public class BudgetAndAccountingApp extends Application {
+
+    private final User user = new User();
 
     public static void main(String[] args) {
         launch(args);

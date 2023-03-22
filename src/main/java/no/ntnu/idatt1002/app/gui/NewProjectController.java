@@ -15,8 +15,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
+import no.ntnu.idatt1002.app.data.ProjectRegistry;
 import no.ntnu.idatt1002.app.data.User;
-import no.ntnu.idatt1002.app.registry.ProjectRegistry;
 
 public class NewProjectController {
   
@@ -72,8 +72,8 @@ public class NewProjectController {
   
   public void saveProject() {
     try {
-      Project project = new Project(name.getText(), description.getText(), category.getText());
-      user.addProject(project);
+      Project project = new Project(name.getText(), description.getText(), category.getText(), date.getValue());
+      // user.addProject(project);
       nameError.setText(project.toString());
     } catch (IllegalArgumentException e) {
       nameError.setText(e.getMessage());

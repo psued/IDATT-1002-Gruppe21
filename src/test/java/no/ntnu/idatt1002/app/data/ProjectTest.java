@@ -14,13 +14,13 @@ public class ProjectTest {
 
     @BeforeEach
     public void setUp() {
-        project = new Project("name", "description", "category");
+        project = new Project("name", "description", "category", LocalDate.now());
     }
 
     @Test
     void testProject() {
-        assertThrows(IllegalArgumentException.class, () -> new Project(null, "test", "test"));
-        assertThrows(IllegalArgumentException.class, () -> new Project("", "test", "test"));
+        assertThrows(IllegalArgumentException.class, () -> new Project(null, "test", "test", LocalDate.now()));
+        assertThrows(IllegalArgumentException.class, () -> new Project("", "test", "test", LocalDate.now()));
     }
 
     @Test

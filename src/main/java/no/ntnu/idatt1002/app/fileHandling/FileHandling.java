@@ -1,30 +1,43 @@
 package no.ntnu.idatt1002.app.fileHandling;
 
-import no.ntnu.idatt1002.app.data.Project;
-import no.ntnu.idatt1002.app.data.ProjectRegistry;
+import no.ntnu.idatt1002.app.data.User;
 
 import java.io.*;
 
+/**
+ * FileHandling class is used to store a user.
+ */
 public class FileHandling {
 
-  private static String file = System.getProperty("user.dir") + "/src/main/resources/projectRegistry.txt";
+  private static String file = System.getProperty("user.dir") + "/src/main/resources/user.txt";
 
-  public static void writeProjectRegistryToFile(ProjectRegistry projectRegistry) throws IOException {
+  /**
+   * This methode is used to write a user object to user.txt file.
+   * @param user is the user object you want to write to the file.
+   * @throws IOException
+   */
+  public static void writeUserToFile(User user) throws IOException {
     FileOutputStream fileOutputStream = new FileOutputStream(file);
     ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-    objectOutputStream.writeObject(projectRegistry);
+    objectOutputStream.writeObject(user);
     objectOutputStream.flush();
     objectOutputStream.close();
   }
 
-  public static ProjectRegistry readProjectRegistryFromFile() throws IOException, ClassNotFoundException {
+  /**
+   * This methode is used to read a user object from the user.txt file.
+   * @return the user stored in user.txt file.
+   * @throws IOException
+   * @throws ClassNotFoundException
+   */
+  public static User readUserFromFile() throws IOException, ClassNotFoundException {
     FileInputStream fileInputStream = new FileInputStream(file);
     ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-    ProjectRegistry projectRegistry = (ProjectRegistry) objectInputStream.readObject();
+    User user = (User) objectInputStream.readObject();
     objectInputStream.close();
 
-    return projectRegistry;
+    return user;
   }
 }

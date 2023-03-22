@@ -1,18 +1,19 @@
 package no.ntnu.idatt1002.app.data;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import no.ntnu.idatt1002.app.fileHandling.FileHandling;
 
 // NOTE(ingar): Make this a Singleton?
-public class User {
+public class User implements Serializable {
 
   private ProjectRegistry projectRegistry;
 
   public User() {
-    loadFromFile();
+    this.projectRegistry = new ProjectRegistry();
   }
 
   public ProjectRegistry getProjectRegistry() {
@@ -49,7 +50,7 @@ public class User {
 
   public void saveToFile() {
     try {
-      FileHandling.writeProjectRegistryToFile(projectRegistry);
+      FileHandling.writeUserToFile(this);
     } catch (IOException e) {
       // TODO(ingar): Need to give the user a message that something failed
       System.err.println("Error writing to file: " + e.getMessage());
@@ -61,29 +62,38 @@ public class User {
     }
   }
 
-  public void loadFromFile() {
-    try {
-      projectRegistry = FileHandling.readProjectRegistryFromFile();
-    } catch (IOException e) {
-      // TODO(ingar): Need to give the user a message that something failed
-      System.err.println("Error reading from file: " + e.getMessage());
-      e.printStackTrace(); // NOTE(ingar): This might not be needed in the final product
-    } catch (ClassNotFoundException e) {
-      // NOTE(ingar): Same as above
-      // NOTE(ingar): Might not need to catch this specifically, since it's not
-      // really useful for the user
-      System.err.println("Could not find class: " + e.getMessage());
-      e.printStackTrace();
-    } catch (Exception e) {
-      // NOTE(ingar): Same as above
-      System.err.println("Error trying to read from file: " + e.getMessage());
-      e.printStackTrace();
-    }
-  }
+  /**
+   public void loadFromFile() {
+   try {
+   projectRegistry = FileHandling.readProjectRegistryFromFile();
+   } catch (IOException e) {
+   // TODO(ingar): Need to give the user a message that something failed
+   System.err.println("Error reading from file: " + e.getMessage());
+   e.printStackTrace(); // NOTE(ingar): This might not be needed in the final product
+   } catch (ClassNotFoundException e) {
+   // NOTE(ingar): Same as above
+   // NOTE(ingar): Might not need to catch this specifically, since it's not
+   // really useful for the user
+   System.err.println("Could not find class: " + e.getMessage());
+   e.printStackTrace();
+   } catch (Exception e) {
+   // NOTE(ingar): Same as above
+   System.err.println("Error trying to read from file: " + e.getMessage());
+   e.printStackTrace();
+   }
+   }
+
 
   @Override
   public void finalize() {
     saveToFile();
   }
+  **/
 
+  @Override
+  public String toString() {
+    return "User{" +
+      "projectRegistry=" + projectRegistry +
+      '}';
+  }
 }

@@ -124,4 +124,11 @@ public class Project {
   public Budgeting getBudgeting() {
     return budgeting;
   }
+  
+  @Override
+  public String toString() {
+    return "Project{" + "name='" + name + '\'' + ", description='" + description + '\'' +
+        ", category='" + category + '\'' + ", creationDate=" + creationDate + ", accounting=" +
+        accounting + ", budgeting=" + budgeting + '}';
+  }
 }

@@ -2,20 +2,20 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../../css/default.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.NewProjectController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../../../css/default.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.NewProjectController">
    <children>
       <VBox layoutX="12.0" layoutY="14.0" maxWidth="-Infinity" prefHeight="526.0" prefWidth="746.0" spacing="30.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
          <children>
@@ -43,7 +43,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <MenuButton mnemonicParsing="false" prefHeight="23.0" prefWidth="233.0" text="MenuButton">
+                                    <MenuButton fx:id="category" mnemonicParsing="false" onAction="#setChosenCategory" prefHeight="23.0" prefWidth="233.0" text="Category">
                                       <items>
                                         <MenuItem mnemonicParsing="false" text="Action 1" />
                                         <MenuItem mnemonicParsing="false" text="Action 2" />
@@ -54,7 +54,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <DatePicker />
+                                    <DatePicker fx:id="date" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="198.0" prefWidth="331.0" spacing="6.0">
@@ -84,28 +84,38 @@
                                     </VBox>
                                     <HBox alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="290.0">
                                        <children>
-                                          <ToggleButton alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Accounting" textAlignment="CENTER" />
-                                          <ToggleButton alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Budgetting" textAlignment="CENTER" />
+                                          <Button fx:id="accounting" mnemonicParsing="false" text="Accounting" />
+                                          <Button fx:id="budgeting" mnemonicParsing="false" text="Budgeting" />
                                        </children>
                                     </HBox>
                                  </children>
                               </HBox>
-                              <TableView editable="true" maxHeight="120.0" minHeight="120.0" prefHeight="50.0" prefWidth="380.0" tableMenuButtonVisible="true">
+                              <TableView fx:id="incomeTable" editable="true" maxHeight="120.0" minHeight="120.0" prefHeight="50.0" prefWidth="380.0" tableMenuButtonVisible="true">
                                 <columns>
-                                  <TableColumn prefWidth="75.0" text="C1" />
-                                  <TableColumn prefWidth="75.0" text="C2" />
+                                  <TableColumn fx:id="incomeDate" prefWidth="75.0" text="Date" />
+                                  <TableColumn fx:id="incomeDescription" prefWidth="75.0" text="Description" />
+                                    <TableColumn fx:id="incomeCategory" prefWidth="72.79998779296875" text="Category" />
+                                    <TableColumn fx:id="incomeAmount" minWidth="6.39996337890625" prefWidth="77.5999755859375" text="Amount" />
                                 </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
                               </TableView>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Expence">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Text>
-                              <TableView maxHeight="120.0" minHeight="120.0" prefHeight="149.0" prefWidth="508.0">
+                              <TableView fx:id="expenseTable" editable="true" maxHeight="120.0" minHeight="120.0" prefHeight="50.0" prefWidth="380.0" tableMenuButtonVisible="true">
                                  <columns>
-                                    <TableColumn prefWidth="75.0" text="C1" />
-                                    <TableColumn prefWidth="75.0" text="C2" />
+                                    <TableColumn fx:id="expenseDate" prefWidth="75.0" text="Date" />
+                                    <TableColumn fx:id="expenseDescription" prefWidth="75.0" text="Description" />
+                                    <TableColumn fx:id="expenseCategory" prefWidth="75.0" text="Category" />
+                                    <TableColumn fx:id="expenseAmount" prefWidth="75.0" text="Amount" />
                                  </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
                               </TableView>
                            </children>
                         </VBox>
@@ -133,7 +143,7 @@
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <Button mnemonicParsing="false" style="-fx-background-color: Red;" text="Delete" textFill="WHITE">
+                                          <Button fx:id="delete" mnemonicParsing="false" style="-fx-background-color: Red;" text="Delete" textFill="WHITE">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -159,5 +169,6 @@
             </HBox>
          </children>
       </VBox>
+      <Label fx:id="nameError" layoutX="362.0" layoutY="651.0" text="Warning Label" textFill="RED" />
    </children>
 </AnchorPane>

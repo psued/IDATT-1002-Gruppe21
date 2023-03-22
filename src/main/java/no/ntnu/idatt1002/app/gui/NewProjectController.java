@@ -15,8 +15,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Equity;
 import no.ntnu.idatt1002.app.data.Project;
+import no.ntnu.idatt1002.app.data.ProjectRegistry;
 import no.ntnu.idatt1002.app.data.User;
-import no.ntnu.idatt1002.app.registry.ProjectRegistry;
 
 public class NewProjectController {
   

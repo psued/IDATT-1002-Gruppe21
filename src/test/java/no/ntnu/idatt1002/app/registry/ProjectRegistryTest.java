@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import no.ntnu.idatt1002.app.data.Project;
+import no.ntnu.idatt1002.app.data.ProjectRegistry;
 
 public class ProjectRegistryTest {
 

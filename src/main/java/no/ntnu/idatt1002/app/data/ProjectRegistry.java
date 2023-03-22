@@ -1,8 +1,7 @@
-package no.ntnu.idatt1002.app.registry;
+package no.ntnu.idatt1002.app.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import no.ntnu.idatt1002.app.data.Project;
 
 /**
  * Class for registering all the projects

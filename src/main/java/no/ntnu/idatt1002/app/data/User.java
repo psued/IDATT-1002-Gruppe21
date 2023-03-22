@@ -3,8 +3,6 @@ package no.ntnu.idatt1002.app.data;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import no.ntnu.idatt1002.app.registry.ProjectRegistry;
-
 public class User {
 
   private ProjectRegistry projectRegistry = new ProjectRegistry();
@@ -28,11 +26,6 @@ public class User {
 
     projectRegistry.addProject(newProject);
   }
-
-  // // TODO
-  // public void addProject(String name, String description, String category) {
-  // projectRegistry.addProject(new Project(name, description, category));
-  // }
 
   public void removeProject(Project project) {
     projectRegistry.removeProject(project);

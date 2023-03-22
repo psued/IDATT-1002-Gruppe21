@@ -1,9 +1,6 @@
 package no.ntnu.idatt1002.app.registry;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import no.ntnu.idatt1002.app.data.Project;
 
@@ -11,50 +8,48 @@ import no.ntnu.idatt1002.app.data.Project;
  * Class for registering all the projects
  */
 public class ProjectRegistry {
-  
-  private final HashMap<LocalDateTime, Project> projects;
+
+  private final ArrayList<Project> projects;
   private final List<String> categories = new ArrayList<>();
-  
+
   /**
    * Creates a new project registry
    */
   public ProjectRegistry() {
-    this.projects = new HashMap<>();
+    this.projects = new ArrayList<>();
     categories.add("Freelance");
     categories.add("Personal");
   }
-  
+
   /**
    * Adds a project to the registry
    *
    * @param project the project to be added
    */
+  // NOTE(ingar): Should consider sending the necessary data to the registry
+  // instead of the project
   public void addProject(Project project) {
-    // TODO(ingar): This needs to be double checked to see if it works
-    // since the LocalDateTime in the project is saved to the nanosecond
-    // it might be impossible to use it as a key in the HashMap
-    projects.put(project.getCreationDate(), project);
+    projects.add(project);
   }
-  
+
   /**
    * Gets a project from the registry
    *
    * @return the project
    */
-  public Project getProject(LocalDateTime creationDate) {
-    return projects.get(creationDate);
-  }
-  
-  
+  // public Project getProject(Project project) {
+  // return projects.get(project);
+  // }
+
   /**
    * Gets all the projects from the registry
    *
    * @return the projects
    */
-  public Collection<Project> getProjects() {
-    return projects.values();
+  public ArrayList<Project> getProjects() {
+    return new ArrayList<>(projects);
   }
-  
+
   /**
    * Gets all the categories from the registry
    *
@@ -63,7 +58,11 @@ public class ProjectRegistry {
   public List<String> getCategories() {
     return categories;
   }
-  
+
+  public void removeProject(Project project) {
+    projects.remove(project);
+  }
+
   /**
    * Adds a category to the registry
    *

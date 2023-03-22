@@ -28,11 +28,11 @@ public class AccountingTest {
 
     @Test
     public void testAddIncome() {
-        Income income = new Income("test", "test", 100, LocalDate.now());
+        Equity income = new Equity("test", "test", 100, LocalDate.now());
         accounting.addEquity(income);
         assertEquals(1, accounting.getIncomeList().size());
 
-        Income addedIncome = accounting.getIncomeList().get(0);
+        Equity addedIncome = accounting.getIncomeList().get(0);
         assertEqualTransaction(income, addedIncome);
     }
 
@@ -55,18 +55,18 @@ public class AccountingTest {
 
     @Test
     public void testGetIncomeList() {
-        Income expense1 = new Income("test1", "test1", 100, LocalDate.now());
+        Equity expense1 = new Equity("test1", "test1", 100, LocalDate.now());
         accounting.addEquity(expense1);
         assertEquals(1, accounting.getIncomeList().size());
         
-        Income expense2 = new Income("test2", "test2", 100, LocalDate.now());
+        Equity expense2 = new Equity("test2", "test2", 100, LocalDate.now());
         accounting.addEquity(expense2);
         assertEquals(2, accounting.getIncomeList().size());
 
-        Income addedIncome1 = accounting.getIncomeList().get(0);
+        Equity addedIncome1 = accounting.getIncomeList().get(0);
         assertEqualTransaction(expense1, addedIncome1);
 
-        Income addedIncome2 = accounting.getIncomeList().get(1);
+        Equity addedIncome2 = accounting.getIncomeList().get(1);
         assertEqualTransaction(expense2, addedIncome2);
     }
 
@@ -82,8 +82,8 @@ public class AccountingTest {
 
     @Test
     public void testGetTotalIncome() {
-        Income expense1 = new Income("test1", "test1", 100, LocalDate.now());
-        Income expense2 = new Income("test2", "test2", 100, LocalDate.now());
+        Equity expense1 = new Equity("test1", "test1", 100, LocalDate.now());
+        Equity expense2 = new Equity("test2", "test2", 100, LocalDate.now());
         accounting.addEquity(expense1);
         accounting.addEquity(expense2);
 

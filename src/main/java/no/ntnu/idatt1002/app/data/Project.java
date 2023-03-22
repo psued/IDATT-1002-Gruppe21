@@ -1,25 +1,25 @@
 package no.ntnu.idatt1002.app.data;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.LocalDate;
 
 /**
- * A project is a way to plan, categorize and track expenses and income related to a specific goal.
+ * A project is a way to plan, categorize and track expenses and income related
+ * to a specific goal.
  */
 public class Project {
+
   private String name;
-  
+
   private String description;
-  
+
   private String category;
-  
-  private final LocalDateTime creationDate;
-  
+
+  private final LocalDate dueDate;
+
   private final Accounting accounting;
-  
+
   private final Budgeting budgeting;
-  
-  
+
   /**
    * Creates a project with a name, description and category.
    *
@@ -28,19 +28,19 @@ public class Project {
    * @param category    The category of the project.
    * @throws IllegalArgumentException if name is null or blank.
    */
-  public Project(String name, String description, String category) {
+  public Project(String name, String description, String category, LocalDate dueDate) {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Name cannot be null or blank");
     }
-    
+
     this.name = name;
     this.description = description;
     this.category = category;
-    this.creationDate = LocalDateTime.now();
+    this.dueDate = dueDate;
     this.accounting = new Accounting();
     this.budgeting = new Budgeting();
   }
-  
+
   /**
    * Gets name.
    *
@@ -49,7 +49,7 @@ public class Project {
   public String getName() {
     return name;
   }
-  
+
   /**
    * Sets name.
    *
@@ -59,10 +59,10 @@ public class Project {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("name cannot be null or blank");
     }
-    
+
     this.name = name;
   }
-  
+
   /**
    * Gets description.
    *
@@ -71,7 +71,7 @@ public class Project {
   public String getDescription() {
     return description;
   }
-  
+
   /**
    * Sets description.
    *
@@ -80,7 +80,7 @@ public class Project {
   public void setDescription(String description) {
     this.description = description;
   }
-  
+
   /**
    * Gets category.
    *
@@ -89,7 +89,7 @@ public class Project {
   public String getCategory() {
     return category;
   }
-  
+
   /**
    * Sets category.
    *
@@ -98,16 +98,16 @@ public class Project {
   public void setCategory(String category) {
     this.category = category;
   }
-  
+
   /**
    * Gets creation date.
    *
    * @return the creation date
    */
-  public LocalDateTime getCreationDate() {
-    return creationDate;
+  public LocalDate getDueDate() {
+    return dueDate;
   }
-  
+
   /**
    * Gets accounting object.
    *
@@ -116,7 +116,7 @@ public class Project {
   public Accounting getAccounting() {
     return accounting;
   }
-  
+
   /**
    * Gets budgeting object.
    *
@@ -125,11 +125,11 @@ public class Project {
   public Budgeting getBudgeting() {
     return budgeting;
   }
-  
+
   @Override
   public String toString() {
     return "Project{" + "name='" + name + '\'' + ", description='" + description + '\'' +
-        ", category='" + category + '\'' + ", creationDate=" + creationDate + ", accounting=" +
+        ", category='" + category + '\'' + ", creationDate=" + dueDate + ", accounting=" +
         accounting + ", budgeting=" + budgeting + '}';
   }
 

@@ -13,7 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import no.ntnu.idatt1002.app.data.Expense;
-import no.ntnu.idatt1002.app.data.Income;
+import no.ntnu.idatt1002.app.data.Equity;
 import no.ntnu.idatt1002.app.data.Project;
 import no.ntnu.idatt1002.app.data.User;
 import no.ntnu.idatt1002.app.registry.ProjectRegistry;
@@ -31,11 +31,11 @@ public class NewProjectController {
   @FXML private Button accounting;
   @FXML private Button budgeting;
   
-  @FXML private TableView<Income> incomeTable;
-  @FXML private TableColumn<Income, LocalDate> incomeDate;
-  @FXML private TableColumn<Income, String> incomeDescription;
-  @FXML private TableColumn<Income, String> incomeCategory;
-  @FXML private TableColumn<Income, Double> incomeAmount;
+  @FXML private TableView<Equity> incomeTable;
+  @FXML private TableColumn<Equity, LocalDate> incomeDate;
+  @FXML private TableColumn<Equity, String> incomeDescription;
+  @FXML private TableColumn<Equity, String> incomeCategory;
+  @FXML private TableColumn<Equity, Double> incomeAmount;
   
   @FXML private TableView<Expense> expenseTable;
   @FXML private TableColumn<Expense, LocalDate> expenseDate;

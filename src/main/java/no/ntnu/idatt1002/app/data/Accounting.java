@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Accounting implements Bookkeeping {
   
-  ArrayList<Income> incomeList;
+  ArrayList<Equity> incomeList;
   ArrayList<Expense> expenseList;
 
   /**
@@ -26,7 +26,7 @@ public class Accounting implements Bookkeeping {
    *
    * @param income the income to be added
    */
-  public void addEquity(Income income) {
+  public void addEquity(Equity income) {
     incomeList.add(income);
   }
 
@@ -35,7 +35,7 @@ public class Accounting implements Bookkeeping {
    * 
    * @param incomes the incomes to be added
    */
-  public void addEquities(ArrayList<Income> incomes) {
+  public void addEquities(ArrayList<Equity> incomes) {
     incomeList.addAll(incomes);
   }
 
@@ -62,7 +62,7 @@ public class Accounting implements Bookkeeping {
    *
    * @return the income list
    */
-  public ArrayList<Income> getIncomeList() {
+  public ArrayList<Equity> getIncomeList() {
     return incomeList;
   }
 
@@ -81,7 +81,7 @@ public class Accounting implements Bookkeeping {
    * @return the total income
    */
   public double getTotalIncome() {
-    return incomeList.stream().mapToDouble(Income::getAmount).sum();
+    return incomeList.stream().mapToDouble(Equity::getAmount).sum();
   }
 
   /**

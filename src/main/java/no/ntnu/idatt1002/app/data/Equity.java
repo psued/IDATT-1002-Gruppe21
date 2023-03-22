@@ -8,7 +8,7 @@ import java.time.LocalDate;
  * @author Lars Mikkel Nilsen, Trygve Jørgensen, Ingar Aasheim, Ari Maman
  * @since 10.03.2023
  */
-public class Income implements Transaction {
+public class Equity implements Transaction {
 
   String description;
   String category;
@@ -23,7 +23,7 @@ public class Income implements Transaction {
    * @param date The date of the Income.
    * @throws IllegalArgumentException if description or category is null or blank or if amount is less than zero.
    */
-  public Income(String description, String category, double amount, LocalDate date) throws IllegalArgumentException {
+  public Equity(String description, String category, double amount, LocalDate date) throws IllegalArgumentException {
     if (description == null) throw new IllegalArgumentException("description cannot be null.");
     if (description.isBlank()) throw new IllegalArgumentException("description cannot be blank");
     if (category == null) throw new IllegalArgumentException("category cannot be null.");

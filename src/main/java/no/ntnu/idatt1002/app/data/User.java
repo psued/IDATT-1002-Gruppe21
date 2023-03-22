@@ -1,5 +1,6 @@
 package no.ntnu.idatt1002.app.data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import no.ntnu.idatt1002.app.registry.ProjectRegistry;
@@ -7,13 +8,17 @@ import no.ntnu.idatt1002.app.registry.ProjectRegistry;
 public class User {
 
   private ProjectRegistry projectRegistry = new ProjectRegistry();
-  
+
   public ProjectRegistry getProjectRegistry() {
     return projectRegistry;
   }
-  
-  public void addProject(String name, String description, String category, ArrayList<Expense> accountingExpenses, ArrayList<Income> accountingEquities, ArrayList<Expense> budgetingExpenses, ArrayList<Income> budgetingEquities) {
-    Project newProject = new Project(name, description, category);
+
+  // NOTE(ingar): We will probably just send in empty arraylists if nothing is
+  // entered
+  public void addProject(String name, String description, String category, LocalDate dueDate,
+      ArrayList<Expense> accountingExpenses, ArrayList<Equity> accountingEquities, ArrayList<Expense> budgetingExpenses,
+      ArrayList<Equity> budgetingEquities) {
+    Project newProject = new Project(name, description, category, dueDate);
 
     newProject.getAccounting().addExpenses(accountingExpenses);
     newProject.getAccounting().addEquities(accountingEquities);
@@ -24,14 +29,19 @@ public class User {
     projectRegistry.addProject(newProject);
   }
 
-  // TODO
-  public void addProject(String name, String description, String category) {
-    projectRegistry.addProject(new Project(name, description, category));
+  // // TODO
+  // public void addProject(String name, String description, String category) {
+  // projectRegistry.addProject(new Project(name, description, category));
+  // }
+
+  public void removeProject(Project project) {
+    projectRegistry.removeProject(project);
   }
 
-  public void removeProject() {
-    // TODO(ingar): Needs some parameter that can get the corresponding
-    // project
+  public void editProject(Project project, String name, String description, String category) {
+    project.setName(name);
+    project.setDescription(description);
+    project.setCategory(category);
   }
 
   public void saveToFile() {
@@ -43,7 +53,5 @@ public class User {
     // TODO(ingar): implement with classes made by Lars
     // Will probably load the projectRegistry
   }
-
-
 
 }

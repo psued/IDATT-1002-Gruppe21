@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -30,9 +31,9 @@ public class ProjectRegistryTest {
 
     @Test
     void testAddProject() {
-        Project project = new Project("name", "description", "category");
+        Project project = new Project("name", "description", "category", LocalDate.now());
         projectRegistry.addProject(project);
-        assertEquals(project, projectRegistry.getProject(project.getCreationDate()));
+        assertTrue(projectRegistry.getProjects().contains(project));
     }
 
     @Test
@@ -43,16 +44,9 @@ public class ProjectRegistryTest {
     }
 
     @Test
-    void testGetProject() {
-        Project project = new Project("name", "description", "category");
-        projectRegistry.addProject(project);
-        assertEquals(project, projectRegistry.getProject(project.getCreationDate()));
-    }
-
-    @Test
     void testGetProjects() {
-        Project project1 = new Project("name", "description", "category");
-        Project project2 = new Project("name2", "description2", "category2");
+        Project project1 = new Project("name", "description", "category", LocalDate.now());
+        Project project2 = new Project("name2", "description2", "category2", LocalDate.now());
 
         projectRegistry.addProject(project1);
         projectRegistry.addProject(project2);

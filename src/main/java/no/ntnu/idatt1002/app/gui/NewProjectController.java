@@ -1,6 +1,7 @@
 package no.ntnu.idatt1002.app.gui;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -24,58 +25,98 @@ public class NewProjectController {
   
   private ProjectRegistry projectRegistry = user.getProjectRegistry();
   
+  // Local Accounting overview
+  private ArrayList<Income> AccountingIncome = new ArrayList<>();
+  private ArrayList<Expense> AccountingExpense = new ArrayList<>();
+  
+  // Local Budgeting overview
+  private ArrayList<Income> BudgetingIncome = new ArrayList<>();
+  private ArrayList<Expense> BudgetingExpense = new ArrayList<>();
+  
+  // Fundamental project information
   @FXML private TextField name;
   @FXML private MenuButton category;
   @FXML private TextArea description;
-  @FXML private DatePicker date;
+  @FXML private DatePicker dueDate;
+  
+  //Accounting and Budgeting buttons
   @FXML private Button accounting;
   @FXML private Button budgeting;
   
+  //Accounting Table
   @FXML private TableView<Income> incomeTable;
   @FXML private TableColumn<Income, LocalDate> incomeDate;
   @FXML private TableColumn<Income, String> incomeDescription;
   @FXML private TableColumn<Income, String> incomeCategory;
   @FXML private TableColumn<Income, Double> incomeAmount;
+  @FXML private DatePicker incomeDatePicker;
+  @FXML private TextField incomeDescriptionField;
+  @FXML private TextField incomeCategoryField;
+  @FXML private TextField incomeAmountField;
+  @FXML private Button addIncome;
   
+  //Budgeting Table
   @FXML private TableView<Expense> expenseTable;
   @FXML private TableColumn<Expense, LocalDate> expenseDate;
   @FXML private TableColumn<Expense, String> expenseDescription;
   @FXML private TableColumn<Expense, String> expenseCategory;
   @FXML private TableColumn<Expense, Double> expenseAmount;
+  @FXML private DatePicker expenseDatePicker;
+  @FXML private TextField expenseDescriptionField;
+  @FXML private TextField expenseCategoryField;
+  @FXML private TextField expenseAmountField;
+  @FXML private Button addExpense;
   
-  
+  //Save and delete buttons
   @FXML private Button save;
   @FXML private Button delete;
+  
+  //Error message
   @FXML private Label nameError = new Label();
   
   /**
    * Initializes the controller class.
    */
   public void initialize() {
+    user.addTestProjects();
+    
     category.getItems().clear();
   
     for (String category : projectRegistry.getCategories()) {
-      this.category.getItems().add(new MenuItem(category));
+      MenuItem menuItem = new MenuItem(category);
+      menuItem.setOnAction(event -> this.category.setText(menuItem.getText()));
+      this.category.getItems().add(menuItem);
     }
+    
+    accounting.setStyle("-fx-border-color: #000000");
+    
+    nameError.setVisible(false);
   }
   
   /**
-   * Sets the chosen category when the menu item is clicked.
+   * Toggle to accounting view, makes the accounting button style look active
    */
-  public void setChosenCategory() {
-    for (MenuItem menuItem : category.getItems()) {
-      menuItem.setOnAction(event -> {
-        description.setText(menuItem.getText());
-      });
-    }
+  public void toggleAccounting() {
+    accounting.setStyle("-fx-border-color: #000000");
+    budgeting.setStyle("-fx-border-color: none");
+  }
+  
+  /**
+   * Toggle to budgeting view, makes the budgeting button style look active
+   */
+  public void toggleBudgeting() {
+    budgeting.setStyle("-fx-border-color: #000000");
+    accounting.setStyle("-fx-border-color: none");
   }
   
   public void saveProject() {
     try {
       Project project = new Project(name.getText(), description.getText(), category.getText());
-      user.addProject(project);
+      user.getProjectRegistry().addProject(project);
       nameError.setText(project.toString());
+      nameError.setVisible(true);
     } catch (IllegalArgumentException e) {
+      nameError.setVisible(true);
       nameError.setText(e.getMessage());
     }
   }

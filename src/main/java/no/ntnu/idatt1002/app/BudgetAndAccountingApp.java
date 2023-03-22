@@ -1,6 +1,10 @@
 package no.ntnu.idatt1002.app;
 
+import java.io.IOException;
+import java.util.Objects;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
@@ -14,10 +18,10 @@ public class BudgetAndAccountingApp extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
-        Region sceneRoot = new ScreenBuilder(new GUIController(), () -> {
-        }).build();
-        Scene scene = new Scene(sceneRoot);
+    public void start(Stage primaryStage) throws IOException {
+        Parent root =  FXMLLoader.load(Objects.requireNonNull(getClass().getResource(
+            "/NewProject.fxml")));
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         scene.getStylesheets().add("/css/default.css");
         primaryStage.show();

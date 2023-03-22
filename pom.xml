@@ -35,6 +35,7 @@
             <artifactId>javafx-controls</artifactId>
             <version>20-ea+9</version>
         </dependency>
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
@@ -72,7 +73,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>no.ntnu.idatt1002.app.BudgetAndAccountingApp</mainClass>
+                            <mainClass>no.ntnu.idatt1002.app.Main</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

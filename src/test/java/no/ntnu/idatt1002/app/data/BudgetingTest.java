@@ -28,11 +28,11 @@ public class BudgetingTest {
 
     @Test
     public void testAddIncome() {
-        Equity income = new Equity("test", "test", 100, LocalDate.now());
-        budgeting.addEquity(income);
+        Income income = new Income("test", "test", 100, LocalDate.now());
+        budgeting.addIncome(income);
         assertEquals(1, budgeting.getIncomeList().size());
 
-        Equity addedIncome = budgeting.getIncomeList().get(0);
+        Income addedIncome = budgeting.getIncomeList().get(0);
         assertEqualTransaction(income, addedIncome);
     }
 
@@ -55,18 +55,18 @@ public class BudgetingTest {
 
     @Test
     public void testGetIncomeList() {
-        Equity expense1 = new Equity("test1", "test1", 100, LocalDate.now());
-        budgeting.addEquity(expense1);
+        Income expense1 = new Income("test1", "test1", 100, LocalDate.now());
+        budgeting.addIncome(expense1);
         assertEquals(1, budgeting.getIncomeList().size());
         
-        Equity expense2 = new Equity("test2", "test2", 100, LocalDate.now());
-        budgeting.addEquity(expense2);
+        Income expense2 = new Income("test2", "test2", 100, LocalDate.now());
+        budgeting.addIncome(expense2);
         assertEquals(2, budgeting.getIncomeList().size());
 
-        Equity addedIncome1 = budgeting.getIncomeList().get(0);
+        Income addedIncome1 = budgeting.getIncomeList().get(0);
         assertEqualTransaction(expense1, addedIncome1);
 
-        Equity addedIncome2 = budgeting.getIncomeList().get(1);
+        Income addedIncome2 = budgeting.getIncomeList().get(1);
         assertEqualTransaction(expense2, addedIncome2);
     }
 
@@ -82,10 +82,10 @@ public class BudgetingTest {
 
     @Test
     public void testGetTotalIncome() {
-        Equity expense1 = new Equity("test1", "test1", 100, LocalDate.now());
-        Equity expense2 = new Equity("test2", "test2", 100, LocalDate.now());
-        budgeting.addEquity(expense1);
-        budgeting.addEquity(expense2);
+        Income expense1 = new Income("test1", "test1", 100, LocalDate.now());
+        Income expense2 = new Income("test2", "test2", 100, LocalDate.now());
+        budgeting.addIncome(expense1);
+        budgeting.addIncome(expense2);
 
         assertEquals(200, budgeting.getTotalIncome());
     }

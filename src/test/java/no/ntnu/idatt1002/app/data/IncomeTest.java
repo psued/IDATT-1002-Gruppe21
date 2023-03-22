@@ -8,23 +8,23 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class EquityTest {
+public class IncomeTest {
 
-    private Equity income;
+    private Income income;
 
     @BeforeEach
     void setUp() {
-        income = new Equity("test", "test", 100, LocalDate.now());
+        income = new Income("test", "test", 100, LocalDate.now());
     }
 
 
     @Test
     public void testIncome() {
-        assertThrows(IllegalArgumentException.class, () -> new Equity(null, "test", 100, LocalDate.now()));
-        assertThrows(IllegalArgumentException.class, () -> new Equity("", "test", 100, LocalDate.now()));
-        assertThrows(IllegalArgumentException.class, () -> new Equity("test", null, 100, LocalDate.now()));
-        assertThrows(IllegalArgumentException.class, () -> new Equity("test", "", 100, LocalDate.now()));
-        assertThrows(IllegalArgumentException.class, () -> new Equity("test", "test", -1, LocalDate.now()));
+        assertThrows(IllegalArgumentException.class, () -> new Income(null, "test", 100, LocalDate.now()));
+        assertThrows(IllegalArgumentException.class, () -> new Income("", "test", 100, LocalDate.now()));
+        assertThrows(IllegalArgumentException.class, () -> new Income("test", null, 100, LocalDate.now()));
+        assertThrows(IllegalArgumentException.class, () -> new Income("test", "", 100, LocalDate.now()));
+        assertThrows(IllegalArgumentException.class, () -> new Income("test", "test", -1, LocalDate.now()));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class EquityTest {
     @Test
     void testGetDate() {
         LocalDate time = LocalDate.now();
-        Equity dateTestIncome = new Equity("test", "test", 100, time);
+        Income dateTestIncome = new Income("test", "test", 100, time);
         assertEquals(time, dateTestIncome.getDate());
     }
 
@@ -65,7 +65,7 @@ public class EquityTest {
     @Test
     void testSetDate() {
         LocalDate time = LocalDate.now();
-        Equity dateTestIncome = new Equity("test", "test", 100, time);
+        Income dateTestIncome = new Income("test", "test", 100, time);
         assertEquals(time, dateTestIncome.getDate());
     }
 

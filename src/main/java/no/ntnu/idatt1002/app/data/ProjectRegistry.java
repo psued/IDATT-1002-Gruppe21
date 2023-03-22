@@ -1,25 +1,16 @@
 package no.ntnu.idatt1002.app.data;
 
-<<<<<<< HEAD:src/main/java/no/ntnu/idatt1002/app/data/ProjectRegistry.java
-=======
 import java.io.Serializable;
 import java.time.LocalDateTime;
->>>>>>> a73090b3796a7c1b0446e0477b240b077b376ce3:src/main/java/no/ntnu/idatt1002/app/registry/ProjectRegistry.java
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Class for registering all the projects
  */
-<<<<<<< HEAD:src/main/java/no/ntnu/idatt1002/app/data/ProjectRegistry.java
 public class ProjectRegistry {
 
   private final ArrayList<Project> projects;
-=======
-public class ProjectRegistry implements Serializable {
-  
-  private final HashMap<LocalDateTime, Project> projects;
->>>>>>> a73090b3796a7c1b0446e0477b240b077b376ce3:src/main/java/no/ntnu/idatt1002/app/registry/ProjectRegistry.java
   private final List<String> categories = new ArrayList<>();
 
   /**

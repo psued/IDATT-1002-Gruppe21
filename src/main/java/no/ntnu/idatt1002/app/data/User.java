@@ -62,34 +62,6 @@ public class User implements Serializable {
     }
   }
 
-  /**
-   public void loadFromFile() {
-   try {
-   projectRegistry = FileHandling.readProjectRegistryFromFile();
-   } catch (IOException e) {
-   // TODO(ingar): Need to give the user a message that something failed
-   System.err.println("Error reading from file: " + e.getMessage());
-   e.printStackTrace(); // NOTE(ingar): This might not be needed in the final product
-   } catch (ClassNotFoundException e) {
-   // NOTE(ingar): Same as above
-   // NOTE(ingar): Might not need to catch this specifically, since it's not
-   // really useful for the user
-   System.err.println("Could not find class: " + e.getMessage());
-   e.printStackTrace();
-   } catch (Exception e) {
-   // NOTE(ingar): Same as above
-   System.err.println("Error trying to read from file: " + e.getMessage());
-   e.printStackTrace();
-   }
-   }
-
-
-  @Override
-  public void finalize() {
-    saveToFile();
-  }
-  **/
-
   @Override
   public String toString() {
     return "User{" +

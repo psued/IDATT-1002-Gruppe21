@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Class for registering all the projects
  */
-public class ProjectRegistry implements Serializable{
+public class ProjectRegistry implements Serializable {
 
   private final ArrayList<Project> projects;
   private final List<String> categories = new ArrayList<>();

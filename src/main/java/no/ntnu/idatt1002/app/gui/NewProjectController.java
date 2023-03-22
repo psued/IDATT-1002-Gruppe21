@@ -46,7 +46,7 @@ public class NewProjectController {
   
   @FXML private Button save;
   @FXML private Button delete;
-  @FXML private Label nameError = new Label("");
+  @FXML private Label nameError = new Label();
   
   /**
    * Initializes the controller class.
@@ -57,8 +57,6 @@ public class NewProjectController {
     for (String category : projectRegistry.getCategories()) {
       this.category.getItems().add(new MenuItem(category));
     }
-  
-    nameError.setText("");
   }
   
   /**

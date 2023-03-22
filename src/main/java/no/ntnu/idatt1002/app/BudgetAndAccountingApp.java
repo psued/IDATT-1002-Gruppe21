@@ -19,10 +19,8 @@ public class BudgetAndAccountingApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root =  FXMLLoader.load(Objects.requireNonNull(getClass().getResource("NewProject" +
-            ".fxml")));
-        Region sceneRoot = new ScreenBuilder(new GUIController(), () -> {
-        }).build();
+        Parent root =  FXMLLoader.load(Objects.requireNonNull(getClass().getResource(
+            "/NewProject.fxml")));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         scene.getStylesheets().add("/css/default.css");

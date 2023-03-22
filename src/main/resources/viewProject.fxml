@@ -25,12 +25,12 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Project Name">
+                  <Text fx:id="projectName" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Name">
                      <font>
                         <Font name="System Bold" size="32.0" />
                      </font>
                   </Text>
-                  <Button mnemonicParsing="false" style="-fx-background-color: Green;" text="Edit" textFill="WHITE">
+                  <Button fx:id="edit" mnemonicParsing="false" style="-fx-background-color: Green;" text="Edit" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -50,19 +50,19 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Project Name" />
+                                    <Text fx:id="projectName" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Name" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category:">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Project Category" />
+                                    <Text fx:id="projectCategory" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Category" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date:">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Project Date" />
+                                    <Text fx:id="projectDate" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Date" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="198.0" prefWidth="331.0" spacing="6.0">
@@ -72,7 +72,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Project Description" />
+                                    <Text fx:id="projectDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Description" />
                                  </children>
                               </VBox>
                            </children>
@@ -92,18 +92,18 @@
                                     </VBox>
                                     <HBox alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="290.0">
                                        <children>
-                                          <ToggleButton alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Accounting" textAlignment="CENTER" />
-                                          <ToggleButton alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Budgetting" textAlignment="CENTER" />
+                                          <ToggleButton fx:id="accounting" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Accounting" textAlignment="CENTER" />
+                                          <ToggleButton fx:id="budgeting" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Budgetting" textAlignment="CENTER" />
                                        </children>
                                     </HBox>
                                  </children>
                               </HBox>
                               <TableView editable="true" maxHeight="120.0" minHeight="120.0" prefHeight="50.0" prefWidth="380.0" tableMenuButtonVisible="true">
-                                <columns>
-                                  <TableColumn prefWidth="150.0" text="Description" />
-                                  <TableColumn prefWidth="150.0" text="Category" />
+                                 <columns>
+                                    <TableColumn prefWidth="150.0" text="Description" />
+                                    <TableColumn prefWidth="150.0" text="Category" />
                                     <TableColumn prefWidth="150.0" text="Price" />
-                                </columns>
+                                 </columns>
                               </TableView>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Expence">
                                  <font>
@@ -125,40 +125,23 @@
                      <children>
                         <VBox prefHeight="94.0" prefWidth="189.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" wrappingWidth="86.984375">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" wrappingWidth="112.984375">
                                  <font>
                                     <Font name="System Bold Italic" size="32.0" />
                                  </font>
                               </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0kr" wrappingWidth="49.21875">
-                                 <font>
-                                    <Font name="System Bold Italic" size="32.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </VBox>
-                        <VBox alignment="BASELINE_LEFT" prefHeight="0.0" prefWidth="189.0" spacing="10.0">
-                           <children>
-                              <HBox alignment="CENTER" prefHeight="38.0" prefWidth="189.0">
+                              <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <VBox prefHeight="200.0" prefWidth="100.0">
-                                       <children>
-                                          <Button mnemonicParsing="false" style="-fx-background-color: Red;" text="Delete" textFill="WHITE">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Button>
-                                       </children>
-                                    </VBox>
-                                    <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
-                                       <children>
-                                          <Button fx:id="save" mnemonicParsing="false" onAction="#saveProject" onMouseClicked="#saveProject" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: Green;" text="Save" textFill="WHITE">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Button>
-                                       </children>
-                                    </VBox>
+                                    <Text fx:id="totalPrice" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="49.21875">
+                                       <font>
+                                          <Font name="System Bold Italic" size="32.0" />
+                                       </font>
+                                    </Text>
+                                    <Text layoutX="19.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="kr" wrappingWidth="49.21875">
+                                       <font>
+                                          <Font name="System Bold Italic" size="32.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </HBox>
                            </children>

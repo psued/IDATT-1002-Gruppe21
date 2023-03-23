@@ -90,7 +90,7 @@
                                     </HBox>
                                  </children>
                               </HBox>
-                              <TableView fx:id="incomeTable" editable="true" maxHeight="120.0" minHeight="120.0" prefHeight="120.0" prefWidth="523.0" tableMenuButtonVisible="true">
+                              <TableView fx:id="incomeTable" editable="true" maxHeight="120.0" minHeight="120.0" onKeyPressed="#removeTransaction" onMouseClicked="#selectedIncome" prefHeight="120.0" prefWidth="523.0" tableMenuButtonVisible="true">
                                 <columns>
                                   <TableColumn fx:id="incomeDate" prefWidth="75.0" text="Date" />
                                   <TableColumn fx:id="incomeDescription" prefWidth="75.0" text="Description" />
@@ -104,10 +104,10 @@
                               <HBox prefHeight="9.0" prefWidth="492.0">
                                  <children>
                                     <DatePicker fx:id="incomeDatePicker" prefHeight="22.0" prefWidth="155.0" promptText="Date" />
-                                    <TextField fx:id="incomeDescriptionField" promptText="Description" />
-                                    <TextField fx:id="incomeCategoryField" promptText="Category" />
-                                    <TextField fx:id="incomeAmountField" promptText="Amount" />
-                                    <Button fx:id="addIncome" mnemonicParsing="false" prefHeight="23.0" prefWidth="22.0" text="+">
+                                    <TextField fx:id="incomeDescriptionField" prefHeight="23.0" prefWidth="156.0" promptText="Description" />
+                                    <TextField fx:id="incomeCategoryField" prefHeight="23.0" prefWidth="157.0" promptText="Category" />
+                                    <TextField fx:id="incomeAmountField" prefHeight="23.0" prefWidth="130.0" promptText="Amount" />
+                                    <Button fx:id="addIncome" mnemonicParsing="false" onAction="#addIncomeToLocal" prefHeight="23.0" prefWidth="22.0" text="+">
                                        <font>
                                           <Font name="Arial Black" size="10.0" />
                                        </font>
@@ -119,7 +119,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Text>
-                              <TableView fx:id="expenseTable" editable="true" maxHeight="120.0" minHeight="120.0" prefHeight="50.0" prefWidth="380.0" tableMenuButtonVisible="true">
+                              <TableView fx:id="expenseTable" editable="true" maxHeight="120.0" minHeight="120.0" onKeyPressed="#removeTransaction" onMouseClicked="#selectedExpense" prefHeight="50.0" prefWidth="380.0" tableMenuButtonVisible="true">
                                  <columns>
                                     <TableColumn fx:id="expenseDate" prefWidth="75.0" text="Date" />
                                     <TableColumn fx:id="expenseDescription" prefWidth="75.0" text="Description" />
@@ -135,8 +135,8 @@
                                     <DatePicker fx:id="expenseDatePicker" prefHeight="22.0" prefWidth="155.0" promptText="Date" />
                                     <TextField fx:id="expenseDescriptionField" promptText="Description" />
                                     <TextField fx:id="expenseCategoryField" promptText="Category" />
-                                    <TextField fx:id="expenseAmountField" promptText="Amount" />
-                                    <Button fx:id="addExpense" mnemonicParsing="false" prefHeight="23.0" prefWidth="22.0" text="+">
+                                    <TextField fx:id="expenseAmountField" prefHeight="23.0" prefWidth="129.0" promptText="Amount" />
+                                    <Button fx:id="addExpense" mnemonicParsing="false" onAction="#addExpenseToLocal" prefHeight="23.0" prefWidth="22.0" text="+">
                                        <font>
                                           <Font name="Arial Black" size="10.0" />
                                        </font>
@@ -156,11 +156,25 @@
                                     <Font name="System Bold Italic" size="32.0" />
                                  </font>
                               </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0kr" wrappingWidth="49.21875">
-                                 <font>
-                                    <Font name="System Bold Italic" size="32.0" />
-                                 </font>
-                              </Text>
+                              <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Text fx:id="totalIncome" strokeType="OUTSIDE" strokeWidth="0.0" text="0kr" textAlignment="RIGHT" wrappingWidth="180.0">
+                                       <font>
+                                          <Font name="System Italic" size="32.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="totalExpense" strokeType="OUTSIDE" strokeWidth="0.0" text="-0kr" textAlignment="RIGHT" wrappingWidth="180.0">
+                                       <font>
+                                          <Font name="System Italic" size="32.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="totalAmount" strokeType="OUTSIDE" strokeWidth="0.0" text="0kr" textAlignment="RIGHT" wrappingWidth="180.0">
+                                       <font>
+                                          <Font name="System Bold Italic" size="32.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </VBox>
                            </children>
                         </VBox>
                         <VBox alignment="BASELINE_LEFT" prefHeight="0.0" prefWidth="189.0" spacing="10.0">
@@ -178,7 +192,7 @@
                                     </VBox>
                                     <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <Button fx:id="save" mnemonicParsing="false" onAction="#saveProject" onMouseClicked="#saveProject" prefHeight="66.0" prefWidth="94.0" style="-fx-background-color: Blue;" text="Save" textFill="WHITE">
+                                          <Button fx:id="save" mnemonicParsing="false" onMouseClicked="#saveProject" prefHeight="66.0" prefWidth="94.0" style="-fx-background-color: Blue;" text="Save" textFill="WHITE">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>

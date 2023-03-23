@@ -25,6 +25,11 @@ public class User implements Serializable {
   public void addProject(String name, String description, String category, LocalDate dueDate,
       ArrayList<Expense> accountingExpenses, ArrayList<Income> accountingIncome, ArrayList<Expense> budgetingExpenses,
       ArrayList<Income> budgetingIncome) {
+    if (name == null || description == null || category == null || dueDate == null || accountingExpenses == null
+        || accountingIncome == null || budgetingExpenses == null || budgetingIncome == null) {
+      throw new IllegalArgumentException("One or more arguments are null");
+    }
+    
     Project newProject = new Project(name, description, category, dueDate);
 
     newProject.getAccounting().addExpenses(accountingExpenses);
@@ -65,7 +70,7 @@ public class User implements Serializable {
   @Override
   public String toString() {
     return "User{" +
-      "projectRegistry=" + projectRegistry +
-      '}';
+        "projectRegistry=" + projectRegistry +
+        '}';
   }
 }

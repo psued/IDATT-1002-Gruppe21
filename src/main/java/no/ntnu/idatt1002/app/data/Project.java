@@ -128,6 +128,19 @@ public class Project implements Serializable {
   }
 
   @Override
+  public boolean equals(Object obj) {
+    if (obj == this)
+      return true;
+    if (!(obj instanceof Project))
+      return false;
+
+    Project project = (Project) obj;
+    return project.getName().equals(this.name) && project.getDescription().equals(this.description)
+        && project.getCategory().equals(this.category) && project.getDueDate().equals(this.dueDate)
+        && project.getAccounting().equals(this.accounting) && project.getBudgeting().equals(this.budgeting);
+  }
+
+  @Override
   public String toString() {
     return "Project{" + "name='" + name + '\'' + ", description='" + description + '\'' +
         ", category='" + category + '\'' + ", creationDate=" + dueDate + ", accounting=" +

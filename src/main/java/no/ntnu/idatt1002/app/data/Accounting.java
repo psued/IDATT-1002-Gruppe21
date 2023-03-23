@@ -93,4 +93,17 @@ public class Accounting implements Bookkeeping, Serializable {
   public double getTotalExpense() {
     return expenseList.stream().mapToDouble(Expense::getAmount).sum();
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) {
+      return true;
+    }
+    if (!(obj instanceof Budgeting)) {
+      return false;
+    }
+    
+    Budgeting budgeting = (Budgeting) obj;
+    return incomeList.equals(budgeting.getIncomeList()) && expenseList.equals(budgeting.getExpenseList());
+  }
 }

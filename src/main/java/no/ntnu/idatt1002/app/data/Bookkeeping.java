@@ -49,4 +49,6 @@ public interface Bookkeeping {
    * @return the total expense amount
    */
   double getTotalExpense();
+
+  public boolean equals(Object obj);
 }

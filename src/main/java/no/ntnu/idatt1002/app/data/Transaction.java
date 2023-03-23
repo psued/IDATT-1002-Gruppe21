@@ -67,4 +67,7 @@ public interface Transaction {
    * @throws IllegalArgumentException if date is not valid.
    */
   void setDate(LocalDate newDate);
+
+  public boolean equals(Object obj);
+
 }

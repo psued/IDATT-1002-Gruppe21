@@ -52,6 +52,8 @@ public class NewProjectController {
    * Initializes the controller class.
    */
   public void initialize() {
+    // user.addTestProjects();
+    
     category.getItems().clear();
   
     for (String category : projectRegistry.getCategories()) {

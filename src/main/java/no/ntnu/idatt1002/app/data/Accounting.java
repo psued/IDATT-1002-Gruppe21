@@ -99,11 +99,11 @@ public class Accounting implements Bookkeeping, Serializable {
     if (obj == this) {
       return true;
     }
-    if (!(obj instanceof Budgeting)) {
+    if (!(obj instanceof Accounting)) {
       return false;
     }
     
-    Budgeting budgeting = (Budgeting) obj;
-    return incomeList.equals(budgeting.getIncomeList()) && expenseList.equals(budgeting.getExpenseList());
+    Accounting accounting = (Accounting) obj;
+    return incomeList.equals(accounting.getIncomeList()) && expenseList.equals(accounting.getExpenseList());
   }
 }

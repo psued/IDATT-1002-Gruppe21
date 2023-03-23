@@ -24,7 +24,8 @@ import no.ntnu.idatt1002.app.data.Transaction;
 import no.ntnu.idatt1002.app.data.User;
 
 /**
- * FXML Controller class for the New Project page. Only mandatory field is the name of the project.
+ * FXML Controller class for the EditProject.fxml file. Takes an existing project and allows the
+ * user to edit the project information, accounting and budgeting.
  */
 public class EditProjectController {
   
@@ -50,12 +51,16 @@ public class EditProjectController {
   private Project originalProject = user.getProjectRegistry().getProjects().get(0);
   
   // Local Accounting overview
-  private final ArrayList<Income> accountingIncome = originalProject.getAccounting().getIncomeList();
-  private final ArrayList<Expense> accountingExpense = originalProject.getAccounting().getExpenseList();
+  private final ArrayList<Income> accountingIncome = originalProject.getAccounting()
+      .getIncomeList();
+  private final ArrayList<Expense> accountingExpense = originalProject.getAccounting()
+      .getExpenseList();
   
   // Local Budgeting overview
-  private final ArrayList<Income> budgetingIncome = originalProject.getBudgeting().getIncomeList();
-  private final ArrayList<Expense> budgetingExpense = originalProject.getBudgeting().getExpenseList();
+  private final ArrayList<Income> budgetingIncome = originalProject.getBudgeting()
+      .getIncomeList();
+  private final ArrayList<Expense> budgetingExpense = originalProject.getBudgeting()
+      .getExpenseList();
   
   // Fundamental project information
   @FXML private TextField name;
@@ -104,9 +109,12 @@ public class EditProjectController {
   @FXML private Label nameError = new Label();
   
   /**
-   * Initializes the controller class.
+   * Initializes the controller class. Also sets up the text fields and tables to display the
+   * data of the project that is being edited.
    */
   public void initialize() {
+    
+    // Set up the text fields to display the project information
     name.setText(originalProject.getName());
     category.setText(originalProject.getCategory());
     description.setText(originalProject.getDescription());
@@ -135,6 +143,7 @@ public class EditProjectController {
     expenseCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
     expenseAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
     
+    // Set up the tables to display the transactions of the project that is being edited
     refreshLocalOverview();
     
     nameError.setVisible(false);
@@ -262,7 +271,7 @@ public class EditProjectController {
   
   /**
    * Removes a transaction from the local overview when the delete or backspace key is pressed.
-   * Checks if the overview is set to accounting or budgeting.
+   * Also checks if the overview is set to accounting or budgeting.
    */
   @FXML
   public void removeTransaction(KeyEvent event) {
@@ -329,26 +338,18 @@ public class EditProjectController {
   }
   
   /**
-   * Creates a new project and adds it to the user's project registry. It will display an error
-   * message if the project name is invalid.
+   * Updates the project with the new values and saves it to the user registry. It does this by
+   * deleting the old project and adding the new one.
    */
   public void saveProject() {
     try {
-      Project project = new Project(name.getText(), description.getText(), category.getText(), dueDate.getValue());
-      
-      for (Income income : accountingIncome) {
-        project.getAccounting().addIncome(income);
-      }
-      for (Income income : budgetingIncome) {
-        project.getBudgeting().addIncome(income);
-      }
-      
-      for (Expense expense : accountingExpense) {
-        project.getAccounting().addExpense(expense);
-      }
-      for (Expense expense : budgetingExpense) {
-        project.getBudgeting().addExpense(expense);
-      }
+      Project project = new Project(name.getText(), description.getText(), category.getText(),
+          dueDate.getValue());
+  
+      accountingIncome.forEach(project.getAccounting()::addIncome);
+      accountingExpense.forEach(project.getAccounting()::addExpense);
+      budgetingIncome.forEach(project.getBudgeting()::addIncome);
+      budgetingExpense.forEach(project.getBudgeting()::addExpense);
       
       user.getProjectRegistry().removeProject(originalProject);
       user.getProjectRegistry().addProject(project);

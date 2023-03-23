@@ -310,21 +310,13 @@ public class NewProjectController {
    */
   public void saveProject() {
     try {
-      Project project = new Project(name.getText(), description.getText(), category.getText(), dueDate.getValue());
+      Project project = new Project(name.getText(), description.getText(), category.getText(),
+          dueDate.getValue());
       
-      for (Income income : accountingIncome) {
-        project.getAccounting().addIncome(income);
-      }
-      for (Income income : budgetingIncome) {
-        project.getBudgeting().addIncome(income);
-      }
-      
-      for (Expense expense : accountingExpense) {
-        project.getAccounting().addExpense(expense);
-      }
-      for (Expense expense : budgetingExpense) {
-        project.getBudgeting().addExpense(expense);
-      }
+      accountingIncome.forEach(project.getAccounting()::addIncome);
+      accountingExpense.forEach(project.getAccounting()::addExpense);
+      budgetingIncome.forEach(project.getBudgeting()::addIncome);
+      budgetingExpense.forEach(project.getBudgeting()::addExpense);
       
       user.getProjectRegistry().addProject(project);
 

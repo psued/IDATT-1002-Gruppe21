@@ -22,7 +22,6 @@ import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
 import no.ntnu.idatt1002.app.data.Transaction;
 import no.ntnu.idatt1002.app.data.User;
-import no.ntnu.idatt1002.app.registry.ProjectRegistry;
 
 /**
  * FXML Controller class for the New Project page. Only mandatory field is the name of the project.
@@ -309,7 +308,7 @@ public class NewProjectController {
    */
   public void saveProject() {
     try {
-      Project project = new Project(name.getText(), description.getText(), category.getText());
+      Project project = new Project(name.getText(), description.getText(), category.getText(), dueDate.getValue());
       
       for (Income income : accountingIncome) {
         project.getAccounting().addIncome(income);

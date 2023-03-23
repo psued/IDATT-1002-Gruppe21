@@ -1,7 +1,11 @@
 package no.ntnu.idatt1002.app.fileHandling;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
+import no.ntnu.idatt1002.app.data.ProjectRegistry;
 import no.ntnu.idatt1002.app.data.User;
 
 public class FileHandlingTest {
@@ -48,6 +53,14 @@ public class FileHandlingTest {
 
     @Test
     void testReadAndWrite() {
-        
+        assertDoesNotThrow(() -> FileHandling.writeUserToFile(user));
+
+        AtomicReference<User> newUser = new AtomicReference<>(new User());
+        assertDoesNotThrow(() -> {newUser.set(FileHandling.readUserFromFile());});
+
+        ProjectRegistry oldUserRegistry = user.getProjectRegistry();
+        ProjectRegistry newUserRegistry = newUser.get().getProjectRegistry();
+
+        assert(oldUserRegistry.getProjects().equals(newUserRegistry.getProjects()));
     }
 }

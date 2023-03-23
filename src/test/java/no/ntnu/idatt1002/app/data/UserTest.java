@@ -15,7 +15,6 @@ public class UserTest {
         user = new User();
     }
 
-
     @Test
     void testAddProject() {
         

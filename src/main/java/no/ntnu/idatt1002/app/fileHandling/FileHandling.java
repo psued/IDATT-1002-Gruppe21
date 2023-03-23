@@ -9,7 +9,8 @@ import java.io.*;
  */
 public class FileHandling {
 
-  private static String file = System.getProperty("user.dir") + "/src/main/resources/user.txt";
+  // TODO(ingar): This should not 
+  private static String file = System.getProperty("user.dir") + "/src/main/resources/user.ser";
 
   /**
    * This methode is used to write a user object to user.txt file.

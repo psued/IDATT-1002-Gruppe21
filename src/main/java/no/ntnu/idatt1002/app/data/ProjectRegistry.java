@@ -1,7 +1,6 @@
 package no.ntnu.idatt1002.app.data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

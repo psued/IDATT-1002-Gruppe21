@@ -23,15 +23,15 @@ public class User implements Serializable {
   // NOTE(ingar): We will probably just send in empty arraylists if nothing is
   // entered
   public void addProject(String name, String description, String category, LocalDate dueDate,
-      ArrayList<Expense> accountingExpenses, ArrayList<Income> accountingEquities, ArrayList<Expense> budgetingExpenses,
-      ArrayList<Income> budgetingEquities) {
+      ArrayList<Expense> accountingExpenses, ArrayList<Income> accountingIncome, ArrayList<Expense> budgetingExpenses,
+      ArrayList<Income> budgetingIncome) {
     Project newProject = new Project(name, description, category, dueDate);
 
     newProject.getAccounting().addExpenses(accountingExpenses);
-    newProject.getAccounting().addEquities(accountingEquities);
+    newProject.getAccounting().addEquities(accountingIncome);
 
     newProject.getBudgeting().addExpenses(budgetingExpenses);
-    newProject.getBudgeting().addEquities(budgetingEquities);
+    newProject.getBudgeting().addEquities(budgetingIncome);
 
     projectRegistry.addProject(newProject);
   }

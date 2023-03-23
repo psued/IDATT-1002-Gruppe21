@@ -141,13 +141,13 @@ public class Expense implements Transaction, Serializable {
   public boolean equals(Object obj) {
     if (obj == this)
       return true;
-    if (!(obj instanceof Income))
+    if (!(obj instanceof Expense))
       return false;
 
-    Income income = (Income) obj;
-    return income.getDescription().equals(this.description)
-        && income.getCategory().equals(this.category)
-        && income.getAmount() == this.amount
-        && income.getDate().equals(this.date);
+    Expense expense = (Expense) obj;
+    return expense.getDescription().equals(this.description)
+        && expense.getCategory().equals(this.category)
+        && expense.getAmount() == this.amount
+        && expense.getDate().equals(this.date);
   }
 }

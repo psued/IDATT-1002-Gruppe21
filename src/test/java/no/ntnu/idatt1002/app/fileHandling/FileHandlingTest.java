@@ -1,11 +1,14 @@
 package no.ntnu.idatt1002.app.fileHandling;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
+import no.ntnu.idatt1002.app.data.Project;
 import no.ntnu.idatt1002.app.data.ProjectRegistry;
 import no.ntnu.idatt1002.app.data.User;
 
@@ -47,8 +51,9 @@ public class FileHandlingTest {
         Income income4 = new Income("Gave", "Gave", 1000, LocalDate.now());
         budgetingIncome.add(income3);
         budgetingIncome.add(income4);
-        
-        user.addProject("TestName", "TestDescription", "TestCategory", LocalDate.now(), accountingExpenses, accountingIncome, budgetingExpenses, budgetingIncome);
+
+        user.addProject("TestName", "TestDescription", "TestCategory", LocalDate.now(), accountingExpenses,
+                accountingIncome, budgetingExpenses, budgetingIncome);
     }
 
     @Test
@@ -61,6 +66,7 @@ public class FileHandlingTest {
         ProjectRegistry oldUserRegistry = user.getProjectRegistry();
         ProjectRegistry newUserRegistry = newUser.get().getProjectRegistry();
 
-        assert(oldUserRegistry.getProjects().equals(newUserRegistry.getProjects()));
+        assertTrue(oldUserRegistry.getCategories().equals(newUserRegistry.getCategories()));
+        assertTrue(oldUserRegistry.getProjects().equals(newUserRegistry.getProjects()));
     }
 }

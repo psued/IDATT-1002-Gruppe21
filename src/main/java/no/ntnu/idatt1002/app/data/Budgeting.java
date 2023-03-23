@@ -1,5 +1,6 @@
 package no.ntnu.idatt1002.app.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  * @author Ari Maman, Lars Mikkel Lødeng Nilsen, Trygve Jørgensen, Ingar Asheim
  */
 
-public class Budgeting implements Bookkeeping {
+public class Budgeting implements Bookkeeping, Serializable {
   
   ArrayList<Income> incomeList;
   ArrayList<Expense> expenseList;

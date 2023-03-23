@@ -1,12 +1,13 @@
 package no.ntnu.idatt1002.app.data;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  * A project is a way to plan, categorize and track expenses and income related
  * to a specific goal.
  */
-public class Project {
+public class Project implements Serializable {
 
   private String name;
 

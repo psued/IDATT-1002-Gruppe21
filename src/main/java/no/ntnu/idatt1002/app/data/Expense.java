@@ -1,5 +1,6 @@
 package no.ntnu.idatt1002.app.data;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -8,7 +9,7 @@ import java.time.LocalDate;
  * @author Lars Mikkel Nilsen, Trygve Jørgensen, Ingar Aasheim, Ari Maman
  * @since 10.03.2023
  */
-public class Expense implements Transaction {
+public class Expense implements Transaction, Serializable {
 
   String description;
   String category;

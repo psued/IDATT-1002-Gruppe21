@@ -23,7 +23,7 @@ public class BudgetingTest {
         assertEquals(1, budgeting.getExpenseList().size());
 
         Expense addedExpense = budgeting.getExpenseList().get(0);
-        assertEqualTransaction(expense, addedExpense);
+        assertEquals(expense, addedExpense);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class BudgetingTest {
         assertEquals(1, budgeting.getIncomeList().size());
 
         Income addedIncome = budgeting.getIncomeList().get(0);
-        assertEqualTransaction(income, addedIncome);
+        assertEquals(income, addedIncome);
     }
 
     @Test
@@ -47,10 +47,10 @@ public class BudgetingTest {
         assertEquals(2, budgeting.getExpenseList().size());
 
         Expense addedExpense1 = budgeting.getExpenseList().get(0);
-        assertEqualTransaction(expense1, addedExpense1);
+        assertEquals(expense1, addedExpense1);
 
         Expense addedExpense2 = budgeting.getExpenseList().get(1);
-        assertEqualTransaction(expense2, addedExpense2);
+        assertEquals(expense2, addedExpense2);
     }
 
     @Test
@@ -64,10 +64,10 @@ public class BudgetingTest {
         assertEquals(2, budgeting.getIncomeList().size());
 
         Income addedIncome1 = budgeting.getIncomeList().get(0);
-        assertEqualTransaction(expense1, addedIncome1);
+        assertEquals(expense1, addedIncome1);
 
         Income addedIncome2 = budgeting.getIncomeList().get(1);
-        assertEqualTransaction(expense2, addedIncome2);
+        assertEquals(expense2, addedIncome2);
     }
 
     @Test
@@ -88,12 +88,5 @@ public class BudgetingTest {
         budgeting.addIncome(expense2);
 
         assertEquals(200, budgeting.getTotalIncome());
-    }
-
-    private void assertEqualTransaction(Transaction transaction1, Transaction transaction2) {
-        assertEquals(transaction1.getAmount(), transaction2.getAmount());
-        assertEquals(transaction1.getCategory(), transaction2.getCategory());
-        assertEquals(transaction1.getDate(), transaction2.getDate());
-        assertEquals(transaction1.getDescription(), transaction2.getDescription());
     }
 }

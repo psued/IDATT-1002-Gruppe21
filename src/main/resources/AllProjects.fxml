@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="statusText" prefHeight="479.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.AllProjectsController">
    <children>
-      <TableView fx:id="table" layoutX="6.0" layoutY="66.0" prefHeight="405.0" prefWidth="620.0">
+      <TableView fx:id="table" layoutX="6.0" layoutY="66.0" prefHeight="374.0" prefWidth="620.0">
         <columns>
           <TableColumn fx:id="name" prefWidth="93.33331298828125" text="Navn" />
           <TableColumn fx:id="dateStart" prefWidth="115.33334350585938" text="Dato start" />
@@ -26,8 +26,8 @@
          </font>
       </Text>
       <Line endX="618.0" endY="-3.814697265625E-6" layoutX="107.0" layoutY="44.0" startX="-113.66666412353516" startY="-3.814697265625E-6" />
-      <Button fx:id="editButton" layoutX="634.0" layoutY="239.0" mnemonicParsing="false" onAction="#editButton" text="Edit" />
-      <Button fx:id="newProjectButton" layoutX="634.0" layoutY="269.0" mnemonicParsing="false" onAction="#newProject" text="New Project" />
-      <Text fx:id="showText" layoutX="634.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Button layoutX="634.0" layoutY="239.0" mnemonicParsing="false" onMouseClicked="#editProject" text="Edit" />
+      <Button layoutX="634.0" layoutY="269.0" mnemonicParsing="false" onMouseClicked="#newProject" text="New Project" />
+      <Text fx:id="errorMessage" layoutX="260.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="198.599853515625" />
    </children>
 </AnchorPane>

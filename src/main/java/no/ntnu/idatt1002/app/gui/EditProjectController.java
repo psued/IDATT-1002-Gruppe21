@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +26,6 @@ import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
 import no.ntnu.idatt1002.app.data.Transaction;
-import no.ntnu.idatt1002.app.data.User;
 
 /**
  * FXML Controller class for the EditProject.fxml file. Takes an existing project and allows the
@@ -33,38 +33,26 @@ import no.ntnu.idatt1002.app.data.User;
  */
 public class EditProjectController {
   
-  private User createTestProject() {
-    Project project = new Project("Test Project", "This is a test project", "Test",
-        LocalDate.now());
-    project.getAccounting().addIncome(new Income("Test Accounting ", "Test Income", 100,
-        LocalDate.now()));
-    project.getAccounting().addExpense(new Expense("Test Accounting", "Test Expense", 200,
-        LocalDate.now()));
-    project.getBudgeting().addIncome(new Income("Test Budgeting", "Test Income", 300,
-        LocalDate.now()));
-    project.getBudgeting().addExpense(new Expense("Test Budgeting", "Test Expense", 400,
-        LocalDate.now()));
-    
-    User user = new User();
-    user.getProjectRegistry().addProject(project);
-    return user;
+  private Project originalProject;
+  private ArrayList<String> projectCategories = new ArrayList<>();
+  
+  /**
+   * Initializes the controller class.
+   */
+  public void initializeWithData(Project project, ArrayList<String> projectCategories) throws NullPointerException {
+    originalProject = Objects.requireNonNull(project);
+    this.projectCategories = Objects.requireNonNull(projectCategories);
+    initializeController();
   }
   
-  private User user = createTestProject();
-  
-  private Project originalProject = user.getProjectRegistry().getProjects().get(0);
   
   // Local Accounting overview
-  private final ArrayList<Income> accountingIncome = originalProject.getAccounting()
-      .getIncomeList();
-  private final ArrayList<Expense> accountingExpense = originalProject.getAccounting()
-      .getExpenseList();
+  private ArrayList<Income> accountingIncome;
+  private ArrayList<Expense> accountingExpense;
   
   // Local Budgeting overview
-  private final ArrayList<Income> budgetingIncome = originalProject.getBudgeting()
-      .getIncomeList();
-  private final ArrayList<Expense> budgetingExpense = originalProject.getBudgeting()
-      .getExpenseList();
+  private ArrayList<Income> budgetingIncome;
+  private  ArrayList<Expense> budgetingExpense;
   
   // Fundamental project information
   @FXML private TextField name;
@@ -116,7 +104,7 @@ public class EditProjectController {
    * Initializes the controller class. Also sets up the text fields and tables to display the
    * data of the project that is being edited.
    */
-  public void initialize() {
+  public void initializeController() {
     
     // Set up the text fields to display the project information
     name.setText(originalProject.getName());
@@ -125,9 +113,15 @@ public class EditProjectController {
     dueDate.setValue(originalProject.getDueDate());
     
     category.getItems().clear();
+  
+    accountingIncome = originalProject.getAccounting().getIncomeList();
+    accountingExpense = originalProject.getAccounting().getExpenseList();
+    budgetingIncome = originalProject.getBudgeting().getIncomeList();
+    budgetingExpense = originalProject.getBudgeting().getExpenseList();
+    
     
     // Add categories to the category menu button
-    for (String category : user.getProjectRegistry().getCategories()) {
+    for (String category : projectCategories) {
       MenuItem menuItem = new MenuItem(category);
       menuItem.setOnAction(event -> this.category.setText(menuItem.getText()));
       this.category.getItems().add(menuItem);
@@ -355,11 +349,7 @@ public class EditProjectController {
       budgetingIncome.forEach(project.getBudgeting()::addIncome);
       budgetingExpense.forEach(project.getBudgeting()::addExpense);
       
-      user.getProjectRegistry().removeProject(originalProject);
-      user.getProjectRegistry().addProject(project);
-      
       nameError.setVisible(false);
-  
       try {
         Parent root = FXMLLoader.load(getClass().getResource("/ViewProject.fxml"));
         BudgetAndAccountingApp.setRoot(root);

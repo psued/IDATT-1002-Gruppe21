@@ -27,11 +27,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class AllProjectsController {
   
-  private ArrayList<Project> projects = new ArrayList<>();
+  private ProjectRegistry projectRegistry;
   
-  public void initializeWithData(ArrayList<Project> projects) {
-    this.projects = projects;
-    initialize();
+  public void initializeWithData(ProjectRegistry projectRegistry) {
+    this.projectRegistry = projectRegistry;
+    initializeController();
   }
   
   @FXML
@@ -55,15 +55,12 @@ public class AllProjectsController {
   private TableColumn<Project, Double> income;
 
   @FXML
-  private Text showText;
+  private Text errorMessage;
+  
 
-  @FXML
-  private Button editButton;
-
-  @FXML
-  private Button newProjectButton;
-
-  public void initialize() {
+  public void initializeController() {
+    errorMessage.setVisible(false);
+    
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
     dateStart.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
     plannedDone.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
@@ -73,27 +70,28 @@ public class AllProjectsController {
   
     
     table.getItems().clear();
-    table.getItems().addAll(projects);
+    if (projectRegistry != null) {
+      table.getItems().addAll(projectRegistry.getProjects());
+    }
     table.refresh();
   }
 
-
-  public Project getSelectedProject() {
-    AtomicReference<Project> selectedProject = new AtomicReference<>();
-
-    table.setOnMouseClicked(mouseEvent -> {
-      selectedProject.set(table.getSelectionModel().getSelectedItem());
-      showText.setText("");
-    });
-    return selectedProject.get();
-  }
-
-  public void editButton() {
+  public void editProject() {
+    Project selectedProject = table.getSelectionModel().getSelectedItem();
     try {
-      Parent root = FXMLLoader.load(getClass().getResource("/EditProject.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditProject.fxml"));
+      Parent root = loader.load();
+      
+      EditProjectController controller = loader.getController();
+      controller.initializeWithData(selectedProject,
+          (ArrayList<String>)projectRegistry.getCategories());
+      
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
       e.printStackTrace();
+    } catch (NullPointerException e) {
+      errorMessage.setText("Please select a project");
+      errorMessage.setVisible(true);
     }
   }
 

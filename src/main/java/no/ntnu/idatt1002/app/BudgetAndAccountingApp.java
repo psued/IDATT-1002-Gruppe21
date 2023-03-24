@@ -56,13 +56,11 @@ public class BudgetAndAccountingApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        ArrayList<Project> startData = user.getProjectRegistry().getProjects();
-        System.out.println(startData);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AllProjects.fxml"));
         Parent root = loader.load();
         
         AllProjectsController controller = loader.getController();
-        controller.initializeWithData(startData);
+        controller.initializeWithData(user.getProjectRegistry());
         
         scene = new Scene(root);
         primaryStage.setScene(scene);

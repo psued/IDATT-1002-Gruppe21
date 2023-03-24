@@ -4,30 +4,28 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * A project is a way to plan, categorize and track expenses and income related
- * to a specific goal.
+ * A Project class representing a project with a name, description, category, due date,
+ * accounting, and budgeting information. It provides methods to get and set properties
+ * of the project, as well as to access its accounting and budgeting data.
  */
 public class Project implements Serializable {
 
   private String name;
-
   private String description;
-
   private String category;
-
   private final LocalDate dueDate;
-
   private final Accounting accounting;
-
   private final Budgeting budgeting;
 
   /**
-   * Creates a project with a name, description and category.
+   * Constructs a Project object with the specified name, description, category, and due date.
+   * Initializes the accounting and budgeting objects.
    *
-   * @param name        The name of the project.
+   * @param name The name of the project.
    * @param description The description of the project.
-   * @param category    The category of the project.
-   * @throws IllegalArgumentException if name is null or blank.
+   * @param category The category of the project.
+   * @param dueDate The due date of the project.
+   * @throws IllegalArgumentException If the name is null or blank.
    */
   public Project(String name, String description, String category, LocalDate dueDate) {
     if (name == null || name.isBlank()) {
@@ -43,18 +41,19 @@ public class Project implements Serializable {
   }
 
   /**
-   * Gets name.
+   * Returns the name of the project.
    *
-   * @return the name
+   * @return The name of the project.
    */
   public String getName() {
     return name;
   }
 
   /**
-   * Sets name.
+   * Sets the name of the project.
    *
-   * @param name the name
+   * @param name The new name of the project.
+   * @throws IllegalArgumentException If the name is null or blank.
    */
   public void setName(String name) {
     if (name == null || name.isBlank()) {
@@ -65,74 +64,83 @@ public class Project implements Serializable {
   }
 
   /**
-   * Gets description.
+   * Returns the description of the project.
    *
-   * @return the description
+   * @return The description of the project.
    */
   public String getDescription() {
     return description;
   }
 
   /**
-   * Sets description.
+   * Sets the description of the project.
    *
-   * @param description the description
+   * @param description The new description of the project.
    */
   public void setDescription(String description) {
     this.description = description;
   }
 
   /**
-   * Gets category.
+   * Returns the category of the project.
    *
-   * @return the category
+   * @return The category of the project.
    */
   public String getCategory() {
     return category;
   }
 
   /**
-   * Sets category.
+   * Sets the category of the project.
    *
-   * @param category the category
+   * @param category The new category of the project.
    */
   public void setCategory(String category) {
     this.category = category;
   }
 
   /**
-   * Gets creation date.
+   * Returns the due date of the project.
    *
-   * @return the creation date
+   * @return The due date of the project.
    */
   public LocalDate getDueDate() {
     return dueDate;
   }
 
   /**
-   * Gets accounting object.
+   * Returns the accounting object of the project.
    *
-   * @return the accounting object
+   * @return The accounting object of the project.
    */
   public Accounting getAccounting() {
     return accounting;
   }
 
-  public double getAccountingExpenses(){
+  /**
+   * Returns the total accounting expenses of the project.
+   *
+   * @return The total accounting expenses of the project.
+   */
+  public double getAccountingExpenses() {
     return accounting.getTotalExpense();
   }
 
-
-
-  /**
-   * Gets budgeting object.
+   /**
+   * Returns the budgeting object of the project.
    *
-   * @return the budgeting object
+   * @return The budgeting object of the project.
    */
   public Budgeting getBudgeting() {
     return budgeting;
   }
 
+  /**
+   * Indicates whether the specified object is equal to this project object.
+   *
+   * @param obj The object to compare to this project object.
+   * @return true if the specified object is equal to this project object, false otherwise.
+   */
   @Override
   public boolean equals(Object obj) {
     if (obj == this)
@@ -146,6 +154,11 @@ public class Project implements Serializable {
         && project.getAccounting().equals(this.accounting) && project.getBudgeting().equals(this.budgeting);
   }
 
+  /**
+   * Returns a string representation of the project object.
+   *
+   * @return A string representation of the project object.
+   */
   @Override
   public String toString() {
     return "Project{" + "name='" + name + '\'' + ", description='" + description + '\'' +

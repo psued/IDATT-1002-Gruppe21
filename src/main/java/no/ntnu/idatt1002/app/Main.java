@@ -8,18 +8,6 @@ import java.io.IOException;
 
 public class Main {
   public static void main(String[] args) throws IOException, ClassNotFoundException {
-
-    User user = new User();
-
-    FileHandling.writeUserToFile(user);
-    User user2 = FileHandling.readUserFromFile();
-
-    System.out.println(user.toString());
-    System.out.println(user2.toString());
-
-    System.out.println(user.getProjectRegistry().toString());
-
-
     BudgetAndAccountingApp.main(args);
   }
 }

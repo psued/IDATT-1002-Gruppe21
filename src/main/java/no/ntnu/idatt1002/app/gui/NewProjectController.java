@@ -1,9 +1,13 @@
 package no.ntnu.idatt1002.app.gui;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -17,18 +21,20 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
 import no.ntnu.idatt1002.app.data.Transaction;
 import no.ntnu.idatt1002.app.data.User;
+import no.ntnu.idatt1002.app.fileHandling.FileHandling;
 
 /**
  * FXML Controller class for the New Project page. Only mandatory field is the name of the project.
  */
 public class NewProjectController {
   
-  private User user = new User();
+  private User tempUser;
   
   // Local Accounting overview
   private final ArrayList<Income> accountingIncome = new ArrayList<>();
@@ -88,11 +94,17 @@ public class NewProjectController {
    * Initializes the controller class.
    */
   public void initialize() {
-    // user.addTestProjects();
+    try {
+      tempUser = FileHandling.readUserFromFile();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      throw new RuntimeException(e);
+    }
     
     category.getItems().clear();
   
-    for (String category : user.getProjectRegistry().getCategories()) {
+    for (String category : tempUser.getProjectRegistry().getCategories()) {
       MenuItem menuItem = new MenuItem(category);
       menuItem.setOnAction(event -> this.category.setText(menuItem.getText()));
       this.category.getItems().add(menuItem);
@@ -318,12 +330,30 @@ public class NewProjectController {
       budgetingIncome.forEach(project.getBudgeting()::addIncome);
       budgetingExpense.forEach(project.getBudgeting()::addExpense);
       
-      user.getProjectRegistry().addProject(project);
-
-      nameError.setVisible(false);
+      tempUser.addProject(project);
+      
+     
+      try {
+        FileHandling.writeUserToFile(tempUser);
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/ViewProject.fxml"));
+        BudgetAndAccountingApp.setRoot(root);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      
     } catch (IllegalArgumentException e) {
       nameError.setVisible(true);
       nameError.setText(e.getMessage());
+    }
+  }
+  
+  public void deleteProject() {
+    try {
+      Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 }

@@ -150,9 +150,11 @@ public class Expense implements Transaction, Serializable {
       return false;
 
     Expense expense = (Expense) obj;
+    boolean equalsDate = expense.getDate() == null ? this.getDate() == null :
+        expense.getDate().equals(this.getDate());
+  
     return expense.getDescription().equals(this.description)
         && expense.getCategory().equals(this.category)
-        && expense.getAmount() == this.amount
-        && expense.getDate().equals(this.date);
+        && expense.getAmount() == this.amount && equalsDate;
   }
 }

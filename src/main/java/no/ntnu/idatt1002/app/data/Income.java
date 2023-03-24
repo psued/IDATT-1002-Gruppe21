@@ -150,9 +150,10 @@ public class Income implements Transaction, Serializable {
       return false;
 
     Income income = (Income) obj;
+    boolean isEqual = income.getDate() == null ? this.date == null : income.getDate().equals(this.date);
+    
     return income.getDescription().equals(this.description)
         && income.getCategory().equals(this.category)
-        && income.getAmount() == this.amount
-        && income.getDate().equals(this.date);
+        && income.getAmount() == this.amount && isEqual;
   }
 }

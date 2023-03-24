@@ -1,13 +1,17 @@
 package no.ntnu.idatt1002.app.gui;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
@@ -19,38 +23,14 @@ import no.ntnu.idatt1002.app.data.User;
  */
 public class ViewProjectController {
   
-  private User createTestProject() {
-    Project project = new Project("Test Project", "This is a test project", "Test",
-        LocalDate.now());
-    project.getAccounting().addIncome(new Income("Test Accounting ", "Test Income", 100,
-        LocalDate.now()));
-    project.getAccounting().addExpense(new Expense("Test Accounting", "Test Expense", 200,
-        LocalDate.now()));
-    project.getBudgeting().addIncome(new Income("Test Budgeting", "Test Income", 300,
-        LocalDate.now()));
-    project.getBudgeting().addExpense(new Expense("Test Budgeting", "Test Expense", 400,
-        LocalDate.now()));
-    
-    User user = new User();
-    user.getProjectRegistry().addProject(project);
-    return user;
-  }
+  private Project project;
   
-  private User user = createTestProject();
-  
-  private Project project = user.getProjectRegistry().getProjects().get(0);
-  
-  private final ArrayList<Income> accountingIncome = project.getAccounting()
-      .getIncomeList();
-  private final ArrayList<Expense> accountingExpense = project.getAccounting()
-      .getExpenseList();
+  private ArrayList<Income> accountingIncome = new ArrayList<>();
+  private ArrayList<Expense> accountingExpense = new ArrayList<>();
   
   // Local Budgeting overview
-  private final ArrayList<Income> budgetingIncome = project.getBudgeting()
-      .getIncomeList();
-  private final ArrayList<Expense> budgetingExpense = project.getBudgeting()
-      .getExpenseList();
-
+  private ArrayList<Income> budgetingIncome = new ArrayList<>();
+  private ArrayList<Expense> budgetingExpense = new ArrayList<>();
   @FXML private Text viewTitle;
   @FXML private Text name;
   @FXML private Text category;
@@ -85,12 +65,18 @@ public class ViewProjectController {
    * Initialize the view project controller. Sets all text objects to match with the project data
    * and sets up the tables.
    */
-  public void initialize() {
+  public void initializeWithData(Project selectedProject) {
+    project = selectedProject;
     viewTitle.setText("View " + project.getName());
     name.setText(project.getName());
     category.setText(project.getCategory());
     dueDate.setText(project.getDueDate().toString());
     description.setText(project.getDescription());
+    
+    accountingIncome = project.getAccounting().getIncomeList();
+    accountingExpense = project.getAccounting().getExpenseList();
+    budgetingIncome = project.getBudgeting().getIncomeList();
+    budgetingExpense = project.getBudgeting().getExpenseList();
     
     accounting.setStyle("-fx-border-color: #000000");
     
@@ -164,13 +150,30 @@ public class ViewProjectController {
    * Opens the edit project view of the current project.
    */
   public void editProject() {
-  
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditProject.fxml"));
+      Parent root = loader.load();
+    
+      EditProjectController controller = loader.getController();
+      controller.initializeWithData(project);
+    
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (NullPointerException e) {
+      e.printStackTrace();
+    }
   }
   
   /**
    * Opens the all projects view.
    */
   public void goToAllProjects() {
-  
+    try {
+      Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

@@ -1,37 +1,28 @@
 package no.ntnu.idatt1002.app.gui;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Objects;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import no.ntnu.idatt1002.app.data.Expense;
+import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.data.Project;
-import no.ntnu.idatt1002.app.data.ProjectRegistry;
 import no.ntnu.idatt1002.app.data.User;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicReference;
+import no.ntnu.idatt1002.app.fileHandling.FileHandling;
 
 public class AllProjectsController {
-
-  private User user = new User();
-
-  private ProjectRegistry projectRegistry = user.getProjectRegistry();
-
+  
+  private User tempUser;
+  
   @FXML
   private TableView<Project> table;
-
   @FXML
   private TableColumn<Project, String> name;
-
   @FXML
   private TableColumn<Project, Date> dateStart;
 
@@ -49,63 +40,80 @@ public class AllProjectsController {
   private TableColumn<Project, Double> income;
 
   @FXML
-  private Text showText;
-
-  @FXML
-  private Button editButton;
-
-  @FXML
-  private Button newProjectButton;
+  private Text errorMessage;
+  
 
   public void initialize() {
+    try {
+      tempUser = FileHandling.readUserFromFile();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+  
+    errorMessage.setVisible(false);
+    
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
     dateStart.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
     plannedDone.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
     category.setCellValueFactory(new PropertyValueFactory<>("category"));
     expense.setCellValueFactory(new PropertyValueFactory<>("AccountingExpenses"));
-    income.setCellValueFactory(new PropertyValueFactory<>(""));
-    setupTable();
-
-    table.getItems().addAll(projectRegistry.getProjects());
+    income.setCellValueFactory(new PropertyValueFactory<>("AccountingIncome"));
+  
+    
+    table.getItems().clear();
+    if (tempUser.getProjectRegistry().getProjects() != null) {
+      table.getItems().addAll(tempUser.getProjectRegistry().getProjects());
+    }
     table.refresh();
   }
 
-
-  public Project getSelectedProject() {
-    AtomicReference<Project> selectedProject = new AtomicReference<>();
-
-    table.setOnMouseClicked(mouseEvent -> {
-      selectedProject.set(table.getSelectionModel().getSelectedItem());
-      showText.setText("");
-    });
-    return selectedProject.get();
+  public void editProject() {
+    Project selectedProject = table.getSelectionModel().getSelectedItem();
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditProject.fxml"));
+      Parent root = loader.load();
+      
+      EditProjectController controller = loader.getController();
+      controller.initializeWithData(selectedProject);
+      
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (NullPointerException e) {
+      errorMessage.setText("Please select a project");
+      errorMessage.setVisible(true);
+    }
   }
-
-  public void editButton() {
-    editButton.setOnAction((ActionEvent event) -> {
-      Project selectedProject = getSelectedProject();
-      if (selectedProject != null) {
-
-      } else {
-        showText.setText("Please select a project");
-      }
-    });
+  
+  public void viewProject(){
+    Project selectedProject = table.getSelectionModel().getSelectedItem();
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewProject.fxml"));
+      Parent root = loader.load();
+    
+      ViewProjectController controller = loader.getController();
+      controller.initializeWithData(selectedProject);
+    
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (NullPointerException e) {
+      errorMessage.setText("Please select a project");
+      errorMessage.setVisible(true);
+    }
+    
   }
 
   public void newProject() {
-    newProjectButton.setOnAction((ActionEvent event) -> {
-
-    });
-
-  }
-
-
-    public void setupTable () {
-      Project project1 = new Project("Test", "Test", "Test", LocalDate.now());
-      Project project2 = new Project("Test2", "Test2", "Test2", LocalDate.now());
-      Project project3 = new Project("Test3", "Test3", "Test3", LocalDate.now());
-      project1.getAccounting().addExpense(new Expense("Test", "brus", 10, LocalDate.now()));
-      table.getItems().addAll(project1, project2, project3);
+    try {
+      Parent root = FXMLLoader.load(
+          Objects.requireNonNull(getClass().getResource("/NewProject.fxml")));
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
+}
 

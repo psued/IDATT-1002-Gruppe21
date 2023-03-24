@@ -86,6 +86,25 @@ public class AllProjectsController {
       errorMessage.setVisible(true);
     }
   }
+  
+  public void viewProject(){
+    Project selectedProject = table.getSelectionModel().getSelectedItem();
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewProject.fxml"));
+      Parent root = loader.load();
+    
+      ViewProjectController controller = loader.getController();
+      controller.initializeWithData(selectedProject);
+    
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (NullPointerException e) {
+      errorMessage.setText("Please select a project");
+      errorMessage.setVisible(true);
+    }
+    
+  }
 
   public void newProject() {
     try {

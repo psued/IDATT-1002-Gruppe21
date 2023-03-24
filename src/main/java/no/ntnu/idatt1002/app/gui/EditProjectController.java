@@ -26,6 +26,8 @@ import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
 import no.ntnu.idatt1002.app.data.Transaction;
+import no.ntnu.idatt1002.app.data.User;
+import no.ntnu.idatt1002.app.fileHandling.FileHandling;
 
 /**
  * FXML Controller class for the EditProject.fxml file. Takes an existing project and allows the
@@ -33,15 +35,14 @@ import no.ntnu.idatt1002.app.data.Transaction;
  */
 public class EditProjectController {
   
+  private User tempUser;
   private Project originalProject;
-  private ArrayList<String> projectCategories = new ArrayList<>();
   
   /**
    * Initializes the controller class.
    */
-  public void initializeWithData(Project project, ArrayList<String> projectCategories) throws NullPointerException {
+  public void initializeWithData(Project project) throws NullPointerException {
     originalProject = Objects.requireNonNull(project);
-    this.projectCategories = Objects.requireNonNull(projectCategories);
     initializeController();
   }
   
@@ -105,6 +106,13 @@ public class EditProjectController {
    * data of the project that is being edited.
    */
   public void initializeController() {
+    try {
+      tempUser = FileHandling.readUserFromFile();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      throw new RuntimeException(e);
+    }
     
     // Set up the text fields to display the project information
     name.setText(originalProject.getName());
@@ -121,7 +129,7 @@ public class EditProjectController {
     
     
     // Add categories to the category menu button
-    for (String category : projectCategories) {
+    for (String category : tempUser.getProjectRegistry().getCategories()) {
       MenuItem menuItem = new MenuItem(category);
       menuItem.setOnAction(event -> this.category.setText(menuItem.getText()));
       this.category.getItems().add(menuItem);

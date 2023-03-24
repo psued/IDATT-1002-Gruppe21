@@ -2,10 +2,8 @@ package no.ntnu.idatt1002.app;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Objects;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,13 +11,12 @@ import javafx.stage.Stage;
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
-import no.ntnu.idatt1002.app.data.ProjectRegistry;
 import no.ntnu.idatt1002.app.data.User;
-import no.ntnu.idatt1002.app.gui.AllProjectsController;
+import no.ntnu.idatt1002.app.fileHandling.FileHandling;
 
 public class BudgetAndAccountingApp extends Application {
     
-    private User testData() {
+    private void testData() {
         User user = new User();
         Project project1 = new Project("Project 1", "Description 1", "Category 1", LocalDate.now());
         Income income1 = new Income("Income 1", "Category 1", 100, LocalDate.now());
@@ -42,12 +39,14 @@ public class BudgetAndAccountingApp extends Application {
         project2.getAccounting().addExpense(expense3);
         project2.getBudgeting().addExpense(expense4);
         user.addProject(project2);
-        
-        return user;
+    
+        try {
+            FileHandling.writeUserToFile(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
-    private final User user = testData();
-
     private static Scene scene;
     
     public static void main(String[] args) {
@@ -56,11 +55,10 @@ public class BudgetAndAccountingApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AllProjects.fxml"));
-        Parent root = loader.load();
+        testData();
         
-        AllProjectsController controller = loader.getController();
-        controller.initializeWithData(user.getProjectRegistry());
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(
+            "/AllProjects.fxml")));
         
         scene = new Scene(root);
         primaryStage.setScene(scene);

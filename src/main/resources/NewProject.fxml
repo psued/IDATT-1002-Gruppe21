@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.NewProjectController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.NewProjectController">
    <children>
       <VBox layoutX="12.0" layoutY="14.0" maxWidth="-Infinity" prefHeight="734.0" prefWidth="700.0" spacing="30.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
          <children>
@@ -183,7 +172,7 @@
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <Button fx:id="delete" mnemonicParsing="false" prefHeight="52.0" prefWidth="91.0" style="-fx-background-color: Red;" text="Delete" textFill="WHITE">
+                                          <Button mnemonicParsing="false" onMouseClicked="#deleteProject" prefHeight="52.0" prefWidth="91.0" style="-fx-background-color: Red;" text="Delete" textFill="WHITE">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -192,7 +181,7 @@
                                     </VBox>
                                     <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <Button fx:id="save" mnemonicParsing="false" onMouseClicked="#saveProject" prefHeight="66.0" prefWidth="94.0" style="-fx-background-color: Blue;" text="Save" textFill="WHITE">
+                                          <Button mnemonicParsing="false" onMouseClicked="#saveProject" prefHeight="66.0" prefWidth="94.0" style="-fx-background-color: Blue;" text="Save" textFill="WHITE">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>

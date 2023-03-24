@@ -1,14 +1,18 @@
 package no.ntnu.idatt1002.app.gui;
 
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Project;
 import no.ntnu.idatt1002.app.data.ProjectRegistry;
@@ -82,21 +86,21 @@ public class AllProjectsController {
   }
 
   public void editButton() {
-    editButton.setOnAction((ActionEvent event) -> {
-      Project selectedProject = getSelectedProject();
-      if (selectedProject != null) {
-
-      } else {
-        showText.setText("Please select a project");
-      }
-    });
+    try {
+      Parent root = FXMLLoader.load(getClass().getResource("/EditProject.fxml"));
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public void newProject() {
-    newProjectButton.setOnAction((ActionEvent event) -> {
-
-    });
-
+    try {
+      Parent root = FXMLLoader.load(getClass().getResource("/NewProject.fxml"));
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
 

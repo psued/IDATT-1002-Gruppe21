@@ -1,9 +1,12 @@
 package no.ntnu.idatt1002.app.gui;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -17,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
@@ -321,9 +325,26 @@ public class NewProjectController {
       user.getProjectRegistry().addProject(project);
 
       nameError.setVisible(false);
+  
+      try {
+        Parent root = FXMLLoader.load(getClass().getResource("/ViewProject.fxml"));
+        BudgetAndAccountingApp.setRoot(root);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      
     } catch (IllegalArgumentException e) {
       nameError.setVisible(true);
       nameError.setText(e.getMessage());
+    }
+  }
+  
+  public void deleteProject() {
+    try {
+      Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 }

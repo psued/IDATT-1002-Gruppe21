@@ -1,13 +1,17 @@
 package no.ntnu.idatt1002.app.gui;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
@@ -164,13 +168,23 @@ public class ViewProjectController {
    * Opens the edit project view of the current project.
    */
   public void editProject() {
-  
+    try {
+      Parent root = FXMLLoader.load(getClass().getResource("/EditProject.fxml"));
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
   
   /**
    * Opens the all projects view.
    */
   public void goToAllProjects() {
-  
+    try {
+      Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="statusText" prefHeight="479.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.AllProjectsController">
+   <children>
+      <TableView fx:id="table" layoutX="6.0" layoutY="66.0" prefHeight="405.0" prefWidth="620.0">
+        <columns>
+          <TableColumn fx:id="name" prefWidth="93.33331298828125" text="Navn" />
+          <TableColumn fx:id="dateStart" prefWidth="115.33334350585938" text="Dato start" />
+            <TableColumn fx:id="plannedDone" prefWidth="102.66668701171875" text="Planlagt ferdig" />
+            <TableColumn fx:id="category" prefWidth="86.00006103515625" text="Kategori" />
+            <TableColumn fx:id="expense" prefWidth="116.0" text="Utgift" />
+            <TableColumn fx:id="income" prefWidth="105.33331298828125" text="Inntekt" />
+        </columns>
+      </TableView>
+      <Text layoutX="559.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prosjekt" wrappingWidth="100.8951416015625">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Text>
+      <Line endX="618.0" endY="-3.814697265625E-6" layoutX="107.0" layoutY="44.0" startX="-113.66666412353516" startY="-3.814697265625E-6" />
+      <Button fx:id="editButton" layoutX="634.0" layoutY="239.0" mnemonicParsing="false" onAction="#editButton" text="Edit" />
+      <Button fx:id="newProjectButton" layoutX="634.0" layoutY="269.0" mnemonicParsing="false" onAction="#newProject" text="New Project" />
+      <Text fx:id="showText" layoutX="634.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+   </children>
+</AnchorPane>

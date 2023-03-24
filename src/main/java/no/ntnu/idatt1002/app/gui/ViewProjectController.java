@@ -1,12 +1,13 @@
 package no.ntnu.idatt1002.app.gui;
 
+import java.time.LocalDate;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
-
-import java.time.LocalDate;
 
 public class ViewProjectController {
 

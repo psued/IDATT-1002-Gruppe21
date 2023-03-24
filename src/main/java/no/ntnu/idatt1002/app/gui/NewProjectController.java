@@ -336,7 +336,7 @@ public class NewProjectController {
       try {
         FileHandling.writeUserToFile(tempUser);
         
-        Parent root = FXMLLoader.load(getClass().getResource("/ViewProject.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
         BudgetAndAccountingApp.setRoot(root);
       } catch (IOException e) {
         e.printStackTrace();

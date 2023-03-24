@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class for registering all the projects
+ * Registry class for all the projects for a user
  */
 public class ProjectRegistry implements Serializable {
 
@@ -26,20 +26,9 @@ public class ProjectRegistry implements Serializable {
    *
    * @param project the project to be added
    */
-  // NOTE(ingar): Should consider sending the necessary data to the registry
-  // instead of the project
   public void addProject(Project project) {
     projects.add(project);
   }
-
-  /**
-   * Gets a project from the registry
-   *
-   * @return the project
-   */
-  // public Project getProject(Project project) {
-  // return projects.get(project);
-  // }
 
   /**
    * Gets all the projects from the registry
@@ -75,6 +64,11 @@ public class ProjectRegistry implements Serializable {
     categories.add(category);
   }
 
+  /**
+   * Returns a string representation of the projectregistry object.
+   *
+   * @return A string representation of the projectregistry object.
+   */
   @Override
   public String toString() {
     return "ProjectRegistry{" +

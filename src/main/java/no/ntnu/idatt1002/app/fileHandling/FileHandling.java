@@ -5,18 +5,20 @@ import no.ntnu.idatt1002.app.data.User;
 import java.io.*;
 
 /**
- * FileHandling class is used to store a user.
+ * A FileHandling utility class for managing User objects by storing and retrieving them
+ * from a file. It provides methods to write a User object to a file and read a User object
+ * from a file.
  */
 public class FileHandling {
 
-  // TODO(ingar): This should not
   private static String file = System.getProperty("user.dir") + "/src/main/resources/user.ser";
 
   /**
-   * This methode is used to write a user object to user.txt file.
-   * 
-   * @param user is the user object you want to write to the file.
-   * @throws IOException
+   * Writes a given User object to a file. The file is located in the "src/main/resources"
+   * directory and is named "user.ser".
+   *
+   * @param user The User object to be written to the file.
+   * @throws IOException If an error occurs during the file writing process.
    */
   public static void writeUserToFile(User user) throws IOException {
     FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -28,11 +30,12 @@ public class FileHandling {
   }
 
   /**
-   * This methode is used to read a user object from the user.txt file.
-   * 
-   * @return the user stored in user.txt file.
-   * @throws IOException
-   * @throws ClassNotFoundException
+   * Reads a User object from a file. The file is located in the "src/main/resources"
+   * directory and is named "user.ser".
+   *
+   * @return A User object read from the file.
+   * @throws IOException If an error occurs during the file reading process.
+   * @throws ClassNotFoundException If the serialized User class is not found.
    */
   public static User readUserFromFile() throws IOException, ClassNotFoundException {
     FileInputStream fileInputStream = new FileInputStream(file);

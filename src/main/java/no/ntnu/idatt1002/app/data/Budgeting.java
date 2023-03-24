@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class Budgeting implements Bookkeeping, Serializable {
   
-  ArrayList<Income> incomeList;
-  ArrayList<Expense> expenseList;
+  private ArrayList<Income> incomeList;
+  private ArrayList<Expense> expenseList;
 
   /**
    * The constructor for this class

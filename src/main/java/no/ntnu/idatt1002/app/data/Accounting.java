@@ -11,17 +11,11 @@ import java.util.ArrayList;
  * and deserialization.
  */
 public class Accounting implements Bookkeeping, Serializable {
-  /**
-   * A list of Income objects.
-   */
-  ArrayList<Income> incomeList;
+
+  private ArrayList<Income> incomeList;
+  private ArrayList<Expense> expenseList;
 
   /**
-   * A list of Expense objects.
-   */
-  ArrayList<Expense> expenseList;
-
-  /** 
    * Creates an Accounting object with empty income and expense lists.
    */
   public Accounting() {

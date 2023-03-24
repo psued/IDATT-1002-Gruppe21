@@ -125,6 +125,10 @@ public class Project implements Serializable {
   public double getAccountingExpenses() {
     return accounting.getTotalExpense();
   }
+  
+  public double getAccountingIncome() {
+    return accounting.getTotalIncome();
+  }
 
    /**
    * Returns the budgeting object of the project.

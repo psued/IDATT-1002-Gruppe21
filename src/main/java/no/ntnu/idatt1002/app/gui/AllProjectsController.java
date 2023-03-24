@@ -59,7 +59,7 @@ public class AllProjectsController {
     plannedDone.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
     category.setCellValueFactory(new PropertyValueFactory<>("category"));
     expense.setCellValueFactory(new PropertyValueFactory<>("AccountingExpenses"));
-    income.setCellValueFactory(new PropertyValueFactory<>(""));
+    income.setCellValueFactory(new PropertyValueFactory<>("AccountingIncome"));
   
     
     table.getItems().clear();

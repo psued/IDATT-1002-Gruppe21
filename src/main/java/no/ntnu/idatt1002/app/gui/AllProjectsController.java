@@ -1,6 +1,7 @@
 package no.ntnu.idatt1002.app.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,17 +26,18 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class AllProjectsController {
-
-  private User user = new User();
-
-  private ProjectRegistry projectRegistry = user.getProjectRegistry();
-
+  
+  private ArrayList<Project> projects = new ArrayList<>();
+  
+  public void initializeWithData(ArrayList<Project> projects) {
+    this.projects = projects;
+    initialize();
+  }
+  
   @FXML
   private TableView<Project> table;
-
   @FXML
   private TableColumn<Project, String> name;
-
   @FXML
   private TableColumn<Project, Date> dateStart;
 
@@ -68,9 +70,10 @@ public class AllProjectsController {
     category.setCellValueFactory(new PropertyValueFactory<>("category"));
     expense.setCellValueFactory(new PropertyValueFactory<>("AccountingExpenses"));
     income.setCellValueFactory(new PropertyValueFactory<>(""));
-    setupTable();
-
-    table.getItems().addAll(projectRegistry.getProjects());
+  
+    
+    table.getItems().clear();
+    table.getItems().addAll(projects);
     table.refresh();
   }
 
@@ -102,14 +105,5 @@ public class AllProjectsController {
       e.printStackTrace();
     }
   }
-
-
-    public void setupTable () {
-      Project project1 = new Project("Test", "Test", "Test", LocalDate.now());
-      Project project2 = new Project("Test2", "Test2", "Test2", LocalDate.now());
-      Project project3 = new Project("Test3", "Test3", "Test3", LocalDate.now());
-      project1.getAccounting().addExpense(new Expense("Test", "brus", 10, LocalDate.now()));
-      table.getItems().addAll(project1, project2, project3);
-    }
-  }
+}
 

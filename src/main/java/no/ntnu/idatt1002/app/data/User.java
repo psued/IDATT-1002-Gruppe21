@@ -64,6 +64,10 @@ public class User implements Serializable {
 
     projectRegistry.addProject(newProject);
   }
+  
+  public void addProject(Project project) {
+    projectRegistry.addProject(project);
+  }
 
   /**
    * Removes a project from the user's project registry.

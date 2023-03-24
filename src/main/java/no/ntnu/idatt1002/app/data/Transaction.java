@@ -9,9 +9,6 @@ import java.time.LocalDate;
  * -Category
  * -Amount
  * -Date
-
- *  @author Lars Mikkel Nilsen, Trygve Jørgensen, Ingar Aasheim, Ari Maman
- *  @since 10.03.2023
  */
 public interface Transaction {
 
@@ -38,7 +35,6 @@ public interface Transaction {
    * @return Date as LocalDate.
    */
   LocalDate getDate();
-
 
   /**
    * Method that sets a new description for a transaction.
@@ -68,6 +64,11 @@ public interface Transaction {
    */
   void setDate(LocalDate newDate);
 
+  /**
+   * Determines if the Transaction object is equal to the specified object
+   * @param obj The object to compare with.
+   * @return True if the transactions are equal, false otherwise.
+   */
   public boolean equals(Object obj);
 
 }

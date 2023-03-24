@@ -4,17 +4,16 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * Class that represents an expense that implements the Transaction interface.
- * 
- * @author Lars Mikkel Nilsen, Trygve Jørgensen, Ingar Aasheim, Ari Maman
- * @since 10.03.2023
+ * Class that represents an expense.
+ * Implements the Transaction interface and is Serializable for serialization
+ * and deserialization.
  */
 public class Expense implements Transaction, Serializable {
 
-  String description;
-  String category;
-  double amount;
-  LocalDate date;
+  private String description; 
+  private String category;
+  private double amount;
+  private LocalDate date;
 
   /**
    * Creates an expense that is an instance of Transaction.
@@ -137,6 +136,12 @@ public class Expense implements Transaction, Serializable {
     this.date = newDate;
   }
 
+  /**
+   * Determines if the Expense object is equal to the specified object.
+   * 
+   * @param obj The object to compare to.
+   * @return true if the objects are equal, false otherwise.
+   */
   @Override
   public boolean equals(Object obj) {
     if (obj == this)

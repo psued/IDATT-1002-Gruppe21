@@ -4,15 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Class for accounting
  * 
- * @author Ari Maman, Lars Mikkel Lødeng Nilsen, Trygve Jørgensen, Ingar Asheim
+ * The Budgeting class represents a bookkeeping system for tracking income and
+ * expenses for the budgeting of a project.
+ * It implements the Bookkeeping interface and is Serializable for serialization
+ * and deserialization.
  */
-
 public class Budgeting implements Bookkeeping, Serializable {
   
-  ArrayList<Income> incomeList;
-  ArrayList<Expense> expenseList;
+  private ArrayList<Income> incomeList;
+  private ArrayList<Expense> expenseList;
 
   /**
    * The constructor for this class
@@ -95,6 +96,12 @@ public class Budgeting implements Bookkeeping, Serializable {
     return expenseList.stream().mapToDouble(Expense::getAmount).sum();
   }
 
+  /**
+   * Determines if the Budgeting object is equal to the specified object
+   * 
+   * @param obj the object to compare to
+   * @return true if the objects are equal, false otherwise
+   */
   @Override
   public boolean equals(Object obj) {
     if (obj == this) {

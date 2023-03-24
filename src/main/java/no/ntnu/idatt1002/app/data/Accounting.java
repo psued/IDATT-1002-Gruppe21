@@ -4,18 +4,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Class for accounting
  * 
- * @author Ari Maman, Lars Mikkel Lødeng Nilsen, Trygve Jørgensen, Ingar Asheim
+ * The Accounting class represents a bookkeeping system for tracking income and
+ * expenses for the accounting of a project.
+ * It implements the Bookkeeping interface and is Serializable for serialization
+ * and deserialization.
  */
-
 public class Accounting implements Bookkeeping, Serializable {
-  
-  ArrayList<Income> incomeList;
-  ArrayList<Expense> expenseList;
+
+  private ArrayList<Income> incomeList;
+  private ArrayList<Expense> expenseList;
 
   /**
-   * The constructor for this class
+   * Creates an Accounting object with empty income and expense lists.
    */
   public Accounting() {
     incomeList = new ArrayList<>();
@@ -23,77 +24,92 @@ public class Accounting implements Bookkeeping, Serializable {
   }
 
   /**
-   * Method for adding an income to the income list
-   *
-   * @param income the income to be added
+   * 
+   * Adds an Income object to the income list.
+   * 
+   * @param income the Income object to add.
    */
   public void addIncome(Income income) {
     incomeList.add(income);
   }
 
   /**
-   * Method for adding incomes to the income list
    * 
-   * @param incomes the incomes to be added
+   * Adds a list of Income objects to the income list.
+   * 
+   * @param incomes the list of Income objects to add.
    */
   public void addEquities(ArrayList<Income> incomes) {
     incomeList.addAll(incomes);
   }
 
   /**
-   * Method for adding an expense to the expense list
-   *
-   * @param expense the expense to be added
+   * 
+   * Adds an Expense object to the expense list.
+   * 
+   * @param expense the Expense object to add.
    */
   public void addExpense(Expense expense) {
     expenseList.add(expense);
   }
 
   /**
-   * Method for adding expenses to the expense list
    * 
-   * @param expenses the expenses to be added
+   * Adds a list of Expense objects to the expense list.
+   * 
+   * @param expenses the list of Expense objects to add.
    */
   public void addExpenses(ArrayList<Expense> expenses) {
     expenseList.addAll(expenses);
   }
 
   /**
-   * Method for getting the income list
-   *
-   * @return the income list
+   * 
+   * Returns the list of Income objects.
+   * 
+   * @return the list of Income objects.
    */
   public ArrayList<Income> getIncomeList() {
     return incomeList;
   }
 
   /**
-   * Method for getting the expense list
-   *
-   * @return the expense list
+   * 
+   * Returns the list of Expense objects.
+   * 
+   * @return the list of Expense objects.
    */
   public ArrayList<Expense> getExpenseList() {
     return expenseList;
   }
 
   /**
-   * Method for getting the total income
-   *
-   * @return the total income
+   * 
+   * Returns the total amount of income.
+   * 
+   * @return the total amount of income.
    */
   public double getTotalIncome() {
     return incomeList.stream().mapToDouble(Income::getAmount).sum();
   }
 
   /**
-   * Method for getting the total expense
    * 
-   * @return the total expense
+   * Returns the total amount of expenses.
+   * 
+   * @return the total amount of expenses.
    */
   public double getTotalExpense() {
     return expenseList.stream().mapToDouble(Expense::getAmount).sum();
   }
 
+  /**
+   * 
+   * Determines if the Accounting object is equal to the specified object.
+   * 
+   * @param obj the object to compare to.
+   * @return true if the objects are equal, false otherwise.
+   */
   @Override
   public boolean equals(Object obj) {
     if (obj == this) {
@@ -102,7 +118,7 @@ public class Accounting implements Bookkeeping, Serializable {
     if (!(obj instanceof Accounting)) {
       return false;
     }
-    
+
     Accounting accounting = (Accounting) obj;
     return incomeList.equals(accounting.getIncomeList()) && expenseList.equals(accounting.getExpenseList());
   }

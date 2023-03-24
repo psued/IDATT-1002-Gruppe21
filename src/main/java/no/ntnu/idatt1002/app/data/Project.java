@@ -149,9 +149,12 @@ public class Project implements Serializable {
       return false;
 
     Project project = (Project) obj;
+    boolean equalsDate = project.getDueDate() == null ? this.dueDate == null : project.getDueDate().equals(this.dueDate);
+    
     return project.getName().equals(this.name) && project.getDescription().equals(this.description)
-        && project.getCategory().equals(this.category) && project.getDueDate().equals(this.dueDate)
-        && project.getAccounting().equals(this.accounting) && project.getBudgeting().equals(this.budgeting);
+        && project.getCategory().equals(this.category)
+        && project.getAccounting().equals(this.accounting)
+        && project.getBudgeting().equals(this.budgeting) && equalsDate;
   }
 
   /**

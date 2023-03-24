@@ -66,7 +66,7 @@ public class Budgeting implements Bookkeeping, Serializable {
    * @return the income list
    */
   public ArrayList<Income> getIncomeList() {
-    return incomeList;
+    return new ArrayList<>(incomeList);
   }
 
   /**
@@ -75,7 +75,7 @@ public class Budgeting implements Bookkeeping, Serializable {
    * @return the expense list
    */
   public ArrayList<Expense> getExpenseList() {
-    return expenseList;
+    return new ArrayList<>(expenseList);
   }
 
   /**

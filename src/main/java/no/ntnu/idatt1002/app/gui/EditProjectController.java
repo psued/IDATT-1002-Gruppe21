@@ -231,12 +231,22 @@ public class EditProjectController {
    */
   public void addIncomeToLocal() {
     try {
-      List<Income> incomeList = isAccounting ? accountingIncome : budgetingIncome;
-      if (selectedTransaction != null) {
-        incomeList.remove(selectedTransaction);
+      if (isAccounting) {
+        if (selectedTransaction != null) {
+          accountingIncome.remove(selectedTransaction);
+          accountingIncome.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
+        } else {
+          accountingIncome.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
+        }
+      } else {
+        if (selectedTransaction != null) {
+          budgetingIncome.remove(selectedTransaction);
+          budgetingIncome.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
+        } else {
+          budgetingIncome.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
+        }
       }
-      incomeList.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(),
-          Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
+
       
       refreshLocalOverview();
       resetIncomeFields();
@@ -256,12 +266,21 @@ public class EditProjectController {
    */
   public void addExpenseToLocal() {
     try {
-      List<Expense> expenseList = isAccounting ? accountingExpense : budgetingExpense;
-      if (selectedTransaction != null) {
-        expenseList.remove(selectedTransaction);
+      if (isAccounting) {
+        if (selectedTransaction != null) {
+          accountingExpense.remove(selectedTransaction);
+          accountingExpense.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
+        } else {
+          accountingExpense.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
+        }
+      } else {
+        if (selectedTransaction != null) {
+          budgetingExpense.remove(selectedTransaction);
+          budgetingExpense.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
+        } else {
+          budgetingExpense.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
+        }
       }
-      expenseList.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(),
-          Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
       
       refreshLocalOverview();
       resetExpenseFields();
@@ -357,9 +376,12 @@ public class EditProjectController {
       budgetingIncome.forEach(project.getBudgeting()::addIncome);
       budgetingExpense.forEach(project.getBudgeting()::addExpense);
       
-      nameError.setVisible(false);
+      tempUser.removeProject(originalProject);
+      tempUser.addProject(project);
+      
       try {
-        Parent root = FXMLLoader.load(getClass().getResource("/ViewProject.fxml"));
+        FileHandling.writeUserToFile(tempUser);
+        Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
         BudgetAndAccountingApp.setRoot(root);
       } catch (IOException e) {
         e.printStackTrace();
@@ -372,7 +394,9 @@ public class EditProjectController {
   }
   
   public void deleteProject() {
+    tempUser.removeProject(originalProject);
     try {
+      FileHandling.writeUserToFile(tempUser);
       Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {

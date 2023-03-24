@@ -70,7 +70,7 @@ public class Accounting implements Bookkeeping, Serializable {
    * @return the list of Income objects.
    */
   public ArrayList<Income> getIncomeList() {
-    return incomeList;
+    return new ArrayList<>(incomeList);
   }
 
   /**
@@ -80,7 +80,7 @@ public class Accounting implements Bookkeeping, Serializable {
    * @return the list of Expense objects.
    */
   public ArrayList<Expense> getExpenseList() {
-    return expenseList;
+    return new ArrayList<>(expenseList);
   }
 
   /**

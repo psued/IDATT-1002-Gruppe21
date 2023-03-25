@@ -83,7 +83,7 @@ public class AllProjectsController {
     } catch (IOException e) {
       e.printStackTrace();
     } catch (NullPointerException e) {
-      errorMessage.setText("Please select a project");
+      errorMessage.setText(e.getMessage());
       errorMessage.setVisible(true);
     }
     

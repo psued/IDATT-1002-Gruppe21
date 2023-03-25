@@ -116,18 +116,14 @@ public class Project implements Serializable {
   public Accounting getAccounting() {
     return accounting;
   }
-
-  /**
-   * Returns the total accounting expenses of the project.
-   *
-   * @return The total accounting expenses of the project.
-   */
-  public double getAccountingExpenses() {
-    return accounting.getTotalExpense();
-  }
   
-  public double getAccountingIncome() {
-    return accounting.getTotalIncome();
+  /**
+   * Returns the total income of the project.
+   *
+   * @return The total income of the project.
+   */
+  public double getAccountingTotal() {
+    return accounting.getTotalIncome() - accounting.getTotalExpense();
   }
 
    /**

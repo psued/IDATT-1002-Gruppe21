@@ -19,28 +19,13 @@ public class AllProjectsController {
   
   private User tempUser;
   
-  @FXML
-  private TableView<Project> table;
-  @FXML
-  private TableColumn<Project, String> name;
-  @FXML
-  private TableColumn<Project, Date> dateStart;
+  @FXML private TableView<Project> table;
+  @FXML private TableColumn<Project, String> name;
+  @FXML private TableColumn<Project, Date> dueDate;
+  @FXML private TableColumn<Project, String> category;
+  @FXML private TableColumn<Project, Double> totalAccounting;
 
-
-  @FXML
-  private TableColumn<Project, String> plannedDone;
-
-  @FXML
-  private TableColumn<Project, String> category;
-
-  @FXML
-  private TableColumn<Project, Double> expense;
-
-  @FXML
-  private TableColumn<Project, Double> income;
-
-  @FXML
-  private Text errorMessage;
+  @FXML private Text errorMessage;
   
 
   public void initialize() {
@@ -55,11 +40,9 @@ public class AllProjectsController {
     errorMessage.setVisible(false);
     
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
-    dateStart.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
-    plannedDone.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+    dueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
     category.setCellValueFactory(new PropertyValueFactory<>("category"));
-    expense.setCellValueFactory(new PropertyValueFactory<>("AccountingExpenses"));
-    income.setCellValueFactory(new PropertyValueFactory<>("AccountingIncome"));
+    totalAccounting.setCellValueFactory(new PropertyValueFactory<>("accountingTotal"));
   
     
     table.getItems().clear();

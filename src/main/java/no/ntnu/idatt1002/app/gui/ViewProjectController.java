@@ -15,7 +15,6 @@ import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
-import no.ntnu.idatt1002.app.data.User;
 
 /**
  * Controller for the view project view. Just displays the project data and allows the user to
@@ -36,10 +35,7 @@ public class ViewProjectController {
   @FXML private Text category;
   @FXML private Text dueDate;
   @FXML private Text description;
-
-  @FXML private Button edit;
-  @FXML private Button allProjects;
-
+  
   @FXML private Button accounting;
   @FXML private Button budgeting;
   private boolean isAccounting = true;
@@ -49,8 +45,7 @@ public class ViewProjectController {
   @FXML private TableColumn<Income, String> incomeDescription;
   @FXML private TableColumn<Income, String> incomeCategory;
   @FXML private TableColumn<Income, Double> incomeAmount;
-
-
+  
   @FXML private TableView<Expense> expenseTable;
   @FXML private TableColumn<Expense, LocalDate> expenseDate;
   @FXML private TableColumn<Expense, String> expenseDescription;
@@ -66,11 +61,19 @@ public class ViewProjectController {
    * and sets up the tables.
    */
   public void initializeWithData(Project selectedProject) {
+    if (selectedProject == null) {
+      throw new NullPointerException("Please select a project to view");
+    }
+    
     project = selectedProject;
+    
     viewTitle.setText("View " + project.getName());
     name.setText(project.getName());
     category.setText(project.getCategory());
-    dueDate.setText(project.getDueDate().toString());
+    
+    String dueDateString =
+        project.getDueDate() == null ? "No due date" : project.getDueDate().toString();
+    dueDate.setText(dueDateString);
     description.setText(project.getDescription());
     
     accountingIncome = project.getAccounting().getIncomeList();

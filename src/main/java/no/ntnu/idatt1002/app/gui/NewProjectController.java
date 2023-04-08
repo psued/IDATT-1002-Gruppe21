@@ -1,14 +1,16 @@
 package no.ntnu.idatt1002.app.gui;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -349,11 +351,21 @@ public class NewProjectController {
   }
   
   public void deleteProject() {
-    try {
-      Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
-      BudgetAndAccountingApp.setRoot(root);
-    } catch (IOException e) {
-      e.printStackTrace();
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Delete project");
+    alert.setHeaderText("Are you sure you want to delete this project?");
+    alert.setContentText("This action cannot be undone.");
+    
+    Optional<ButtonType> result = alert.showAndWait();
+    
+    if (result.isPresent() && result.get() == ButtonType.OK) {
+      try {
+        System.out.println("Deleting project");
+        Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+        BudgetAndAccountingApp.setRoot(root);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 }

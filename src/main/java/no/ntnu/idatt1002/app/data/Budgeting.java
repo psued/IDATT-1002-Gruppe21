@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class Budgeting implements Bookkeeping, Serializable {
   
-  private ArrayList<Income> incomeList;
-  private ArrayList<Expense> expenseList;
+  private final ArrayList<Income> incomeList;
+  private final ArrayList<Expense> expenseList;
 
   /**
    * The constructor for this class
@@ -107,11 +107,10 @@ public class Budgeting implements Bookkeeping, Serializable {
     if (obj == this) {
       return true;
     }
-    if (!(obj instanceof Budgeting)) {
+    if (!(obj instanceof Budgeting budgeting)) {
       return false;
     }
     
-    Budgeting budgeting = (Budgeting) obj;
     return incomeList.equals(budgeting.getIncomeList()) && expenseList.equals(budgeting.getExpenseList());
   }
 }

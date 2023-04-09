@@ -3,6 +3,7 @@ package no.ntnu.idatt1002.app.gui;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -161,9 +162,7 @@ public class ViewProjectController {
       controller.initializeWithData(project);
     
       BudgetAndAccountingApp.setRoot(root);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (NullPointerException e) {
+    } catch (IOException | NullPointerException e) {
       e.printStackTrace();
     }
   }
@@ -173,7 +172,8 @@ public class ViewProjectController {
    */
   public void goToAllProjects() {
     try {
-      Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+      Parent root = FXMLLoader.load(
+          Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
       e.printStackTrace();

@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.AllProjectsController">
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.AllProjectsController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
@@ -21,7 +16,7 @@
             </Text>
             <HBox alignment="CENTER" prefHeight="700.0" prefWidth="800.0">
                <children>
-                  <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="700.0">
+                  <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="700.0">
                     <columns>
                       <TableColumn fx:id="name" prefWidth="93.33331298828125" text="Name" />
                       <TableColumn fx:id="dueDate" prefWidth="115.33334350585938" text="Due date" />
@@ -35,11 +30,20 @@
                         <Insets />
                      </HBox.margin>
                   </TableView>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                  <VBox alignment="CENTER" prefHeight="653.0" prefWidth="146.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#newProject" text="New Project" />
-                        <Button mnemonicParsing="false" onMouseClicked="#viewProject" text="View Project" />
-                        <Button mnemonicParsing="false" onMouseClicked="#editProject" text="Edit Project" />
+                        <Button mnemonicParsing="false" onMouseClicked="#newProject" text="New Project">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Button>
+                        <Button mnemonicParsing="false" onMouseClicked="#viewProject" text="View Project">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Button>
+                        <Button mnemonicParsing="false" onMouseClicked="#editProject" text="Edit Project">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Button>
                      </children>
                   </VBox>
                </children>

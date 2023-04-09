@@ -102,7 +102,7 @@ public class EditProjectController {
   @FXML private Text totalAmount;
   
   //Error message
-  @FXML private Label nameError = new Label();
+  @FXML private final Label nameError = new Label();
   
   /**
    * Initializes the controller class. Also sets up the text fields and tables to display the
@@ -236,14 +236,14 @@ public class EditProjectController {
     try {
       if (isAccounting) {
         if (selectedTransaction != null) {
-          accountingIncome.remove(selectedTransaction);
+          accountingIncome.remove((Income) selectedTransaction);
           accountingIncome.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
         } else {
           accountingIncome.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
         }
       } else {
         if (selectedTransaction != null) {
-          budgetingIncome.remove(selectedTransaction);
+          budgetingIncome.remove((Income) selectedTransaction);
           budgetingIncome.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
         } else {
           budgetingIncome.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
@@ -271,14 +271,14 @@ public class EditProjectController {
     try {
       if (isAccounting) {
         if (selectedTransaction != null) {
-          accountingExpense.remove(selectedTransaction);
+          accountingExpense.remove((Expense) selectedTransaction);
           accountingExpense.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
         } else {
           accountingExpense.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
         }
       } else {
         if (selectedTransaction != null) {
-          budgetingExpense.remove(selectedTransaction);
+          budgetingExpense.remove((Expense) selectedTransaction);
           budgetingExpense.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
         } else {
           budgetingExpense.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
@@ -384,7 +384,8 @@ public class EditProjectController {
       
       try {
         FileHandling.writeUserToFile(tempUser);
-        Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(
+            Objects.requireNonNull(getClass().getResource("/AllProjects.fxml"))));
         BudgetAndAccountingApp.setRoot(root);
       } catch (IOException e) {
         e.printStackTrace();
@@ -409,7 +410,8 @@ public class EditProjectController {
       try {
         
         FileHandling.writeUserToFile(tempUser);
-        Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+        Parent root = FXMLLoader.load(
+            Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
         
       } catch (IOException e) {

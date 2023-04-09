@@ -145,10 +145,9 @@ public class Project implements Serializable {
   public boolean equals(Object obj) {
     if (obj == this)
       return true;
-    if (!(obj instanceof Project))
+    if (!(obj instanceof Project project))
       return false;
-
-    Project project = (Project) obj;
+    
     boolean equalsDate = project.getDueDate() == null ? this.dueDate == null : project.getDueDate().equals(this.dueDate);
     
     return project.getName().equals(this.name) && project.getDescription().equals(this.description)

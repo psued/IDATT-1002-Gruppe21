@@ -146,10 +146,9 @@ public class Expense implements Transaction, Serializable {
   public boolean equals(Object obj) {
     if (obj == this)
       return true;
-    if (!(obj instanceof Expense))
+    if (!(obj instanceof Expense expense))
       return false;
-
-    Expense expense = (Expense) obj;
+    
     boolean equalsDate = expense.getDate() == null ? this.getDate() == null :
         expense.getDate().equals(this.getDate());
   

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -90,7 +91,7 @@ public class NewProjectController {
   @FXML private Text totalAmount;
   
   //Error message
-  @FXML private Label nameError = new Label();
+  @FXML private final Label nameError = new Label();
   
   /**
    * Initializes the controller class.
@@ -208,7 +209,7 @@ public class NewProjectController {
     try {
       List<Income> incomeList = isAccounting ? accountingIncome : budgetingIncome;
       if (selectedTransaction != null) {
-        incomeList.remove(selectedTransaction);
+        incomeList.remove(((Income) selectedTransaction));
       }
       incomeList.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(),
           Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
@@ -233,7 +234,7 @@ public class NewProjectController {
     try {
       List<Expense> expenseList = isAccounting ? accountingExpense : budgetingExpense;
       if (selectedTransaction != null) {
-        expenseList.remove(selectedTransaction);
+        expenseList.remove((Expense) selectedTransaction);
       }
       expenseList.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(),
           Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
@@ -338,7 +339,8 @@ public class NewProjectController {
       try {
         FileHandling.writeUserToFile(tempUser);
         
-        Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+        Parent root = FXMLLoader.load(
+            Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
       } catch (IOException e) {
         e.printStackTrace();
@@ -361,7 +363,8 @@ public class NewProjectController {
     if (result.isPresent() && result.get() == ButtonType.OK) {
       try {
         System.out.println("Deleting project");
-        Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+        Parent root = FXMLLoader.load(
+            Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
       } catch (IOException e) {
         e.printStackTrace();

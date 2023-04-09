@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class Accounting implements Bookkeeping, Serializable {
 
-  private ArrayList<Income> incomeList;
-  private ArrayList<Expense> expenseList;
+  private final ArrayList<Income> incomeList;
+  private final ArrayList<Expense> expenseList;
 
   /**
    * Creates an Accounting object with empty income and expense lists.
@@ -115,11 +115,10 @@ public class Accounting implements Bookkeeping, Serializable {
     if (obj == this) {
       return true;
     }
-    if (!(obj instanceof Accounting)) {
+    if (!(obj instanceof Accounting accounting)) {
       return false;
     }
-
-    Accounting accounting = (Accounting) obj;
+    
     return incomeList.equals(accounting.getIncomeList()) && expenseList.equals(accounting.getExpenseList());
   }
 }

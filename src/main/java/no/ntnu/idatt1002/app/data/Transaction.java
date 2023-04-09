@@ -69,6 +69,6 @@ public interface Transaction {
    * @param obj The object to compare with.
    * @return True if the transactions are equal, false otherwise.
    */
-  public boolean equals(Object obj);
+  boolean equals(Object obj);
 
 }

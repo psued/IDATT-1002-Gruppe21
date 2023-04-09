@@ -1,11 +1,8 @@
 package no.ntnu.idatt1002.app.data;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
-import no.ntnu.idatt1002.app.fileHandling.FileHandling;
 
 /**
  * A User class representing a user with a collection of projects. It provides
@@ -15,7 +12,7 @@ import no.ntnu.idatt1002.app.fileHandling.FileHandling;
  */
 public class User implements Serializable {
 
-  private ProjectRegistry projectRegistry;
+  private final ProjectRegistry projectRegistry;
 
   /**
    * Constructs a User object with an empty ProjectRegistry.
@@ -98,24 +95,7 @@ public class User implements Serializable {
     addProject(name, description, category, dueDate, accountingExpenses, accountingEquities, budgetingExpenses,
         budgetingEquities);
   }
-
-  /**
-   * Saves the user's data to a file.
-   */
-  public void saveToFile() {
-    try {
-      FileHandling.writeUserToFile(this);
-    } catch (IOException e) {
-      // TODO(ingar): Need to give the user a message that something failed
-      System.err.println("Error writing to file: " + e.getMessage());
-      e.printStackTrace(); // NOTE(ingar): This might not be needed in the final product
-    } catch (Exception e) {
-      // NOTE(ingar): Same as above
-      System.err.println("Error trying to write to file: " + e.getMessage());
-      e.printStackTrace();
-    }
-  }
-
+  
   /**
    * Returns a string representation of the user object.
    *

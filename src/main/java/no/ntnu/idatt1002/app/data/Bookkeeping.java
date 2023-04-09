@@ -56,5 +56,5 @@ public interface Bookkeeping {
    * @param obj the object to compare to
    * @return true if the objects are equal, false otherwise
    */
-  public boolean equals(Object obj);
+  boolean equals(Object obj);
 }

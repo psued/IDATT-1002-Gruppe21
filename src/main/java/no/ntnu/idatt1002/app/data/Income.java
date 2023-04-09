@@ -146,10 +146,9 @@ public class Income implements Transaction, Serializable {
   public boolean equals(Object obj) {
     if (obj == this)
       return true;
-    if (!(obj instanceof Income))
+    if (!(obj instanceof Income income))
       return false;
-
-    Income income = (Income) obj;
+    
     boolean isEqual = income.getDate() == null ? this.date == null : income.getDate().equals(this.date);
     
     return income.getDescription().equals(this.description)

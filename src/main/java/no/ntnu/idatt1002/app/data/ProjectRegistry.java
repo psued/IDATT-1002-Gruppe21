@@ -65,9 +65,9 @@ public class ProjectRegistry implements Serializable {
   }
 
   /**
-   * Returns a string representation of the projectregistry object.
+   * Returns a string representation of the project registry object.
    *
-   * @return A string representation of the projectregistry object.
+   * @return A string representation of the project registry object.
    */
   @Override
   public String toString() {

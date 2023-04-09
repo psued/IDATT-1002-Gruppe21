@@ -1,4 +1,4 @@
-package no.ntnu.idatt1002.app.fileHandling;
+package no.ntnu.idatt1002.app.filehandling;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;

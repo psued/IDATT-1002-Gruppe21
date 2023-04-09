@@ -13,8 +13,13 @@ import javafx.scene.text.Text;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.data.Project;
 import no.ntnu.idatt1002.app.data.User;
-import no.ntnu.idatt1002.app.fileHandling.FileHandling;
+import no.ntnu.idatt1002.app.filehandling.FileHandling;
 
+/**
+ * FXML Controller class for the AllProjects.fxml file. Displays all projects in the project
+ * registry in a table and allows the user to create a new project, view an existing project and
+ * edit an existing project
+ */
 public class AllProjectsController {
   
   private User tempUser;
@@ -27,7 +32,9 @@ public class AllProjectsController {
 
   @FXML private Text errorMessage;
   
-
+  /**
+   * Sets up the table containing all relevant projects by loading from the serialized user.
+   */
   public void initialize() {
     try {
       tempUser = FileHandling.readUserFromFile();
@@ -51,7 +58,11 @@ public class AllProjectsController {
     }
     table.refresh();
   }
-
+  
+  /**
+   * Takes the chosen project and loads the edit project page by initializing it with the chosen
+   * project. If no project is chosen, an error message is displayed.
+   */
   public void editProject() {
     Project selectedProject = table.getSelectionModel().getSelectedItem();
     try {
@@ -70,7 +81,11 @@ public class AllProjectsController {
     }
   }
   
-  public void viewProject(){
+  /**
+   * Takes the chosen project and loads the view project page by initializing it with the chosen
+   * project. If no project is chosen, an error message is displayed.
+   */
+  public void viewProject() {
     Project selectedProject = table.getSelectionModel().getSelectedItem();
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewProject.fxml"));
@@ -88,7 +103,10 @@ public class AllProjectsController {
     }
     
   }
-
+  
+  /**
+   * Opens the new project page.
+   */
   public void newProject() {
     try {
       Parent root = FXMLLoader.load(

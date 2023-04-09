@@ -126,7 +126,7 @@ public class Project implements Serializable {
     return accounting.getTotalIncome() - accounting.getTotalExpense();
   }
 
-   /**
+  /**
    * Returns the budgeting object of the project.
    *
    * @return The budgeting object of the project.
@@ -143,12 +143,15 @@ public class Project implements Serializable {
    */
   @Override
   public boolean equals(Object obj) {
-    if (obj == this)
+    if (obj == this) {
       return true;
-    if (!(obj instanceof Project project))
+    }
+    if (!(obj instanceof Project project)) {
       return false;
+    }
     
-    boolean equalsDate = project.getDueDate() == null ? this.dueDate == null : project.getDueDate().equals(this.dueDate);
+    boolean equalsDate = project.getDueDate() == null ? this.dueDate == null
+        : project.getDueDate().equals(this.dueDate);
     
     return project.getName().equals(this.name) && project.getDescription().equals(this.description)
         && project.getCategory().equals(this.category)
@@ -163,9 +166,9 @@ public class Project implements Serializable {
    */
   @Override
   public String toString() {
-    return "Project{" + "name='" + name + '\'' + ", description='" + description + '\'' +
-        ", category='" + category + '\'' + ", creationDate=" + dueDate + ", accounting=" +
-        accounting + ", budgeting=" + budgeting + '}';
+    return "Project{" + "name='" + name + '\'' + ", description='" + description + '\''
+        + ", category='" + category + '\'' + ", creationDate=" + dueDate + ", accounting="
+        + accounting + ", budgeting=" + budgeting + '}';
   }
 
 }

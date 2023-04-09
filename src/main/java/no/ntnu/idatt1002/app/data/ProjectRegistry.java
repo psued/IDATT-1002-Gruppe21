@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Registry class for all the projects for a user
+ * Registry class for all roject for auser.
  */
 public class ProjectRegistry implements Serializable {
 
@@ -13,7 +13,7 @@ public class ProjectRegistry implements Serializable {
   private final List<String> categories = new ArrayList<>();
 
   /**
-   * Creates a new project registry
+   * Cre new projectregistry.
    */
   public ProjectRegistry() {
     this.projects = new ArrayList<>();
@@ -22,7 +22,7 @@ public class ProjectRegistry implements Serializable {
   }
 
   /**
-   * Adds a project to the registry
+   * A roject to theregistry.
    *
    * @param project the project to be added
    */
@@ -31,7 +31,7 @@ public class ProjectRegistry implements Serializable {
   }
 
   /**
-   * Gets all the projects from the registry
+   * Gets al rojects from theregistry.
    *
    * @return the projects
    */
@@ -40,7 +40,7 @@ public class ProjectRegistry implements Serializable {
   }
 
   /**
-   * Gets all the categories from the registry
+   * Gets al ategories from theregistry.
    *
    * @return the categories
    */
@@ -53,7 +53,7 @@ public class ProjectRegistry implements Serializable {
   }
 
   /**
-   * Adds a category to the registry
+   * Adds a category to the registry.
    *
    * @param category the category to be added
    */
@@ -71,9 +71,6 @@ public class ProjectRegistry implements Serializable {
    */
   @Override
   public String toString() {
-    return "ProjectRegistry{" +
-      "projects=" + projects +
-      ", categories=" + categories +
-      '}';
+    return "ProjectRegistry{ projects=" + projects + ", categories=" + categories + '}';
   }
 }

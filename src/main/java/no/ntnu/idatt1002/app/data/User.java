@@ -44,10 +44,11 @@ public class User implements Serializable {
    * @throws IllegalArgumentException If one or more arguments are null.
    */
   public void addProject(String name, String description, String category, LocalDate dueDate,
-      ArrayList<Expense> accountingExpenses, ArrayList<Income> accountingIncome, ArrayList<Expense> budgetingExpenses,
-      ArrayList<Income> budgetingIncome) {
-    if (name == null || description == null || category == null || dueDate == null || accountingExpenses == null
-        || accountingIncome == null || budgetingExpenses == null || budgetingIncome == null) {
+      ArrayList<Expense> accountingExpenses, ArrayList<Income> accountingIncome,
+         ArrayList<Expense> budgetingExpenses, ArrayList<Income> budgetingIncome) {
+    if (name == null || description == null || category == null || dueDate == null
+        || accountingExpenses == null || accountingIncome == null || budgetingExpenses == null
+        || budgetingIncome == null) {
       throw new IllegalArgumentException("One or more arguments are null");
     }
 
@@ -88,12 +89,13 @@ public class User implements Serializable {
    * @param budgetingExpenses  A list of the new budgeting expenses.
    * @param budgetingEquities  A list of the new budgeting equities.
    */
-  public void editProject(Project project, String name, String description, String category, LocalDate dueDate,
-      ArrayList<Expense> accountingExpenses, ArrayList<Income> accountingEquities, ArrayList<Expense> budgetingExpenses,
-      ArrayList<Income> budgetingEquities) {
+  public void editProject(Project project, String name, String description, String category,
+        LocalDate dueDate, ArrayList<Expense> accountingExpenses,
+        ArrayList<Income> accountingEquities, ArrayList<Expense> budgetingExpenses,
+        ArrayList<Income> budgetingEquities) {
     removeProject(project);
-    addProject(name, description, category, dueDate, accountingExpenses, accountingEquities, budgetingExpenses,
-        budgetingEquities);
+    addProject(name, description, category, dueDate, accountingExpenses, accountingEquities,
+        budgetingExpenses, budgetingEquities);
   }
   
   /**
@@ -103,8 +105,6 @@ public class User implements Serializable {
    */
   @Override
   public String toString() {
-    return "User{" +
-        "projectRegistry=" + projectRegistry +
-        '}';
+    return "User{projectRegistry=" + projectRegistry + '}';
   }
 }

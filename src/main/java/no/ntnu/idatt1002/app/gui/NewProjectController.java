@@ -30,7 +30,7 @@ import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
 import no.ntnu.idatt1002.app.data.Transaction;
 import no.ntnu.idatt1002.app.data.User;
-import no.ntnu.idatt1002.app.fileHandling.FileHandling;
+import no.ntnu.idatt1002.app.filehandling.FileHandling;
 
 /**
  * FXML Controller class for the New Project page. Only mandatory field is the name of the project.
@@ -352,6 +352,10 @@ public class NewProjectController {
     }
   }
   
+  /**
+   * Goes to the all projects page without saving the current project. A confirmation popup when
+   * the delete button is pressed.
+   */
   public void deleteProject() {
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle("Delete project");

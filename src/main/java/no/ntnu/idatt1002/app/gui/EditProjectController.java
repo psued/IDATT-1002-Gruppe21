@@ -30,7 +30,7 @@ import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
 import no.ntnu.idatt1002.app.data.Transaction;
 import no.ntnu.idatt1002.app.data.User;
-import no.ntnu.idatt1002.app.fileHandling.FileHandling;
+import no.ntnu.idatt1002.app.filehandling.FileHandling;
 
 /**
  * FXML Controller class for the EditProject.fxml file. Takes an existing project and allows the
@@ -102,7 +102,7 @@ public class EditProjectController {
   @FXML private Text totalAmount;
   
   //Error message
-  @FXML private Label nameError = new Label();
+  @FXML private final Label nameError = new Label();
   
   /**
    * Initializes the controller class. Also sets up the text fields and tables to display the
@@ -236,17 +236,25 @@ public class EditProjectController {
     try {
       if (isAccounting) {
         if (selectedTransaction != null) {
-          accountingIncome.remove(selectedTransaction);
-          accountingIncome.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
+          accountingIncome.remove((Income) selectedTransaction);
+          accountingIncome.add(new Income(
+              incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(
+              incomeAmountField.getText()), incomeDatePicker.getValue()));
         } else {
-          accountingIncome.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
+          accountingIncome.add(new Income(
+              incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(
+              incomeAmountField.getText()), incomeDatePicker.getValue()));
         }
       } else {
         if (selectedTransaction != null) {
-          budgetingIncome.remove(selectedTransaction);
-          budgetingIncome.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
+          budgetingIncome.remove((Income) selectedTransaction);
+          budgetingIncome.add(new Income(
+              incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(
+              incomeAmountField.getText()), incomeDatePicker.getValue()));
         } else {
-          budgetingIncome.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
+          budgetingIncome.add(new Income(
+              incomeDescriptionField.getText(), incomeCategoryField.getText(), Double.parseDouble(
+              incomeAmountField.getText()), incomeDatePicker.getValue()));
         }
       }
 
@@ -271,17 +279,25 @@ public class EditProjectController {
     try {
       if (isAccounting) {
         if (selectedTransaction != null) {
-          accountingExpense.remove(selectedTransaction);
-          accountingExpense.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
+          accountingExpense.remove((Expense) selectedTransaction);
+          accountingExpense.add(new Expense(
+              expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(
+              expenseAmountField.getText()), expenseDatePicker.getValue()));
         } else {
-          accountingExpense.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
+          accountingExpense.add(new Expense(
+              expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(
+              expenseAmountField.getText()), expenseDatePicker.getValue()));
         }
       } else {
         if (selectedTransaction != null) {
-          budgetingExpense.remove(selectedTransaction);
-          budgetingExpense.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
+          budgetingExpense.remove((Expense) selectedTransaction);
+          budgetingExpense.add(new Expense(
+              expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(
+              expenseAmountField.getText()), expenseDatePicker.getValue()));
         } else {
-          budgetingExpense.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
+          budgetingExpense.add(new Expense(
+              expenseDescriptionField.getText(), expenseCategoryField.getText(), Double.parseDouble(
+              expenseAmountField.getText()), expenseDatePicker.getValue()));
         }
       }
       
@@ -384,7 +400,8 @@ public class EditProjectController {
       
       try {
         FileHandling.writeUserToFile(tempUser);
-        Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(
+            Objects.requireNonNull(getClass().getResource("/AllProjects.fxml"))));
         BudgetAndAccountingApp.setRoot(root);
       } catch (IOException e) {
         e.printStackTrace();
@@ -396,6 +413,11 @@ public class EditProjectController {
     }
   }
   
+  /**
+   * Deletes the current project. A popup will appear prompting the user if the really want to
+   * delete the project. If no, the deletion is aborted. If yes, the project is deleted from the
+   * registry and the user is returned to the all projects page.
+   */
   public void deleteProject() {
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle("Delete project");
@@ -409,7 +431,8 @@ public class EditProjectController {
       try {
         
         FileHandling.writeUserToFile(tempUser);
-        Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+        Parent root = FXMLLoader.load(
+            Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
         
       } catch (IOException e) {

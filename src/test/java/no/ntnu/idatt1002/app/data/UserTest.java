@@ -20,28 +20,28 @@ public class UserTest {
   @BeforeEach
   void setUp() {
     user = new User();
-
+    
     ArrayList<Expense> accountingExpenses = new ArrayList<>();
-    Expense expense1 = new Expense("Billett til buss", "Transport", 100, LocalDate.now());
-    Expense expense2 = new Expense("Bensin", "Transport", 100, LocalDate.now());
+    Expense expense1 = new Expense("Ticket to bus", "Transportation", 100, LocalDate.now());
+    Expense expense2 = new Expense("Fuel", "Transportation", 100, LocalDate.now());
     accountingExpenses.add(expense1);
     accountingExpenses.add(expense2);
-
+    
     ArrayList<Income> accountingIncome = new ArrayList<>();
-    Income income1 = new Income("Lønn", "Lønn", 1000, LocalDate.now());
-    Income income2 = new Income("Gave", "Gave", 1000, LocalDate.now());
+    Income income1 = new Income("Salary", "Salary", 1000, LocalDate.now());
+    Income income2 = new Income("Gift", "Gift", 1000, LocalDate.now());
     accountingIncome.add(income1);
     accountingIncome.add(income2);
-
+    
     ArrayList<Expense> budgetingExpenses = new ArrayList<>();
-    Expense expense3 = new Expense("Billett til buss", "Transport", 100, LocalDate.now());
-    Expense expense4 = new Expense("Bensin", "Transport", 100, LocalDate.now());
+    Expense expense3 = new Expense("Ticket to bus", "Transportation", 100, LocalDate.now());
+    Expense expense4 = new Expense("Fuel", "Transportation", 100, LocalDate.now());
     budgetingExpenses.add(expense3);
     budgetingExpenses.add(expense4);
-
+    
     ArrayList<Income> budgetingIncome = new ArrayList<>();
-    Income income3 = new Income("Lønn", "Lønn", 1000, LocalDate.now());
-    Income income4 = new Income("Gave", "Gave", 1000, LocalDate.now());
+    Income income3 = new Income("Salary", "Salary", 1000, LocalDate.now());
+    Income income4 = new Income("Gift", "Gift", 1000, LocalDate.now());
     budgetingIncome.add(income3);
     budgetingIncome.add(income4);
 

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +30,7 @@ import no.ntnu.idatt1002.app.data.Income;
 import no.ntnu.idatt1002.app.data.Project;
 import no.ntnu.idatt1002.app.data.Transaction;
 import no.ntnu.idatt1002.app.data.User;
-import no.ntnu.idatt1002.app.fileHandling.FileHandling;
+import no.ntnu.idatt1002.app.filehandling.FileHandling;
 
 /**
  * FXML Controller class for the New Project page. Only mandatory field is the name of the project.
@@ -90,7 +91,7 @@ public class NewProjectController {
   @FXML private Text totalAmount;
   
   //Error message
-  @FXML private Label nameError = new Label();
+  @FXML private final Label nameError = new Label();
   
   /**
    * Initializes the controller class.
@@ -208,7 +209,7 @@ public class NewProjectController {
     try {
       List<Income> incomeList = isAccounting ? accountingIncome : budgetingIncome;
       if (selectedTransaction != null) {
-        incomeList.remove(selectedTransaction);
+        incomeList.remove(((Income) selectedTransaction));
       }
       incomeList.add(new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(),
           Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue()));
@@ -233,7 +234,7 @@ public class NewProjectController {
     try {
       List<Expense> expenseList = isAccounting ? accountingExpense : budgetingExpense;
       if (selectedTransaction != null) {
-        expenseList.remove(selectedTransaction);
+        expenseList.remove((Expense) selectedTransaction);
       }
       expenseList.add(new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(),
           Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue()));
@@ -338,7 +339,8 @@ public class NewProjectController {
       try {
         FileHandling.writeUserToFile(tempUser);
         
-        Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+        Parent root = FXMLLoader.load(
+            Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
       } catch (IOException e) {
         e.printStackTrace();
@@ -350,6 +352,10 @@ public class NewProjectController {
     }
   }
   
+  /**
+   * Goes to the all projects page without saving the current project. A confirmation popup when
+   * the delete button is pressed.
+   */
   public void deleteProject() {
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle("Delete project");
@@ -361,7 +367,8 @@ public class NewProjectController {
     if (result.isPresent() && result.get() == ButtonType.OK) {
       try {
         System.out.println("Deleting project");
-        Parent root = FXMLLoader.load(getClass().getResource("/AllProjects.fxml"));
+        Parent root = FXMLLoader.load(
+            Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
       } catch (IOException e) {
         e.printStackTrace();

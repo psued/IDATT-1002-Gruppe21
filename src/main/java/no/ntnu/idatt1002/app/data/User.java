@@ -1,11 +1,8 @@
 package no.ntnu.idatt1002.app.data;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
-import no.ntnu.idatt1002.app.fileHandling.FileHandling;
 
 /**
  * A User class representing a user with a collection of projects. It provides
@@ -15,7 +12,7 @@ import no.ntnu.idatt1002.app.fileHandling.FileHandling;
  */
 public class User implements Serializable {
 
-  private ProjectRegistry projectRegistry;
+  private final ProjectRegistry projectRegistry;
 
   /**
    * Constructs a User object with an empty ProjectRegistry.
@@ -47,10 +44,11 @@ public class User implements Serializable {
    * @throws IllegalArgumentException If one or more arguments are null.
    */
   public void addProject(String name, String description, String category, LocalDate dueDate,
-      ArrayList<Expense> accountingExpenses, ArrayList<Income> accountingIncome, ArrayList<Expense> budgetingExpenses,
-      ArrayList<Income> budgetingIncome) {
-    if (name == null || description == null || category == null || dueDate == null || accountingExpenses == null
-        || accountingIncome == null || budgetingExpenses == null || budgetingIncome == null) {
+      ArrayList<Expense> accountingExpenses, ArrayList<Income> accountingIncome,
+         ArrayList<Expense> budgetingExpenses, ArrayList<Income> budgetingIncome) {
+    if (name == null || description == null || category == null || dueDate == null
+        || accountingExpenses == null || accountingIncome == null || budgetingExpenses == null
+        || budgetingIncome == null) {
       throw new IllegalArgumentException("One or more arguments are null");
     }
 
@@ -91,31 +89,15 @@ public class User implements Serializable {
    * @param budgetingExpenses  A list of the new budgeting expenses.
    * @param budgetingEquities  A list of the new budgeting equities.
    */
-  public void editProject(Project project, String name, String description, String category, LocalDate dueDate,
-      ArrayList<Expense> accountingExpenses, ArrayList<Income> accountingEquities, ArrayList<Expense> budgetingExpenses,
-      ArrayList<Income> budgetingEquities) {
+  public void editProject(Project project, String name, String description, String category,
+        LocalDate dueDate, ArrayList<Expense> accountingExpenses,
+        ArrayList<Income> accountingEquities, ArrayList<Expense> budgetingExpenses,
+        ArrayList<Income> budgetingEquities) {
     removeProject(project);
-    addProject(name, description, category, dueDate, accountingExpenses, accountingEquities, budgetingExpenses,
-        budgetingEquities);
+    addProject(name, description, category, dueDate, accountingExpenses, accountingEquities,
+        budgetingExpenses, budgetingEquities);
   }
-
-  /**
-   * Saves the user's data to a file.
-   */
-  public void saveToFile() {
-    try {
-      FileHandling.writeUserToFile(this);
-    } catch (IOException e) {
-      // TODO(ingar): Need to give the user a message that something failed
-      System.err.println("Error writing to file: " + e.getMessage());
-      e.printStackTrace(); // NOTE(ingar): This might not be needed in the final product
-    } catch (Exception e) {
-      // NOTE(ingar): Same as above
-      System.err.println("Error trying to write to file: " + e.getMessage());
-      e.printStackTrace();
-    }
-  }
-
+  
   /**
    * Returns a string representation of the user object.
    *
@@ -123,8 +105,6 @@ public class User implements Serializable {
    */
   @Override
   public String toString() {
-    return "User{" +
-        "projectRegistry=" + projectRegistry +
-        '}';
+    return "User{projectRegistry=" + projectRegistry + '}';
   }
 }

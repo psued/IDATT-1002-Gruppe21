@@ -4,19 +4,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * 
  * The Budgeting class represents a bookkeeping system for tracking income and
  * expenses for the budgeting of a project.
- * It implements the Bookkeeping interface and is Serializable for serialization
+ *
+ * <p>It implements the Bookkeeping interface and is Serializable for serialization
  * and deserialization.
  */
 public class Budgeting implements Bookkeeping, Serializable {
   
-  private ArrayList<Income> incomeList;
-  private ArrayList<Expense> expenseList;
+  private final ArrayList<Income> incomeList;
+  private final ArrayList<Expense> expenseList;
 
   /**
-   * The constructor for this class
+   * The constructor for this class.
    */
   public Budgeting() {
     incomeList = new ArrayList<>();
@@ -25,7 +25,7 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
 
   /**
-   * Method for adding an income to the income list
+   * Method for adding an income to the income list.
    *
    * @param income the income to be added
    */
@@ -34,8 +34,8 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
   
   /**
-   * Method for adding incomes to the income list
-   * 
+   * Method for adding incomes to the income list.
+   *
    * @param incomes the incomes to be added
    */
   public void addEquities(ArrayList<Income> incomes) {
@@ -43,7 +43,7 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
 
   /**
-   * Method for adding an expense to the expense list
+   * Method for adding an expense to the expense list.
    *
    * @param expense the expense to be added
    */
@@ -52,8 +52,8 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
 
   /**
-   * Method for adding expenses to the expense list
-   * 
+   * Method for adding expenses to the expense list.
+   *
    * @param expenses the expenses to be added
    */
   public void addExpenses(ArrayList<Expense> expenses) {
@@ -61,7 +61,7 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
 
   /**
-   * Method for getting the income list
+   * Method for getting the income list.
    *
    * @return the income list
    */
@@ -70,7 +70,7 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
 
   /**
-   * Method for getting the expense list
+   * Method for getting the expense list.
    *
    * @return the expense list
    */
@@ -79,7 +79,7 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
 
   /**
-   * Method for getting the total income
+   * Method for getting the total income.
    *
    * @return the total income
    */
@@ -88,7 +88,7 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
 
   /**
-   * Method for getting the total expense
+   * Method for getting the total expense.
    *
    * @return the total expense
    */
@@ -97,8 +97,8 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
 
   /**
-   * Determines if the Budgeting object is equal to the specified object
-   * 
+   * Determines if the Budgeting object is equal to the specified object.
+   *
    * @param obj the object to compare to
    * @return true if the objects are equal, false otherwise
    */
@@ -107,11 +107,11 @@ public class Budgeting implements Bookkeeping, Serializable {
     if (obj == this) {
       return true;
     }
-    if (!(obj instanceof Budgeting)) {
+    if (!(obj instanceof Budgeting budgeting)) {
       return false;
     }
     
-    Budgeting budgeting = (Budgeting) obj;
-    return incomeList.equals(budgeting.getIncomeList()) && expenseList.equals(budgeting.getExpenseList());
+    return incomeList
+      .equals(budgeting.getIncomeList()) && expenseList.equals(budgeting.getExpenseList());
   }
 }

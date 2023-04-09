@@ -1,13 +1,11 @@
 package no.ntnu.idatt1002.app;
 
-import no.ntnu.idatt1002.app.data.User;
-import no.ntnu.idatt1002.app.fileHandling.FileHandling;
-
-import java.io.File;
-import java.io.IOException;
-
+/**
+ * Initializes the program by running the BudgetAndAccountingApp main method. Its setup this way
+ * as the pom file must direct to a main class for startup.
+ */
 public class Main {
-  public static void main(String[] args) throws IOException, ClassNotFoundException {
+  public static void main(String[] args) {
     BudgetAndAccountingApp.main(args);
   }
 }

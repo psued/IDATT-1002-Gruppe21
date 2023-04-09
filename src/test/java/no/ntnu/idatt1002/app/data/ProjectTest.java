@@ -41,12 +41,7 @@ public class ProjectTest {
     void testGetCategory() {
         assertEquals("category", project.getCategory());
     }
-
-    @Test
-    void testGetCreationDate() {
-        // Not possible to test with current implementation
-    }
-
+    
     @Test
     void testGetDescription() {
         assertEquals("description", project.getDescription());

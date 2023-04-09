@@ -14,30 +14,35 @@ public interface Transaction {
 
   /**
    * Method that gets the description of a transaction.
+   *
    * @return Description as String.
    */
   String getDescription();
 
   /**
    * Method that gets the category of a transaction.
+   *
    * @return Category as String.
    */
   String getCategory();
 
   /**
    * Method that gets the amount of a transaction.
+   *
    * @return Amount as double.
    */
   double getAmount();
 
   /**
    * Method that gets the date of a transaction.
+   *
    * @return Date as LocalDate.
    */
   LocalDate getDate();
 
   /**
    * Method that sets a new description for a transaction.
+   *
    * @param newDescription The new description of the transaction.
    * @throws IllegalArgumentException if newDescription is null or blank.
    */
@@ -45,6 +50,7 @@ public interface Transaction {
 
   /**
    * Method that sets a new category for a transaction.
+   *
    * @param newCategory The new category of the transaction.
    * @throws IllegalArgumentException if newCategory is null or blank.
    */
@@ -52,6 +58,7 @@ public interface Transaction {
 
   /**
    * Method that sets a new amount for a transaction.
+   *
    * @param newAmount The new amount of the transaction.
    * @throws IllegalArgumentException if amount is less than zero.
    */
@@ -59,16 +66,18 @@ public interface Transaction {
 
   /**
    * Method that sets a new date for a transaction.
+   *
    * @param newDate The new date of the transaction.
    * @throws IllegalArgumentException if date is not valid.
    */
   void setDate(LocalDate newDate);
 
   /**
-   * Determines if the Transaction object is equal to the specified object
+   * Determines if the Transaction object is equal to the specified object.
+   *
    * @param obj The object to compare with.
    * @return True if the transactions are equal, false otherwise.
    */
-  public boolean equals(Object obj);
+  boolean equals(Object obj);
 
 }

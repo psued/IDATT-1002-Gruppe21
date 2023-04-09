@@ -1,8 +1,11 @@
-package no.ntnu.idatt1002.app.fileHandling;
+package no.ntnu.idatt1002.app.filehandling;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import no.ntnu.idatt1002.app.data.User;
-
-import java.io.*;
 
 /**
  * A FileHandling utility class for managing User objects by storing and retrieving them
@@ -11,7 +14,8 @@ import java.io.*;
  */
 public class FileHandling {
 
-  private static String file = System.getProperty("user.dir") + "/src/main/resources/user.ser";
+  private static final String file = System.getProperty("user.dir")
+      + "/src/main/resources/user.ser";
 
   /**
    * Writes a given User object to a file. The file is located in the "src/main/resources"

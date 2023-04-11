@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: no.ntnu.idatt1002.app.data.UserTest$AddProjectTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s - in no.ntnu.idatt1002.app.data.UserTest$AddProjectTest

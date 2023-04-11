@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: no.ntnu.idatt1002.app.data.UserTest
+-------------------------------------------------------------------------------
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.03 s - in no.ntnu.idatt1002.app.data.UserTest

@@ -1,0 +1,16 @@
+no/ntnu/idatt1002/app/data/Project.class
+no/ntnu/idatt1002/app/filehandling/FileHandling.class
+no/ntnu/idatt1002/app/data/Expense.class
+no/ntnu/idatt1002/app/data/User.class
+no/ntnu/idatt1002/app/Main.class
+no/ntnu/idatt1002/app/BudgetAndAccountingApp.class
+no/ntnu/idatt1002/app/gui/ViewProjectController.class
+no/ntnu/idatt1002/app/data/Budgeting.class
+no/ntnu/idatt1002/app/data/Transaction.class
+no/ntnu/idatt1002/app/gui/AllProjectsController.class
+no/ntnu/idatt1002/app/data/Bookkeeping.class
+no/ntnu/idatt1002/app/gui/NewProjectController.class
+no/ntnu/idatt1002/app/data/ProjectRegistry.class
+no/ntnu/idatt1002/app/gui/EditProjectController.class
+no/ntnu/idatt1002/app/data/Income.class
+no/ntnu/idatt1002/app/data/Accounting.class

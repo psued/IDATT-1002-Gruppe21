@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">IDATT1002Project</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1002.app.data</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1002.app.data;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+/**
+ * A User class representing a user with a collection of projects. It provides
+ * methods to
+ * add, remove, and edit projects, as well as to save the user's data to a file.
+ *
+ */
+public class User implements Serializable {
+
+  private final ProjectRegistry projectRegistry;
+
+  /**
+   * Constructs a User object with an empty ProjectRegistry.
+   */
+<span class="fc" id="L20">  public User() {</span>
+<span class="fc" id="L21">    this.projectRegistry = new ProjectRegistry();</span>
+<span class="fc" id="L22">  }</span>
+
+  /**
+   * Returns the user's project registry.
+   *
+   * @return The user's ProjectRegistry.
+   */
+  public ProjectRegistry getProjectRegistry() {
+<span class="fc" id="L30">    return projectRegistry;</span>
+  }
+
+  /**
+   * Adds a project to the user's project registry.
+   *
+   * @param name               The name of the project.
+   * @param description        The description of the project.
+   * @param category           The category of the project.
+   * @param dueDate            The due date of the project.
+   * @param accountingExpenses A list of accounting expenses.
+   * @param accountingIncome   A list of accounting income.
+   * @param budgetingExpenses  A list of budgeting expenses.
+   * @param budgetingIncome    A list of budgeting income.
+   * @throws IllegalArgumentException If one or more arguments are null.
+   */
+  public void addProject(String name, String description, String category, LocalDate dueDate,
+      ArrayList&lt;Expense&gt; accountingExpenses, ArrayList&lt;Income&gt; accountingIncome,
+         ArrayList&lt;Expense&gt; budgetingExpenses, ArrayList&lt;Income&gt; budgetingIncome) {
+<span class="fc bfc" id="L49" title="All 8 branches covered.">    if (name == null || description == null || category == null || dueDate == null</span>
+<span class="fc bfc" id="L50" title="All 6 branches covered.">        || accountingExpenses == null || accountingIncome == null || budgetingExpenses == null</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        || budgetingIncome == null) {</span>
+<span class="fc" id="L52">      throw new IllegalArgumentException(&quot;One or more arguments are null&quot;);</span>
+    }
+
+<span class="fc" id="L55">    Project newProject = new Project(name, description, category, dueDate);</span>
+
+<span class="fc" id="L57">    newProject.getAccounting().addExpenses(accountingExpenses);</span>
+<span class="fc" id="L58">    newProject.getAccounting().addEquities(accountingIncome);</span>
+
+<span class="fc" id="L60">    newProject.getBudgeting().addExpenses(budgetingExpenses);</span>
+<span class="fc" id="L61">    newProject.getBudgeting().addEquities(budgetingIncome);</span>
+
+<span class="fc" id="L63">    projectRegistry.addProject(newProject);</span>
+<span class="fc" id="L64">  }</span>
+  
+  public void addProject(Project project) {
+<span class="nc" id="L67">    projectRegistry.addProject(project);</span>
+<span class="nc" id="L68">  }</span>
+
+  /**
+   * Removes a project from the user's project registry.
+   *
+   * @param project The project to be removed.
+   */
+  public void removeProject(Project project) {
+<span class="fc" id="L76">    projectRegistry.removeProject(project);</span>
+<span class="fc" id="L77">  }</span>
+
+  /**
+   * Edits an existing project in the user's project registry.
+   *
+   * @param project            The project to be edited.
+   * @param name               The new name of the project.
+   * @param description        The new description of the project.
+   * @param category           The new category of the project.
+   * @param dueDate            The new due date of the project.
+   * @param accountingExpenses A list of the new accounting expenses.
+   * @param accountingEquities A list of the new accounting equities.
+   * @param budgetingExpenses  A list of the new budgeting expenses.
+   * @param budgetingEquities  A list of the new budgeting equities.
+   */
+  public void editProject(Project project, String name, String description, String category,
+        LocalDate dueDate, ArrayList&lt;Expense&gt; accountingExpenses,
+        ArrayList&lt;Income&gt; accountingEquities, ArrayList&lt;Expense&gt; budgetingExpenses,
+        ArrayList&lt;Income&gt; budgetingEquities) {
+<span class="fc" id="L96">    removeProject(project);</span>
+<span class="fc" id="L97">    addProject(name, description, category, dueDate, accountingExpenses, accountingEquities,</span>
+<span class="fc" id="L98">        budgetingExpenses, budgetingEquities);</span>
+<span class="fc" id="L99">  }</span>
+  
+  /**
+   * Returns a string representation of the user object.
+   *
+   * @return A string representation of the user object.
+   */
+  @Override
+  public String toString() {
+<span class="nc" id="L108">    return &quot;User{projectRegistry=&quot; + projectRegistry + '}';</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

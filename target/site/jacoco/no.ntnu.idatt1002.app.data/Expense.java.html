@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Expense.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">IDATT1002Project</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1002.app.data</a> &gt; <span class="el_source">Expense.java</span></div><h1>Expense.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1002.app.data;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+
+/**
+ * Class that represents an expense.
+ * Implements the Transaction interface and is Serializable for serialization
+ * and deserialization.
+ */
+public class Expense implements Transaction, Serializable {
+
+  private String description; 
+  private String category;
+  private double amount;
+  private LocalDate date;
+
+  /**
+   * Creates an expense that is an instance of Transaction.
+   *
+   * @param description               The description of the Expense.
+   * @param category                  The category of the Expense.
+   * @param amount                    The amount of the Expense.
+   * @param date                      The date of the Expense.
+   * @throws IllegalArgumentException If description or category is null or blank
+   *                                  or if amount is less than zero.
+   */
+<span class="fc" id="L28">  public Expense(String description, String category, double amount, LocalDate date)</span>
+      throws IllegalArgumentException {
+<span class="fc bfc" id="L30" title="All 2 branches covered.">    if (description == null) {</span>
+<span class="fc" id="L31">      throw new IllegalArgumentException(&quot;description cannot be null.&quot;);</span>
+    }
+<span class="fc bfc" id="L33" title="All 2 branches covered.">    if (description.isBlank()) {</span>
+<span class="fc" id="L34">      throw new IllegalArgumentException(&quot;description cannot be blank&quot;);</span>
+    }
+<span class="fc bfc" id="L36" title="All 2 branches covered.">    if (category == null) {</span>
+<span class="fc" id="L37">      throw new IllegalArgumentException(&quot;category cannot be null.&quot;);</span>
+    }
+<span class="fc bfc" id="L39" title="All 2 branches covered.">    if (category.isBlank()) {</span>
+<span class="fc" id="L40">      throw new IllegalArgumentException(&quot;category cannot be blank&quot;);</span>
+    }
+<span class="fc bfc" id="L42" title="All 2 branches covered.">    if (amount &lt; 0) {</span>
+<span class="fc" id="L43">      throw new IllegalArgumentException(&quot;amount cannot be less than zero&quot;);</span>
+    }
+
+<span class="fc" id="L46">    this.description = description;</span>
+<span class="fc" id="L47">    this.category = category;</span>
+<span class="fc" id="L48">    this.amount = amount;</span>
+<span class="fc" id="L49">    this.date = date;</span>
+<span class="fc" id="L50">  }</span>
+
+  /**
+   * Method that gets the description of the Expense.
+   *
+   * @return description as String.
+   */
+  @Override
+  public String getDescription() {
+<span class="fc" id="L59">    return this.description;</span>
+  }
+
+  /**
+   * Method that gets the category of the Expense.
+   *
+   * @return category as String.
+   */
+  @Override
+  public String getCategory() {
+<span class="fc" id="L69">    return this.category;</span>
+  }
+
+  /**
+   * Method that gets the amount of the Expense.
+   *
+   * @return amount as int.
+   */
+  @Override
+  public double getAmount() {
+<span class="fc" id="L79">    return this.amount;</span>
+  }
+
+  /**
+   * Method that gets the date of the Expense.
+   *
+   * @return date as LocalDate.
+   */
+  @Override
+  public LocalDate getDate() {
+<span class="fc" id="L89">    return this.date;</span>
+  }
+
+  /**
+   * Method that sets a new description for the Expense.
+   *
+   * @param newDescription The new description of the Expense.
+   * @throws IllegalArgumentException if newDescription is null or blank.
+   */
+  @Override
+  public void setDescription(String newDescription) throws IllegalArgumentException {
+<span class="fc bfc" id="L100" title="All 2 branches covered.">    if (newDescription == null) {</span>
+<span class="fc" id="L101">      throw new IllegalArgumentException(&quot;newDescription cannot be null.&quot;);</span>
+    }
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">    if (newDescription.isBlank()) {</span>
+<span class="fc" id="L104">      throw new IllegalArgumentException(&quot;newDescription cannot be blank&quot;);</span>
+    }
+    
+<span class="nc" id="L107">    this.description = newDescription;</span>
+<span class="nc" id="L108">  }</span>
+
+  /**
+   * Method that sets a new category for the Expense.
+   *
+   * @param newCategory The new category of the Expense.
+   * @throws IllegalArgumentException if newCategory is null or blank.
+   */
+  @Override
+  public void setCategory(String newCategory) throws IllegalArgumentException {
+<span class="fc bfc" id="L118" title="All 2 branches covered.">    if (newCategory == null) {</span>
+<span class="fc" id="L119">      throw new IllegalArgumentException(&quot;newCategory cannot be null.&quot;);</span>
+    }
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">    if (newCategory.isBlank()) {</span>
+<span class="fc" id="L122">      throw new IllegalArgumentException(&quot;newCategory cannot be blank&quot;);</span>
+    }
+<span class="nc" id="L124">    this.category = newCategory;</span>
+<span class="nc" id="L125">  }</span>
+
+  /**
+   * Method that sets a new amount for the Expense.
+   *
+   * @param newAmount The new amount of the Expense.
+   * @throws IllegalArgumentException if amount is less than zero.
+   */
+  @Override
+  public void setAmount(double newAmount) throws IllegalArgumentException {
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">    if (newAmount &lt; 0) {</span>
+<span class="fc" id="L136">      throw new IllegalArgumentException(&quot;newAmount cannot be less than zero&quot;);</span>
+    }
+<span class="nc" id="L138">    this.amount = newAmount;</span>
+<span class="nc" id="L139">  }</span>
+
+  /**
+   * Method that sets a new date for the Expense.
+   *
+   * @param newDate The new date of the Expense.
+   */
+  @Override
+  public void setDate(LocalDate newDate) {
+<span class="nc" id="L148">    this.date = newDate;</span>
+<span class="nc" id="L149">  }</span>
+
+  /**
+   * Determines if the Expense object is equal to the specified object.
+   *
+   * @param obj The object to compare to.
+   * @return true if the objects are equal, false otherwise.
+   */
+  @Override
+  public boolean equals(Object obj) {
+<span class="fc bfc" id="L159" title="All 2 branches covered.">    if (obj == this) {</span>
+<span class="fc" id="L160">      return true;</span>
+    }
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">    if (!(obj instanceof Expense expense)) {</span>
+<span class="nc" id="L163">      return false;</span>
+    }
+    
+<span class="pc bpc" id="L166" title="3 of 4 branches missed.">    boolean equalsDate = expense.getDate() == null ? this.getDate() == null :</span>
+<span class="fc" id="L167">        expense.getDate().equals(this.getDate());</span>
+  
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">    return expense.getDescription().equals(this.description)</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">        &amp;&amp; expense.getCategory().equals(this.category)</span>
+<span class="pc bpc" id="L171" title="2 of 4 branches missed.">        &amp;&amp; expense.getAmount() == this.amount &amp;&amp; equalsDate;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

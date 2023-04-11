@@ -1,3 +1,4 @@
+# You can override the included template(s) by including variable overrides
 image: maven:eclipse-temurin
 
 stages:
@@ -63,9 +64,10 @@ pages:
   script:
     - mvn clean package
     - mvn javadoc:javadoc
+    - mvn jacoco:prepare-agent install jacoco:report
     - mkdir .public
     - cp -rf target/site/apidocs/* .public
-    - cp -rf target/jacoco/* .public
+    - cp -rf target/site/jacoco/* .public
     - mv -f .public public
   artifacts:
     paths:

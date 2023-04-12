@@ -91,7 +91,7 @@ public class NewProjectController {
   @FXML private Text totalAmount;
   
   //Error message
-  @FXML private final Label nameError = new Label();
+  @FXML private Label nameError = new Label();
   
   /**
    * Initializes the controller class.

@@ -24,8 +24,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
@@ -87,6 +85,7 @@ public class EditProjectController {
   @FXML private TextField incomeDescriptionField;
   @FXML private TextField incomeCategoryField;
   @FXML private TextField incomeAmountField;
+  @FXML private Button deleteIncomeButton;
   
   //Expense Table
   @FXML private TableView<Expense> expenseTable;
@@ -99,6 +98,7 @@ public class EditProjectController {
   @FXML private TextField expenseDescriptionField;
   @FXML private TextField expenseCategoryField;
   @FXML private TextField expenseAmountField;
+  @FXML private Button deleteExpenseButton;
   
   //Image view
   @FXML private ImageView imagePreview;
@@ -166,6 +166,8 @@ public class EditProjectController {
     
     // Set up the tables to display the transactions of the project that is being edited
     refreshLocalOverview();
+    resetIncomeFields();
+    resetExpenseFields();
     
     // Set up the image preview
     images.addAll(originalProject.getImages());
@@ -214,6 +216,8 @@ public class EditProjectController {
       incomeDescriptionField.setText(selectedTransaction.getDescription());
       incomeCategoryField.setText(selectedTransaction.getCategory());
       incomeAmountField.setText(String.valueOf(selectedTransaction.getAmount()));
+      
+      deleteIncomeButton.setDisable(false);
     } else {
       incomeTable.getSelectionModel().clearSelection();
       selectedTransaction = null;
@@ -237,6 +241,8 @@ public class EditProjectController {
       expenseDescriptionField.setText(selectedTransaction.getDescription());
       expenseCategoryField.setText(selectedTransaction.getCategory());
       expenseAmountField.setText(String.valueOf(selectedTransaction.getAmount()));
+      
+      deleteExpenseButton.setDisable(false);
     } else {
       expenseTable.getSelectionModel().clearSelection();
       selectedTransaction = null;
@@ -273,7 +279,6 @@ public class EditProjectController {
               incomeAmountField.getText()), incomeDatePicker.getValue()));
         }
       }
-
       
       refreshLocalOverview();
       resetIncomeFields();
@@ -330,22 +335,32 @@ public class EditProjectController {
   }
   
   /**
-   * Removes a transaction from the local overview when the delete or backspace key is pressed.
-   * Also checks if the overview is set to accounting or budgeting.
+   * Deletes the selected income from the local overview.
    */
-  @FXML
-  public void removeTransaction(KeyEvent event) {
-    if (event.getCode() == KeyCode.DELETE || event.getCode() == KeyCode.BACK_SPACE) {
-      
-      List<? extends Transaction> transactionList = isAccounting
-          ? (selectedTransaction instanceof Income ? accountingIncome : accountingExpense)
-          : (selectedTransaction instanceof Income ? budgetingIncome : budgetingExpense);
-      
-      if (selectedTransaction != null) {
-        transactionList.remove(selectedTransaction);
+  public void deleteIncome() {
+    if (selectedTransaction != null) {
+      if (isAccounting) {
+        accountingIncome.remove((Income) selectedTransaction);
+      } else {
+        budgetingIncome.remove((Income) selectedTransaction);
       }
-      
       refreshLocalOverview();
+      resetIncomeFields();
+    }
+  }
+  
+  /**
+   * Deletes the selected expense from the local overview.
+   */
+  public void deleteExpense() {
+    if (selectedTransaction != null) {
+      if (isAccounting) {
+        accountingExpense.remove((Expense) selectedTransaction);
+      } else {
+        budgetingExpense.remove((Expense) selectedTransaction);
+      }
+      refreshLocalOverview();
+      resetExpenseFields();
     }
   }
   
@@ -387,6 +402,7 @@ public class EditProjectController {
     incomeDescriptionField.setText("");
     incomeCategoryField.setText("");
     incomeAmountField.setText("");
+    deleteIncomeButton.setDisable(true);
   }
   
   // Resets the expense fields
@@ -395,6 +411,7 @@ public class EditProjectController {
     expenseDescriptionField.setText("");
     expenseCategoryField.setText("");
     expenseAmountField.setText("");
+    deleteExpenseButton.setDisable(true);
   }
   
   /**

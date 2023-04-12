@@ -92,7 +92,7 @@
                                     </HBox>
                                  </children>
                               </HBox>
-                              <TableView fx:id="incomeTable" editable="true" maxHeight="120.0" minHeight="120.0" onKeyPressed="#removeTransaction" onMouseClicked="#selectedIncome" prefHeight="120.0" prefWidth="523.0" tableMenuButtonVisible="true">
+                              <TableView fx:id="incomeTable" editable="true" maxHeight="120.0" minHeight="120.0" onMouseClicked="#selectedIncome" prefHeight="120.0" prefWidth="523.0" tableMenuButtonVisible="true">
                                 <columns>
                                   <TableColumn fx:id="incomeDate" prefWidth="75.0" text="Date" />
                                   <TableColumn fx:id="incomeDescription" prefWidth="75.0" text="Description" />
@@ -108,8 +108,13 @@
                                     <DatePicker fx:id="incomeDatePicker" prefHeight="22.0" prefWidth="155.0" promptText="Date" />
                                     <TextField fx:id="incomeDescriptionField" prefHeight="23.0" prefWidth="156.0" promptText="Description" />
                                     <TextField fx:id="incomeCategoryField" prefHeight="23.0" prefWidth="157.0" promptText="Category" />
-                                    <TextField fx:id="incomeAmountField" prefHeight="23.0" prefWidth="130.0" promptText="Amount" />
-                                    <Button fx:id="addIncome" mnemonicParsing="false" onAction="#addIncomeToLocal" prefHeight="23.0" prefWidth="22.0" text="+">
+                                    <TextField fx:id="incomeAmountField" prefHeight="23.0" prefWidth="104.0" promptText="Amount" />
+                                    <Button mnemonicParsing="false" onAction="#addIncomeToLocal" prefHeight="23.0" prefWidth="22.0" text="+">
+                                       <font>
+                                          <Font name="Arial Black" size="10.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="deleteIncomeButton" mnemonicParsing="false" onAction="#deleteIncome" prefHeight="23.0" prefWidth="22.0" text="x">
                                        <font>
                                           <Font name="Arial Black" size="10.0" />
                                        </font>
@@ -121,7 +126,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Text>
-                              <TableView fx:id="expenseTable" editable="true" maxHeight="120.0" minHeight="120.0" onKeyPressed="#removeTransaction" onMouseClicked="#selectedExpense" prefHeight="50.0" prefWidth="380.0" tableMenuButtonVisible="true">
+                              <TableView fx:id="expenseTable" editable="true" maxHeight="120.0" minHeight="120.0" onMouseClicked="#selectedExpense" prefHeight="50.0" prefWidth="380.0" tableMenuButtonVisible="true">
                                  <columns>
                                     <TableColumn fx:id="expenseDate" prefWidth="75.0" text="Date" />
                                     <TableColumn fx:id="expenseDescription" prefWidth="75.0" text="Description" />
@@ -134,11 +139,16 @@
                               </TableView>
                               <HBox prefHeight="9.0" prefWidth="492.0">
                                  <children>
-                                    <DatePicker fx:id="expenseDatePicker" prefHeight="22.0" prefWidth="155.0" promptText="Date" />
-                                    <TextField fx:id="expenseDescriptionField" promptText="Description" />
-                                    <TextField fx:id="expenseCategoryField" promptText="Category" />
-                                    <TextField fx:id="expenseAmountField" prefHeight="23.0" prefWidth="129.0" promptText="Amount" />
-                                    <Button fx:id="addExpense" mnemonicParsing="false" onAction="#addExpenseToLocal" prefHeight="23.0" prefWidth="22.0" text="+">
+                                    <DatePicker fx:id="expenseDatePicker" prefHeight="22.0" prefWidth="148.0" promptText="Date" />
+                                    <TextField fx:id="expenseDescriptionField" prefHeight="23.0" prefWidth="142.0" promptText="Description" />
+                                    <TextField fx:id="expenseCategoryField" prefHeight="23.0" prefWidth="138.0" promptText="Category" />
+                                    <TextField fx:id="expenseAmountField" prefHeight="23.0" prefWidth="101.0" promptText="Amount" />
+                                    <Button mnemonicParsing="false" onAction="#addExpenseToLocal" prefHeight="23.0" prefWidth="22.0" text="+">
+                                       <font>
+                                          <Font name="Arial Black" size="10.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="deleteExpenseButton" mnemonicParsing="false" onAction="#deleteExpense" prefHeight="23.0" prefWidth="22.0" text="x">
                                        <font>
                                           <Font name="Arial Black" size="10.0" />
                                        </font>

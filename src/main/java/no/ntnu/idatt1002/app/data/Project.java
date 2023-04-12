@@ -1,7 +1,10 @@
 package no.ntnu.idatt1002.app.data;
 
+import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Project class representing a project with a name, description, category, due date,
@@ -9,13 +12,13 @@ import java.time.LocalDate;
  * of the project, as well as to access its accounting and budgeting data.
  */
 public class Project implements Serializable {
-
   private String name;
   private String description;
   private String category;
   private final LocalDate dueDate;
   private final Accounting accounting;
   private final Budgeting budgeting;
+  private final List<File> images;
 
   /**
    * Constructs a Project object with the specified name, description, category, and due date.
@@ -36,8 +39,9 @@ public class Project implements Serializable {
     this.description = description;
     this.category = category;
     this.dueDate = dueDate;
-    this.accounting = new Accounting();
-    this.budgeting = new Budgeting();
+    accounting = new Accounting();
+    budgeting = new Budgeting();
+    images = new ArrayList<>();
   }
 
   /**
@@ -133,6 +137,24 @@ public class Project implements Serializable {
    */
   public Budgeting getBudgeting() {
     return budgeting;
+  }
+  
+  /**
+   * Adds an image to the project
+   *
+   * @param image The image to add
+   */
+  public void addImage(File image) {
+    images.add(image);
+  }
+  
+  /**
+   * Returns the images of the project
+   *
+   * @return The images of the project
+   */
+  public List<File> getImages() {
+    return images;
   }
 
   /**

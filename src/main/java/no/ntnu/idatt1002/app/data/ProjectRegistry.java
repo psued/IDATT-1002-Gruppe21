@@ -31,7 +31,7 @@ public class ProjectRegistry implements Serializable {
   }
 
   /**
-   * Gets al rojects from theregistry.
+   * Gets all projects from the registry.
    *
    * @return the projects
    */
@@ -40,7 +40,7 @@ public class ProjectRegistry implements Serializable {
   }
 
   /**
-   * Gets al ategories from theregistry.
+   * Gets all categories from the registry.
    *
    * @return the categories
    */

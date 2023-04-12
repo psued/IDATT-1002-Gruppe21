@@ -19,10 +19,17 @@ test:
     paths:
       - target/surefire-reports/
     reports:
-      junit: target/surefire-reports/TEST-no.ntnu.idatt1002.demo.repo.MyEntityRepoTest.xml
+      junit: 
+#        - target/surefire-reports/TEST-no.ntnu.idatt1002.app.data.AccountingTest.xml
+#        - target/surefire-reports/TEST-no.ntnu.idatt1002.app.data.BudgetingTest.xml
+#        - target/surefire-reports/TEST-no.ntnu.idatt1002.app.data.ExpenseTest.xml
+#        - target/surefire-reports/TEST-no.ntnu.idatt1002.app.data.IncomeTest.xml
+#        - target/surefire-reports/TEST-no.ntnu.idatt1002.app.data.ProjectTest.xml
+#        - target/surefire-reports/TEST-no.ntnu.idatt1002.app.data.UserTest.xml
+        - target/surefire-reports/TEST-*.xml
       coverage_report:
         coverage_format: cobertura
-        path: target/jacoco/coverage-reports/jacoco.xml
+        path: target/site/jacoco/jacoco.xml
 
 package:
   stage: package
@@ -30,7 +37,7 @@ package:
     - mvn clean package
   artifacts:
     paths:
-      - target/idatt2002demo-1.0-SNAPSHOT-jar-with-dependencies.jar
+      - target/IDATT1002Project-1.0-SNAPSHOT.jar
 
 generatepdf:
   image: ubuntu:20.04  # vi kjører dette i en docker container, som kjører Ubuntu Linux

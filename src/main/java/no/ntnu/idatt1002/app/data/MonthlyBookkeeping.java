@@ -1,13 +1,15 @@
 package no.ntnu.idatt1002.app.data;
 
-public class MonthlyBookkeping {
+import java.io.Serializable;
+
+public class MonthlyBookkeeping implements Serializable {
 
     private final Budgeting budgeting;
     private final Accounting accounting;
     private final Month month;
 
     // Constructor
-    public MonthlyBookkeping(Month month) {
+    public MonthlyBookkeeping(Month month) {
         budgeting = new Budgeting();
         accounting = new Accounting();
         this.month = month;

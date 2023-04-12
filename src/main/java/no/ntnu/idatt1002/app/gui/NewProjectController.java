@@ -1,5 +1,6 @@
 package no.ntnu.idatt1002.app.gui;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,9 +22,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.data.Expense;
 import no.ntnu.idatt1002.app.data.Income;
@@ -85,6 +89,14 @@ public class NewProjectController {
   @FXML private TextField expenseCategoryField;
   @FXML private TextField expenseAmountField;
   
+  //Image view
+  @FXML private ImageView imagePreview;
+  @FXML private Button imageLeft;
+  @FXML private Button imageRight;
+  @FXML private Button deleteImageButton;
+  private final List<File> images = new ArrayList<>();
+  private int imageIndex = 0;
+  
   //Total income, expense and amount overview
   @FXML private Text totalIncome;
   @FXML private Text totalExpense;
@@ -127,8 +139,8 @@ public class NewProjectController {
     expenseCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
     expenseAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
     
-    
     nameError.setVisible(false);
+    refreshImages();
   }
   
   /**
@@ -320,6 +332,77 @@ public class NewProjectController {
   }
   
   /**
+   * Lets a user add an image/images from their computer to the project. The images will be
+   * previewed in the imageView object
+   */
+  public void addImage() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select Image");
+    File selectedFile = fileChooser.showOpenDialog(null);
+    
+    if (selectedFile != null) {
+      images.add(selectedFile);
+      imageIndex = images.size() - 1;
+      
+      refreshImages();
+    }
+  }
+  
+  /**
+   * Lets a user look backwards through added images.
+   */
+  public void imageIndexBackwards() {
+    if (imageIndex > 0) {
+      imageIndex--;
+      refreshImages();
+    }
+  }
+  
+  /**
+   * Lets a user look forwards through added images.
+   */
+  public void imageIndexForwards() {
+    if (imageIndex < images.size() - 1) {
+      imageIndex++;
+      refreshImages();
+    }
+  }
+  
+  /**
+   * Deletes the currently selected image.
+   */
+  public void deleteImage() {
+    if (imageIndex > 0 && imageIndex == images.size() - 1) {
+      images.remove(imageIndex);
+      imageIndex--;
+    } else {
+      images.remove(imageIndex);
+    }
+    
+    refreshImages();
+  }
+  
+  /**
+   * Refreshes the image preview and the buttons to navigate between images. Will disable the
+   */
+  private void refreshImages() {
+    if (images.isEmpty()) {
+      imageLeft.setDisable(true);
+      imageRight.setDisable(true);
+      imagePreview.setImage(null);
+      deleteImageButton.setDisable(true);
+      return;
+    }
+    
+    Image image = new Image(images.get(imageIndex).toURI().toString());
+    imagePreview.setImage(image);
+    
+    deleteImageButton.setDisable(false);
+    imageLeft.setDisable(imageIndex == 0);
+    imageRight.setDisable(imageIndex == images.size() - 1);
+  }
+  
+  /**
    * Creates a new project and adds it to the user's project registry. It will display an error
    * message if the project name is invalid.
    */
@@ -332,6 +415,8 @@ public class NewProjectController {
       accountingExpense.forEach(project.getAccounting()::addExpense);
       budgetingIncome.forEach(project.getBudgeting()::addIncome);
       budgetingExpense.forEach(project.getBudgeting()::addExpense);
+      
+      images.forEach(project::addImage);
       
       tempUser.addProject(project);
       

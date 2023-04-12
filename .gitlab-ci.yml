@@ -20,12 +20,6 @@ test:
       - target/surefire-reports/
     reports:
       junit: 
-#        - target/surefire-reports/TEST-no.ntnu.idatt1002.app.data.AccountingTest.xml
-#        - target/surefire-reports/TEST-no.ntnu.idatt1002.app.data.BudgetingTest.xml
-#        - target/surefire-reports/TEST-no.ntnu.idatt1002.app.data.ExpenseTest.xml
-#        - target/surefire-reports/TEST-no.ntnu.idatt1002.app.data.IncomeTest.xml
-#        - target/surefire-reports/TEST-no.ntnu.idatt1002.app.data.ProjectTest.xml
-#        - target/surefire-reports/TEST-no.ntnu.idatt1002.app.data.UserTest.xml
         - target/surefire-reports/TEST-*.xml
       coverage_report:
         coverage_format: cobertura

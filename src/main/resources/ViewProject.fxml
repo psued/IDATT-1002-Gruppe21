@@ -26,7 +26,7 @@
                   <VBox prefHeight="477.0" prefWidth="44.0">
                      <children>
                         <VBox prefHeight="237.0" prefWidth="44.0" />
-                        <ImageView fx:id="imageButton1" fitHeight="43.0" fitWidth="106.0" nodeOrientation="RIGHT_TO_LEFT" onMouseReleased="#previousProject" preserveRatio="true">
+                        <ImageView fx:id="imageButton1" fitHeight="43.0" fitWidth="106.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#previousProject" preserveRatio="true">
                            <image>
                               <Image url="@54240.png" />
                            </image>
@@ -175,7 +175,7 @@
                   <VBox prefHeight="477.0" prefWidth="162.0">
                      <children>
                         <VBox prefHeight="219.0" prefWidth="162.0" />
-                        <ImageView fx:id="imageButton2" fitHeight="43.0" fitWidth="106.0" onMouseReleased="#nextProject" preserveRatio="true">
+                        <ImageView fx:id="imageButton2" fitHeight="43.0" fitWidth="106.0" onMouseClicked="#nextProject" preserveRatio="true">
                            <image>
                               <Image url="@54240.png" />
                            </image>

@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.ViewProjectController">
+<AnchorPane prefHeight="706.0" prefWidth="1083.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.ViewProjectController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="12.0" layoutY="14.0" maxWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="20.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
@@ -14,8 +21,18 @@
                   <Font name="System Bold" size="32.0" />
                </font>
             </Text>
-            <HBox alignment="CENTER" prefHeight="413.0" prefWidth="774.0" spacing="20.0">
+            <HBox alignment="CENTER" prefHeight="477.0" prefWidth="849.0" spacing="20.0">
                <children>
+                  <VBox prefHeight="477.0" prefWidth="44.0">
+                     <children>
+                        <VBox prefHeight="237.0" prefWidth="44.0" />
+                        <ImageView fx:id="imageButton1" fitHeight="43.0" fitWidth="106.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#previousProject" preserveRatio="true">
+                           <image>
+                              <Image url="@54240.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
                   <VBox prefHeight="465.0" prefWidth="530.0" spacing="20.0">
                      <children>
                         <HBox prefHeight="198.0" prefWidth="258.0" spacing="20.0">
@@ -153,6 +170,16 @@
                               </VBox>
                            </children>
                         </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="477.0" prefWidth="162.0">
+                     <children>
+                        <VBox prefHeight="219.0" prefWidth="162.0" />
+                        <ImageView fx:id="imageButton2" fitHeight="43.0" fitWidth="106.0" onMouseClicked="#nextProject" preserveRatio="true">
+                           <image>
+                              <Image url="@54240.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </VBox>
                </children>

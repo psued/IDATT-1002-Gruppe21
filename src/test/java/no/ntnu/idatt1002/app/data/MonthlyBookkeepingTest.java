@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,10 +13,11 @@ import org.junit.jupiter.api.Test;
 public class MonthlyBookkeepingTest {
 
     private MonthlyBookkeeping monthlyBookkeeping;
+    private Calendar calendar = Calendar.getInstance();
 
     @BeforeEach
     void init() {
-        monthlyBookkeeping = new MonthlyBookkeeping(Month.JANUARY);
+        monthlyBookkeeping = new MonthlyBookkeeping(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
     }
 
     @Test
@@ -119,11 +121,22 @@ public class MonthlyBookkeepingTest {
         assertTrue(monthlyBookkeeping.getBudgetNet() == income.getAmount() - expense.getAmount());
     }
 
-   
-
     @Test
     @DisplayName("Test that the month is correct")
     void testGetMonth() {
-        assertEquals(monthlyBookkeeping.getMonth(), Month.JANUARY);
+        assertEquals(monthlyBookkeeping.getMonth(), calendar.get(Calendar.MONTH));
+    }
+
+    @Test
+    @DisplayName("Test that the year is correct")
+    void testGetYear() {
+        assertEquals(monthlyBookkeeping.getYear(), calendar.get(Calendar.YEAR));
+    }
+
+    @Test
+    @DisplayName("Test equals method")
+    void testEquals() {
+        MonthlyBookkeeping monthlyBookkeeping2 = new MonthlyBookkeeping(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+        assertTrue(monthlyBookkeeping.equals(monthlyBookkeeping2));
     }
 }

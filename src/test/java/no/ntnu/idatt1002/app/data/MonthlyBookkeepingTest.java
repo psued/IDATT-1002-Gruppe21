@@ -121,7 +121,6 @@ public class MonthlyBookkeepingTest {
         assertTrue(monthlyBookkeeping.getBudgetNet() == income.getAmount() - expense.getAmount());
     }
 
-<<<<<<< HEAD
     @Test
     @DisplayName("Test that the month is correct")
     void testGetMonth() {
@@ -139,13 +138,5 @@ public class MonthlyBookkeepingTest {
     void testEquals() {
         MonthlyBookkeeping monthlyBookkeeping2 = new MonthlyBookkeeping(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
         assertTrue(monthlyBookkeeping.equals(monthlyBookkeeping2));
-=======
-   
-
-    @Test
-    @DisplayName("Test that the month is correct")
-    void testGetMonth() {
-        assertEquals(monthlyBookkeeping.getMonth(), Month.JANUARY);
->>>>>>> 05b73de (Finished tests for MonthlyBookkeeping.)
     }
 }

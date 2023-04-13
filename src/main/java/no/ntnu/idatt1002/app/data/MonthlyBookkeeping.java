@@ -6,16 +6,15 @@ public class MonthlyBookkeeping implements Serializable {
 
     private final Budgeting budgeting;
     private final Accounting accounting;
-    private final Month month;
+    private final int month;
+    private final int year;
 
-    // Constructor
-    public MonthlyBookkeeping(Month month) {
+    public MonthlyBookkeeping(int month, int year) {
         budgeting = new Budgeting();
         accounting = new Accounting();
         this.month = month;
+        this.year = year;
     }
-
-    // Getters for private fields
     public Budgeting getBudgeting() {
         return budgeting;
     }
@@ -24,8 +23,12 @@ public class MonthlyBookkeeping implements Serializable {
         return accounting;
     }
 
-    public Month getMonth() {
-        return month;
+    public int getMonth() {
+        return month;   
+    }
+
+    public int getYear() {
+        return year;
     }
 
     public double getBudgetNet() {
@@ -36,5 +39,27 @@ public class MonthlyBookkeeping implements Serializable {
     public double getAccountingNet() {
         // Get the difference between the income and expenses
         return accounting.getTotalIncome() - accounting.getTotalExpense();
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof MonthlyBookkeeping)) {
+            return false;
+        }
+        MonthlyBookkeeping monthlyBookkeeping = (MonthlyBookkeeping) o;
+        return month == monthlyBookkeeping.month && year == monthlyBookkeeping.year;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = 17;
+        result = 31 * result + month;
+        result = 31 * result + year;
+        return result;
     }
 }

@@ -25,7 +25,22 @@ public class ProjectRegistryTest {
     void testAddCategory() {
         projectRegistry.addCategory("test");
         ArrayList<String> categories = new ArrayList<>(projectRegistry.getCategories());
-        assertEquals("test", categories.get(2));
+        assertEquals("test", categories.get(projectRegistry.getCategories().size() - 1));
+    }
+    
+    @Test
+    void testRemoveCategory() {
+        projectRegistry.addCategory("test");
+        projectRegistry.removeCategory("test");
+        ArrayList<String> categories = new ArrayList<>(projectRegistry.getCategories());
+        assertEquals("Miscellaneous", categories.get(projectRegistry.getCategories().size() - 1));
+    }
+    
+    @Test
+    void testGetCategories() {
+        ArrayList<String> categories = new ArrayList<>(projectRegistry.getCategories());
+        assertEquals("Freelance", categories.get(0));
+        assertEquals("Personal", categories.get(1));
     }
 
     @Test
@@ -34,12 +49,13 @@ public class ProjectRegistryTest {
         projectRegistry.addProject(project);
         assertTrue(projectRegistry.getProjects().contains(project));
     }
-
+    
     @Test
-    void testGetCategories() {
-        ArrayList<String> categories = new ArrayList<>(projectRegistry.getCategories());
-        assertEquals("Freelance", categories.get(0));
-        assertEquals("Personal", categories.get(1));
+    void testRemoveProject() {
+        Project project = new Project("name", "description", "category", LocalDate.now());
+        projectRegistry.addProject(project);
+        projectRegistry.removeProject(project);
+        assertTrue(!projectRegistry.getProjects().contains(project));
     }
 
     @Test

@@ -8,11 +8,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.User;
@@ -35,64 +36,38 @@ public class ViewProjectController {
   // Local Budgeting overview
   private ArrayList<Income> budgetingIncome = new ArrayList<>();
   private ArrayList<Expense> budgetingExpense = new ArrayList<>();
-  @FXML
-  private Text viewTitle;
-  @FXML
-  private Text name;
-  @FXML
-  private Text category;
-  @FXML
-  private Text dueDate;
-  @FXML
-  private Text description;
+  @FXML private Text viewTitle;
+  @FXML private Text name;
+  @FXML private Text category;
+  @FXML private Text dueDate;
+  @FXML private Text description;
 
-  @FXML
-  private Button accounting;
-  @FXML
-  private Button budgeting;
-
+  @FXML private Button accounting;
+  @FXML private Button budgeting;
   private boolean isAccounting = true;
+  
+  @FXML private TableView<Income> incomeTable;
+  @FXML private TableColumn<Income, LocalDate> incomeDate;
+  @FXML private TableColumn<Income, String> incomeDescription;
+  @FXML private TableColumn<Income, String> incomeCategory;
+  @FXML private TableColumn<Income, Double> incomeAmount;
 
-  @FXML
-  private ImageView imageButton1;
+  @FXML private TableView<Expense> expenseTable;
+  @FXML private TableColumn<Expense, LocalDate> expenseDate;
+  @FXML private TableColumn<Expense, String> expenseDescription;
+  @FXML private TableColumn<Expense, String> expenseCategory;
+  @FXML private TableColumn<Expense, Double> expenseAmount;
+  
+  @FXML private ImageView imageIconLeft;
+  @FXML private ImageView imageIconRight;
+  @FXML private VBox previousProjectBox;
+  @FXML private VBox nextProjectBox;
 
-  @FXML
-  private ImageView imageButton2;
-
-  @FXML
-  private TableView<Income> incomeTable;
-  @FXML
-  private TableColumn<Income, LocalDate> incomeDate;
-  @FXML
-  private TableColumn<Income, String> incomeDescription;
-  @FXML
-  private TableColumn<Income, String> incomeCategory;
-  @FXML
-  private TableColumn<Income, Double> incomeAmount;
-
-  @FXML
-  private TableView<Expense> expenseTable;
-  @FXML
-  private TableColumn<Expense, LocalDate> expenseDate;
-  @FXML
-  private TableColumn<Expense, String> expenseDescription;
-  @FXML
-  private TableColumn<Expense, String> expenseCategory;
-  @FXML
-  private TableColumn<Expense, Double> expenseAmount;
-
-  @FXML
-  private BorderPane previousProjectBox;
-
-  @FXML
-  private BorderPane nextProjectBox;
-
-  @FXML
-  private Text totalIncome;
-  @FXML
-  private Text totalExpense;
-  @FXML
-  private Text totalAmount;
+  @FXML private Text totalIncome;
+  @FXML private Text totalExpense;
+  @FXML private Text totalAmount;
+  
+  @FXML private Label warningLabel;
 
   /**
    * Initialize the view project controller. Sets all text objects to match with the project data
@@ -146,18 +121,21 @@ public class ViewProjectController {
     refreshLocalOverview();
 
     if (selectedProject.equals(tempUser.getProjectRegistry().getProjects().get(0))) {
-      imageButton1.setOpacity(0);
+      imageIconLeft.setOpacity(0);
       previousProjectBox.setDisable(true);
     } else {
-      imageButton1.setOpacity(1);
+      imageIconLeft.setOpacity(1);
       previousProjectBox.setDisable(false);
     }
 
-    if (selectedProject.equals(tempUser.getProjectRegistry().getProjects().get(tempUser.getProjectRegistry().getProjects().size() - 1))) {
-      imageButton2.setOpacity(0);
+    Project lastProject = tempUser.getProjectRegistry().getProjects()
+        .get(tempUser.getProjectRegistry().getProjects().size() - 1);
+    
+    if (selectedProject.equals(lastProject)) {
+      imageIconRight.setOpacity(0);
       nextProjectBox.setDisable(true);
     } else {
-      imageButton2.setOpacity(1);
+      imageIconRight.setOpacity(1);
       nextProjectBox.setDisable(false);
      }
   }
@@ -211,7 +189,8 @@ public class ViewProjectController {
     totalIncome.setText(String.format("%.2f kr", incomeAmount));
     totalExpense.setText(String.format("- %.2f kr", expenseAmount));
     totalAmount.setText(String.format("%.2f kr", incomeAmount - expenseAmount));
-
+    
+    warningLabel.setVisible(false);
   }
 
   /**

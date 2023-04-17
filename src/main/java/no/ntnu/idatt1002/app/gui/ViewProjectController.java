@@ -1,8 +1,10 @@
 package no.ntnu.idatt1002.app.gui;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -58,11 +61,17 @@ public class ViewProjectController {
   @FXML private TableColumn<Expense, String> expenseCategory;
   @FXML private TableColumn<Expense, Double> expenseAmount;
   
-  @FXML private ImageView imageIconLeft;
-  @FXML private ImageView imageIconRight;
+  @FXML private ImageView iconLeft;
+  @FXML private ImageView iconRight;
   @FXML private VBox previousProjectBox;
   @FXML private VBox nextProjectBox;
-
+  @FXML private Button imageLeft;
+  @FXML private Button imageRight;
+  @FXML private ImageView imagePreview;
+  
+  private int imageIndex;
+  private List<File> images;
+  
   @FXML private Text totalIncome;
   @FXML private Text totalExpense;
   @FXML private Text totalAmount;
@@ -86,10 +95,11 @@ public class ViewProjectController {
     } catch (ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
-
-
+    
     project = selectedProject;
-
+    images = project.getImages();
+    imageIndex = 0;
+    
     viewTitle.setText("View " + project.getName());
     name.setText(project.getName());
     category.setText(project.getCategory());
@@ -121,10 +131,10 @@ public class ViewProjectController {
     refreshLocalOverview();
 
     if (selectedProject.equals(tempUser.getProjectRegistry().getProjects().get(0))) {
-      imageIconLeft.setOpacity(0);
+      iconLeft.setOpacity(0);
       previousProjectBox.setDisable(true);
     } else {
-      imageIconLeft.setOpacity(1);
+      iconLeft.setOpacity(1);
       previousProjectBox.setDisable(false);
     }
 
@@ -132,10 +142,10 @@ public class ViewProjectController {
         .get(tempUser.getProjectRegistry().getProjects().size() - 1);
     
     if (selectedProject.equals(lastProject)) {
-      imageIconRight.setOpacity(0);
+      iconRight.setOpacity(0);
       nextProjectBox.setDisable(true);
     } else {
-      imageIconRight.setOpacity(1);
+      iconRight.setOpacity(1);
       nextProjectBox.setDisable(false);
      }
   }
@@ -190,6 +200,8 @@ public class ViewProjectController {
     totalExpense.setText(String.format("- %.2f kr", expenseAmount));
     totalAmount.setText(String.format("%.2f kr", incomeAmount - expenseAmount));
     
+    refreshImages();
+    
     warningLabel.setVisible(false);
   }
 
@@ -237,7 +249,44 @@ public class ViewProjectController {
     Project nextProject = tempUser.getProjectRegistry().getProjects().get(index + 1);
 
     initializeWithData(nextProject);
-
+  }
+  
+  /**
+   * Refreshes the image preview and the buttons to navigate between images. Will disable the
+   */
+  private void refreshImages() {
+    if (images == null || images.isEmpty()) {
+      imageLeft.setDisable(true);
+      imageRight.setDisable(true);
+      imagePreview.setImage(null);
+      return;
+    }
+    
+    Image image = new Image(images.get(imageIndex).toURI().toString());
+    imagePreview.setImage(image);
+    
+    imageLeft.setDisable(imageIndex == 0);
+    imageRight.setDisable(imageIndex == images.size() - 1);
+  }
+  
+  /**
+   * Lets a user look backwards through added images.
+   */
+  public void imageIndexLeft() {
+    if (imageIndex > 0) {
+      imageIndex--;
+      refreshImages();
+    }
+  }
+  
+  /**
+   * Lets a user look forwards through added images.
+   */
+  public void imageIndexRight() {
+    if (imageIndex < images.size() - 1) {
+      imageIndex++;
+      refreshImages();
+    }
   }
 
   public void previousProject() {

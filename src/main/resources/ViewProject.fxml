@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -28,7 +27,7 @@
                      <children>
                         <VBox fx:id="previousProjectBox" onMouseClicked="#previousProject">
                            <children>
-                              <ImageView fx:id="imageIconLeft" fitHeight="43.0" fitWidth="46.0" nodeOrientation="RIGHT_TO_LEFT" preserveRatio="true">
+                              <ImageView fx:id="iconLeft" fitHeight="43.0" fitWidth="46.0" nodeOrientation="RIGHT_TO_LEFT" preserveRatio="true">
                                  <image>
                                     <Image url="@54240.png" />
                                  </image>
@@ -36,7 +35,7 @@
                            </children></VBox>
                      </children>
                   </VBox>
-                  <VBox prefHeight="465.0" prefWidth="530.0" spacing="20.0">
+                  <VBox prefHeight="492.0" prefWidth="450.0" spacing="20.0">
                      <children>
                         <HBox prefHeight="198.0" prefWidth="258.0" spacing="20.0">
                            <children>
@@ -126,17 +125,23 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER" prefHeight="535.0" prefWidth="348.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#goToAllProjects" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: Lightgray; -fx-background-radius: 15;" text="All projects">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Button>
-                        <ImageView fitHeight="164.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imagePreview" fitHeight="245.0" fitWidth="306.0" pickOnBounds="true" preserveRatio="true" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Button fx:id="imageLeft" mnemonicParsing="false" onMouseClicked="#imageIndexLeft" text="&lt;">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="imageRight" mnemonicParsing="false" onMouseClicked="#imageIndexRight" text="&gt;">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
                         <VBox alignment="BOTTOM_CENTER" prefHeight="442.0" prefWidth="226.0">
                            <children>
                               <VBox prefHeight="94.0" prefWidth="189.0">
@@ -163,11 +168,20 @@
                                                 <Font name="System Bold Italic" size="32.0" />
                                              </font>
                                           </Text>
-                                          <Button mnemonicParsing="false" onAction="#editProject" prefHeight="38.0" prefWidth="200.0" scaleShape="false" style="-fx-background-color: Green; -fx-background-radius: 15;" text="Edit" textFill="WHITE">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Button>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#goToAllProjects" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: Lightgray; -fx-background-radius: 15;" text="All projects">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onAction="#editProject" prefHeight="38.0" prefWidth="200.0" scaleShape="false" style="-fx-background-color: Green; -fx-background-radius: 15;" text="Edit" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                </Button>
+                                             </children>
+                                          </HBox>
                                        </children>
                                     </VBox>
                                  </children>
@@ -180,7 +194,7 @@
                      <children>
                         <VBox fx:id="nextProjectBox" onMouseClicked="#nextProject">
                            <children>
-                              <ImageView fx:id="imageIconRight" fitHeight="43.0" fitWidth="106.0" preserveRatio="true">
+                              <ImageView fx:id="iconRight" fitHeight="43.0" fitWidth="106.0" preserveRatio="true">
                                  <image>
                                     <Image url="@54240.png" />
                                  </image>

@@ -1,18 +1,22 @@
 package no.ntnu.idatt1002.app.gui;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.User;
@@ -35,64 +39,44 @@ public class ViewProjectController {
   // Local Budgeting overview
   private ArrayList<Income> budgetingIncome = new ArrayList<>();
   private ArrayList<Expense> budgetingExpense = new ArrayList<>();
-  @FXML
-  private Text viewTitle;
-  @FXML
-  private Text name;
-  @FXML
-  private Text category;
-  @FXML
-  private Text dueDate;
-  @FXML
-  private Text description;
+  @FXML private Text viewTitle;
+  @FXML private Text name;
+  @FXML private Text category;
+  @FXML private Text dueDate;
+  @FXML private Text description;
 
-  @FXML
-  private Button accounting;
-  @FXML
-  private Button budgeting;
-
+  @FXML private Button accounting;
+  @FXML private Button budgeting;
   private boolean isAccounting = true;
+  
+  @FXML private TableView<Income> incomeTable;
+  @FXML private TableColumn<Income, LocalDate> incomeDate;
+  @FXML private TableColumn<Income, String> incomeDescription;
+  @FXML private TableColumn<Income, String> incomeCategory;
+  @FXML private TableColumn<Income, Double> incomeAmount;
 
-  @FXML
-  private ImageView imageButton1;
-
-  @FXML
-  private ImageView imageButton2;
-
-  @FXML
-  private TableView<Income> incomeTable;
-  @FXML
-  private TableColumn<Income, LocalDate> incomeDate;
-  @FXML
-  private TableColumn<Income, String> incomeDescription;
-  @FXML
-  private TableColumn<Income, String> incomeCategory;
-  @FXML
-  private TableColumn<Income, Double> incomeAmount;
-
-  @FXML
-  private TableView<Expense> expenseTable;
-  @FXML
-  private TableColumn<Expense, LocalDate> expenseDate;
-  @FXML
-  private TableColumn<Expense, String> expenseDescription;
-  @FXML
-  private TableColumn<Expense, String> expenseCategory;
-  @FXML
-  private TableColumn<Expense, Double> expenseAmount;
-
-  @FXML
-  private BorderPane previousProjectBox;
-
-  @FXML
-  private BorderPane nextProjectBox;
-
-  @FXML
-  private Text totalIncome;
-  @FXML
-  private Text totalExpense;
-  @FXML
-  private Text totalAmount;
+  @FXML private TableView<Expense> expenseTable;
+  @FXML private TableColumn<Expense, LocalDate> expenseDate;
+  @FXML private TableColumn<Expense, String> expenseDescription;
+  @FXML private TableColumn<Expense, String> expenseCategory;
+  @FXML private TableColumn<Expense, Double> expenseAmount;
+  
+  @FXML private ImageView iconLeft;
+  @FXML private ImageView iconRight;
+  @FXML private VBox previousProjectBox;
+  @FXML private VBox nextProjectBox;
+  @FXML private Button imageLeft;
+  @FXML private Button imageRight;
+  @FXML private ImageView imagePreview;
+  
+  private int imageIndex;
+  private List<File> images;
+  
+  @FXML private Text totalIncome;
+  @FXML private Text totalExpense;
+  @FXML private Text totalAmount;
+  
+  @FXML private Label warningLabel;
 
   /**
    * Initialize the view project controller. Sets all text objects to match with the project data
@@ -111,10 +95,11 @@ public class ViewProjectController {
     } catch (ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
-
-
+    
     project = selectedProject;
-
+    images = project.getImages();
+    imageIndex = 0;
+    
     viewTitle.setText("View " + project.getName());
     name.setText(project.getName());
     category.setText(project.getCategory());
@@ -146,18 +131,21 @@ public class ViewProjectController {
     refreshLocalOverview();
 
     if (selectedProject.equals(tempUser.getProjectRegistry().getProjects().get(0))) {
-      imageButton1.setOpacity(0);
+      iconLeft.setOpacity(0);
       previousProjectBox.setDisable(true);
     } else {
-      imageButton1.setOpacity(1);
+      iconLeft.setOpacity(1);
       previousProjectBox.setDisable(false);
     }
 
-    if (selectedProject.equals(tempUser.getProjectRegistry().getProjects().get(tempUser.getProjectRegistry().getProjects().size() - 1))) {
-      imageButton2.setOpacity(0);
+    Project lastProject = tempUser.getProjectRegistry().getProjects()
+        .get(tempUser.getProjectRegistry().getProjects().size() - 1);
+    
+    if (selectedProject.equals(lastProject)) {
+      iconRight.setOpacity(0);
       nextProjectBox.setDisable(true);
     } else {
-      imageButton2.setOpacity(1);
+      iconRight.setOpacity(1);
       nextProjectBox.setDisable(false);
      }
   }
@@ -211,7 +199,10 @@ public class ViewProjectController {
     totalIncome.setText(String.format("%.2f kr", incomeAmount));
     totalExpense.setText(String.format("- %.2f kr", expenseAmount));
     totalAmount.setText(String.format("%.2f kr", incomeAmount - expenseAmount));
-
+    
+    refreshImages();
+    
+    warningLabel.setVisible(false);
   }
 
   /**
@@ -258,7 +249,44 @@ public class ViewProjectController {
     Project nextProject = tempUser.getProjectRegistry().getProjects().get(index + 1);
 
     initializeWithData(nextProject);
-
+  }
+  
+  /**
+   * Refreshes the image preview and the buttons to navigate between images. Will disable the
+   */
+  private void refreshImages() {
+    if (images == null || images.isEmpty()) {
+      imageLeft.setDisable(true);
+      imageRight.setDisable(true);
+      imagePreview.setImage(null);
+      return;
+    }
+    
+    Image image = new Image(images.get(imageIndex).toURI().toString());
+    imagePreview.setImage(image);
+    
+    imageLeft.setDisable(imageIndex == 0);
+    imageRight.setDisable(imageIndex == images.size() - 1);
+  }
+  
+  /**
+   * Lets a user look backwards through added images.
+   */
+  public void imageIndexLeft() {
+    if (imageIndex > 0) {
+      imageIndex--;
+      refreshImages();
+    }
+  }
+  
+  /**
+   * Lets a user look forwards through added images.
+   */
+  public void imageIndexRight() {
+    if (imageIndex < images.size() - 1) {
+      imageIndex++;
+      refreshImages();
+    }
   }
 
   public void previousProject() {

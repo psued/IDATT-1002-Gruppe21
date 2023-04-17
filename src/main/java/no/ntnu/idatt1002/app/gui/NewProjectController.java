@@ -21,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -103,7 +104,7 @@ public class NewProjectController {
   @FXML private Text totalAmount;
   
   //Error message
-  @FXML private Label nameError = new Label();
+  @FXML private Label warningLabel = new Label();
   
   /**
    * Initializes the controller class.
@@ -119,12 +120,31 @@ public class NewProjectController {
     
     category.getItems().clear();
   
+    // Add categories to category menu
     for (String category : tempUser.getProjectRegistry().getCategories()) {
       MenuItem menuItem = new MenuItem(category);
       menuItem.setOnAction(event -> this.category.setText(menuItem.getText()));
       this.category.getItems().add(menuItem);
     }
     
+    // Add option to create new category
+    MenuItem newCategoryItem = new MenuItem("-New Category-");
+    newCategoryItem.setOnAction(event -> {
+      TextInputDialog dialog = new TextInputDialog();
+      dialog.setTitle("New Category");
+      dialog.setHeaderText("Enter name for new category:");
+      Optional<String> result = dialog.showAndWait();
+      
+      result.ifPresent(name -> {
+        MenuItem menuItem = new MenuItem(name);
+        menuItem.setOnAction(e -> category.setText(name));
+        category.getItems().add(category.getItems().size() - 1, menuItem);
+        category.setText(name);
+      });
+    });
+    category.getItems().add(newCategoryItem);
+    
+    // Set default category
     accounting.setStyle("-fx-border-color: #000000");
     
     // Accounting table
@@ -139,12 +159,34 @@ public class NewProjectController {
     expenseCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
     expenseAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
     
-    nameError.setVisible(false);
-    
+    // Set up the tables to display the transactions of the project that is being edited
+    refreshLocalOverview();
     resetIncomeFields();
     resetExpenseFields();
     
     refreshImages();
+    
+    warningLabel.setVisible(false);
+  }
+  
+  /**
+   * Deletes a category from the user's project registry if it is not used by any projects.
+   */
+  public void deleteCategory() {
+    //Get the category that is selected
+    MenuItem chosenCategory = category.getItems().stream()
+        .filter(item -> item.getText().equals(category.getText())).findFirst().orElse(null);
+    
+    try {
+      tempUser.getProjectRegistry().removeCategory(category.getText());
+      category.getItems().remove(chosenCategory);
+      category.setText("");
+      
+      warningLabel.setVisible(false);
+    } catch (IllegalArgumentException e) {
+      warningLabel.setText(e.getMessage());
+      warningLabel.setVisible(true);
+    }
   }
   
   /**
@@ -239,11 +281,11 @@ public class NewProjectController {
       resetIncomeFields();
       
     } catch (NumberFormatException e) {
-      nameError.setText("Please enter a valid amount");
-      nameError.setVisible(true);
+      warningLabel.setText("Please enter a valid amount");
+      warningLabel.setVisible(true);
     } catch (IllegalArgumentException e) {
-      nameError.setText(e.getMessage());
-      nameError.setVisible(true);
+      warningLabel.setText(e.getMessage());
+      warningLabel.setVisible(true);
     }
   }
   
@@ -264,11 +306,11 @@ public class NewProjectController {
       resetExpenseFields();
       
     } catch (NumberFormatException e) {
-      nameError.setText("Please enter a valid amount");
-      nameError.setVisible(true);
+      warningLabel.setText("Please enter a valid amount");
+      warningLabel.setVisible(true);
     } catch (IllegalArgumentException e) {
-      nameError.setText(e.getMessage());
-      nameError.setVisible(true);
+      warningLabel.setText(e.getMessage());
+      warningLabel.setVisible(true);
     }
   }
   
@@ -330,8 +372,8 @@ public class NewProjectController {
     totalAmount.setText(String.format("%.2f kr", incomeAmount - expenseAmount));
     
     // Reset error message
-    nameError.setVisible(false);
-    nameError.setText("");
+    warningLabel.setVisible(false);
+    warningLabel.setText("");
   }
   
   // Resets the income fields
@@ -449,12 +491,13 @@ public class NewProjectController {
             Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
       } catch (IOException e) {
-        e.printStackTrace();
+        warningLabel.setVisible(true);
+        warningLabel.setText("Could not save project, Error: " + e.getMessage());
       }
       
     } catch (IllegalArgumentException e) {
-      nameError.setVisible(true);
-      nameError.setText(e.getMessage());
+      warningLabel.setVisible(true);
+      warningLabel.setText(e.getMessage());
     }
   }
   
@@ -477,7 +520,8 @@ public class NewProjectController {
             Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
       } catch (IOException e) {
-        e.printStackTrace();
+        warningLabel.setVisible(true);
+        warningLabel.setText("Could not delete project, Error: " + e.getMessage());
       }
     }
   }

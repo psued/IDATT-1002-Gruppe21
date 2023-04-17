@@ -37,6 +37,9 @@ public class Project implements Serializable {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Name cannot be null or blank");
     }
+    if (category == null || category.isBlank()) {
+      throw new IllegalArgumentException("Category cannot be null or blank");
+    }
 
     this.name = name;
     this.description = description;

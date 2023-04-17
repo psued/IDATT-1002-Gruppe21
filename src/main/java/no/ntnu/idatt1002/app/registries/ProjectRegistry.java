@@ -21,6 +21,7 @@ public class ProjectRegistry implements Serializable {
     this.projects = new ArrayList<>();
     categories.add("Freelance");
     categories.add("Personal");
+    categories.add("Miscellaneous");
   }
 
   /**
@@ -37,23 +38,19 @@ public class ProjectRegistry implements Serializable {
    *
    * @return the projects
    */
-  public ArrayList<Project> getProjects() {
+  public List<Project> getProjects() {
     return new ArrayList<>(projects);
   }
-
+  
   /**
-   * Gets all categories from the registry.
+   * Removes a project from the registry.
    *
-   * @return the categories
+   * @param project the project to be removed
    */
-  public List<String> getCategories() {
-    return categories;
-  }
-
   public void removeProject(Project project) {
     projects.remove(project);
   }
-
+  
   /**
    * Adds a category to the registry.
    *
@@ -64,6 +61,27 @@ public class ProjectRegistry implements Serializable {
       throw new IllegalArgumentException("Category cannot be null");
     }
     categories.add(category);
+  }
+  
+  /**
+   * Gets all categories from the registry.
+   *
+   * @return the categories
+   */
+  public List<String> getCategories() {
+    return new ArrayList<>(categories);
+  }
+  
+  /**
+   * Removes a category from the registry.
+   *
+   * @param category the category to be removed
+   */
+  public void removeCategory(String category) {
+    if (getProjects().stream().anyMatch(project -> project.getCategory().equals(category))) {
+      throw new IllegalArgumentException("Cannot remove a category that is in use by a project");
+    }
+    categories.remove(category);
   }
 
   /**

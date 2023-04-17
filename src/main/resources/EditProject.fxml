@@ -19,7 +19,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.EditProjectController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="12.0" layoutY="14.0" maxWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="30.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <VBox alignment="TOP_CENTER" layoutX="12.0" layoutY="14.0" maxWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="10.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Project">
                <font>
@@ -45,12 +45,21 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <MenuButton fx:id="category" mnemonicParsing="false" prefHeight="23.0" prefWidth="233.0" text="Freelance">
-                                      <items>
-                                        <MenuItem mnemonicParsing="false" text="Action 1" />
-                                        <MenuItem mnemonicParsing="false" text="Action 2" />
-                                      </items>
-                                    </MenuButton>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <MenuButton fx:id="category" mnemonicParsing="false" prefHeight="26.0" prefWidth="158.0" text="Freelance">
+                                             <items>
+                                                <MenuItem mnemonicParsing="false" text="Action 1" />
+                                                <MenuItem mnemonicParsing="false" text="Action 2" />
+                                             </items>
+                                          </MenuButton>
+                                          <Button mnemonicParsing="false" onAction="#deleteCategory" prefHeight="26.0" prefWidth="38.0" text="x">
+                                             <font>
+                                                <Font name="Arial Black" size="10.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </HBox>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Due date">
                                        <font>
                                           <Font size="18.0" />
@@ -253,7 +262,10 @@
             </HBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="nameError" alignment="CENTER" contentDisplay="CENTER" text="Warning Label" textAlignment="CENTER" textFill="RED" />
+                  <Label fx:id="warningLabel" alignment="CENTER" contentDisplay="CENTER" text="Warning Label" textAlignment="CENTER" textFill="RED">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
                </children>
             </VBox>
          </children>

@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.data.Expense;
@@ -81,6 +82,12 @@ public class ViewProjectController {
   private TableColumn<Expense, Double> expenseAmount;
 
   @FXML
+  private BorderPane previousProjectBox;
+
+  @FXML
+  private BorderPane nextProjectBox;
+
+  @FXML
   private Text totalIncome;
   @FXML
   private Text totalExpense;
@@ -140,14 +147,18 @@ public class ViewProjectController {
 
     if (selectedProject.equals(tempUser.getProjectRegistry().getProjects().get(0))) {
       imageButton1.setOpacity(0);
+      previousProjectBox.setDisable(true);
     } else {
       imageButton1.setOpacity(1);
+      previousProjectBox.setDisable(false);
     }
 
     if (selectedProject.equals(tempUser.getProjectRegistry().getProjects().get(tempUser.getProjectRegistry().getProjects().size() - 1))) {
       imageButton2.setOpacity(0);
+      nextProjectBox.setDisable(true);
     } else {
       imageButton2.setOpacity(1);
+      nextProjectBox.setDisable(false);
      }
   }
 

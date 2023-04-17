@@ -1,4 +1,4 @@
-package no.ntnu.idatt1002.app.data;
+package no.ntnu.idatt1002.app.transactions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -7,6 +7,8 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import no.ntnu.idatt1002.app.transactions.Income;
 
 public class IncomeTest {
 

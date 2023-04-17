@@ -27,12 +27,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
-import no.ntnu.idatt1002.app.data.Expense;
-import no.ntnu.idatt1002.app.data.Income;
-import no.ntnu.idatt1002.app.data.Project;
-import no.ntnu.idatt1002.app.data.Transaction;
-import no.ntnu.idatt1002.app.data.User;
+import no.ntnu.idatt1002.app.User;
 import no.ntnu.idatt1002.app.filehandling.FileHandling;
+import no.ntnu.idatt1002.app.registers.Project;
+import no.ntnu.idatt1002.app.transactions.Expense;
+import no.ntnu.idatt1002.app.transactions.Income;
+import no.ntnu.idatt1002.app.transactions.Transaction;
 
 /**
  * FXML Controller class for the EditProject.fxml file. Takes an existing project and allows the

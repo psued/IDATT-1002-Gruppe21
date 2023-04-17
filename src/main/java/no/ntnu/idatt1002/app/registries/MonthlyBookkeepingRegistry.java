@@ -1,8 +1,10 @@
-package no.ntnu.idatt1002.app.data;
+package no.ntnu.idatt1002.app.registries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
 
 public class MonthlyBookkeepingRegistry implements Serializable {
 

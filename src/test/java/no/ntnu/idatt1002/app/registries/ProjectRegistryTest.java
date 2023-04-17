@@ -1,4 +1,4 @@
-package no.ntnu.idatt1002.app.registry;
+package no.ntnu.idatt1002.app.registries;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import no.ntnu.idatt1002.app.data.Project;
-import no.ntnu.idatt1002.app.data.ProjectRegistry;
+import no.ntnu.idatt1002.app.registers.Project;
+import no.ntnu.idatt1002.app.registries.ProjectRegistry;
 
 public class ProjectRegistryTest {
 

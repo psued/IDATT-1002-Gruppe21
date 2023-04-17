@@ -14,11 +14,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
-import no.ntnu.idatt1002.app.data.Expense;
-import no.ntnu.idatt1002.app.data.Income;
-import no.ntnu.idatt1002.app.data.Project;
-import no.ntnu.idatt1002.app.data.User;
+import no.ntnu.idatt1002.app.User;
 import no.ntnu.idatt1002.app.filehandling.FileHandling;
+import no.ntnu.idatt1002.app.registers.Project;
+import no.ntnu.idatt1002.app.transactions.Expense;
+import no.ntnu.idatt1002.app.transactions.Income;
 
 /**
  * Controller for the view project view. Just displays the project data and allows the user to

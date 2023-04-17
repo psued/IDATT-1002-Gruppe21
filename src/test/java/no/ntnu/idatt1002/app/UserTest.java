@@ -1,4 +1,4 @@
-package no.ntnu.idatt1002.app.data;
+package no.ntnu.idatt1002.app;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,6 +12,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import no.ntnu.idatt1002.app.User;
+import no.ntnu.idatt1002.app.registers.Project;
+import no.ntnu.idatt1002.app.transactions.Expense;
+import no.ntnu.idatt1002.app.transactions.Income;
 
 public class UserTest {
 

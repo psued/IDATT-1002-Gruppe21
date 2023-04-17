@@ -5,7 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import no.ntnu.idatt1002.app.data.User;
+
+import no.ntnu.idatt1002.app.User;
 
 /**
  * A FileHandling utility class for managing User objects by storing and retrieving them

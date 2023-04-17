@@ -1,6 +1,9 @@
-package no.ntnu.idatt1002.app.data;
+package no.ntnu.idatt1002.app.registers;
 
 import java.io.Serializable;
+
+import no.ntnu.idatt1002.app.bookkeeping.Accounting;
+import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
 
 public class MonthlyBookkeeping implements Serializable {
 

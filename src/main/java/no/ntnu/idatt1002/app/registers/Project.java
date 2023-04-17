@@ -1,10 +1,13 @@
-package no.ntnu.idatt1002.app.data;
+package no.ntnu.idatt1002.app.registers;
 
 import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import no.ntnu.idatt1002.app.bookkeeping.Accounting;
+import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
 
 /**
  * A Project class representing a project with a name, description, category, due date,

@@ -1,4 +1,4 @@
-package no.ntnu.idatt1002.app.data;
+package no.ntnu.idatt1002.app.transactions;
 
 import java.io.Serializable;
 import java.time.LocalDate;

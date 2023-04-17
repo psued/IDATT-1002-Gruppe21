@@ -1,7 +1,10 @@
-package no.ntnu.idatt1002.app.data;
+package no.ntnu.idatt1002.app.bookkeeping;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import no.ntnu.idatt1002.app.transactions.Expense;
+import no.ntnu.idatt1002.app.transactions.Income;
 
 /**
  * The Budgeting class represents a bookkeeping system for tracking income and

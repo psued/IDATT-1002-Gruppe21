@@ -1,6 +1,9 @@
-package no.ntnu.idatt1002.app.data;
+package no.ntnu.idatt1002.app.bookkeeping;
 
 import java.util.ArrayList;
+
+import no.ntnu.idatt1002.app.transactions.Expense;
+import no.ntnu.idatt1002.app.transactions.Income;
 
 /**
  * Bookkeeping interface is used to keep track of all the income and expenses for either

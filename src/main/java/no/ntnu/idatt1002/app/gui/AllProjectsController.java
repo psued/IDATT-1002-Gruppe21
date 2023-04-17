@@ -11,9 +11,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
-import no.ntnu.idatt1002.app.data.Project;
-import no.ntnu.idatt1002.app.data.User;
+import no.ntnu.idatt1002.app.User;
 import no.ntnu.idatt1002.app.filehandling.FileHandling;
+import no.ntnu.idatt1002.app.registers.Project;
 
 /**
  * FXML Controller class for the AllProjects.fxml file. Displays all projects in the project

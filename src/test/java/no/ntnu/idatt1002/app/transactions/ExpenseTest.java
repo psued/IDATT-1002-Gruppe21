@@ -1,4 +1,4 @@
-package no.ntnu.idatt1002.app.data;
+package no.ntnu.idatt1002.app.transactions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 
 public class ExpenseTest {
 
-    private Expense income;
+    private Expense expense;
 
     @BeforeEach
     void setUp() {
-        income = new Expense("test", "test", 100, LocalDate.now());
+        expense = new Expense("test", "test", 100, LocalDate.now());
     }
 
 
@@ -29,12 +29,12 @@ public class ExpenseTest {
 
     @Test
     void testGetAmount() {
-        assertEquals(100, income.getAmount());
+        assertEquals(100, expense.getAmount());
     }
 
     @Test
     void testGetCategory() {
-        assertEquals("test", income.getCategory());
+        assertEquals("test", expense.getCategory());
     }
 
     @Test
@@ -46,20 +46,20 @@ public class ExpenseTest {
 
     @Test
     void testGetDescription() {
-        assertEquals("test", income.getDescription());
+        assertEquals("test", expense.getDescription());
     }
 
     @Test
     void testSetAmount() {
-        assertThrows(IllegalArgumentException.class, () -> income.setAmount(-1));
-        assertEquals(100, income.getAmount());
+        assertThrows(IllegalArgumentException.class, () -> expense.setAmount(-1));
+        assertEquals(100, expense.getAmount());
     }
 
     @Test
     void testSetCategory() {
-        assertThrows(IllegalArgumentException.class, () -> income.setCategory(null));
-        assertThrows(IllegalArgumentException.class, () -> income.setCategory(""));
-        assertEquals("test", income.getCategory());
+        assertThrows(IllegalArgumentException.class, () -> expense.setCategory(null));
+        assertThrows(IllegalArgumentException.class, () -> expense.setCategory(""));
+        assertEquals("test", expense.getCategory());
     }
 
     @Test
@@ -71,8 +71,8 @@ public class ExpenseTest {
 
     @Test
     void testSetDescription() {
-        assertThrows(IllegalArgumentException.class, () -> income.setDescription(null));
-        assertThrows(IllegalArgumentException.class, () -> income.setDescription(""));
-        assertEquals("test", income.getDescription());
+        assertThrows(IllegalArgumentException.class, () -> expense.setDescription(null));
+        assertThrows(IllegalArgumentException.class, () -> expense.setDescription(""));
+        assertEquals("test", expense.getDescription());
     }
 }

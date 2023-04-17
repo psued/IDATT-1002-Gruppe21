@@ -10,10 +10,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import no.ntnu.idatt1002.app.data.Expense;
-import no.ntnu.idatt1002.app.data.Income;
-import no.ntnu.idatt1002.app.data.ProjectRegistry;
-import no.ntnu.idatt1002.app.data.User;
+import no.ntnu.idatt1002.app.User;
+import no.ntnu.idatt1002.app.registries.ProjectRegistry;
+import no.ntnu.idatt1002.app.transactions.Expense;
+import no.ntnu.idatt1002.app.transactions.Income;
 
 public class FileHandlingTest {
 

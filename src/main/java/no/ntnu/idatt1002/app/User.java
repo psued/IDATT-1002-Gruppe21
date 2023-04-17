@@ -1,8 +1,13 @@
-package no.ntnu.idatt1002.app.data;
+package no.ntnu.idatt1002.app;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import no.ntnu.idatt1002.app.registers.Project;
+import no.ntnu.idatt1002.app.registries.ProjectRegistry;
+import no.ntnu.idatt1002.app.transactions.Expense;
+import no.ntnu.idatt1002.app.transactions.Income;
 
 /**
  * A User class representing a user with a collection of projects. It provides

@@ -588,4 +588,8 @@ public class EditProjectController {
       }
     }
   }
+
+  public void switchTheme() {
+    BudgetAndAccountingApp.setTheme();
+  }
 }

@@ -525,4 +525,8 @@ public class NewProjectController {
       }
     }
   }
+
+  public void switchTheme() {
+    BudgetAndAccountingApp.setTheme();
+  }
 }

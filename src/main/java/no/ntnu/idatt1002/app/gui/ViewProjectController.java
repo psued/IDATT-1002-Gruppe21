@@ -304,4 +304,8 @@ public class ViewProjectController {
 
     initializeWithData(previousProject);
   }
+
+  public void switchTheme() {
+    BudgetAndAccountingApp.setTheme();
+  }
 }

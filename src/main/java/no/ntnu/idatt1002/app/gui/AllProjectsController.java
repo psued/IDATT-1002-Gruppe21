@@ -116,5 +116,9 @@ public class AllProjectsController {
       e.printStackTrace();
     }
   }
+
+  public void switchTheme() {
+    BudgetAndAccountingApp.setTheme();
+  }
 }
 

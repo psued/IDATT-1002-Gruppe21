@@ -24,7 +24,7 @@ public class UserTest {
 
   @BeforeEach
   void setUp() {
-    user = new User();
+    User user = User.getInstance();
     
     ArrayList<Expense> accountingExpenses = new ArrayList<>();
     Expense expense1 = new Expense("Ticket to bus", "Transportation", 100, LocalDate.now());
@@ -50,8 +50,8 @@ public class UserTest {
     budgetingIncome.add(income3);
     budgetingIncome.add(income4);
 
-    user.addProject("TestName", "TestDescription", "TestCategory", LocalDate.now(),
-      "TestStatus", accountingExpenses, accountingIncome, budgetingExpenses, budgetingIncome);
+    user.addProject("TestName", "TestDescription", "TestCategory",
+        LocalDate.now(), accountingExpenses, accountingIncome, budgetingExpenses, budgetingIncome);
   }
 
   @Nested
@@ -62,64 +62,59 @@ public class UserTest {
     void testAddProjectExceptions() {
       assertThrows(IllegalArgumentException.class,
           () -> user.addProject(null, "TestDescription", "TestCategory",
-              LocalDate.now(), "TestStatus", new ArrayList<>(), new ArrayList<>(),
+              LocalDate.now(), new ArrayList<>(), new ArrayList<>(),
               new ArrayList<>(), new ArrayList<>()));
 
       assertThrows(IllegalArgumentException.class,
           () -> user.addProject("TestName", null, "TestCategory",
-              LocalDate.now(), "TestStatus", new ArrayList<>(), new ArrayList<>(),
+              LocalDate.now(), new ArrayList<>(), new ArrayList<>(),
               new ArrayList<>(), new ArrayList<>()));
 
       assertThrows(IllegalArgumentException.class,
           () -> user.addProject("TestName", "TestDescription", null,
-              LocalDate.now(), "TestStatus", new ArrayList<>(), new ArrayList<>(),
+              LocalDate.now(), new ArrayList<>(), new ArrayList<>(),
               new ArrayList<>(), new ArrayList<>()));
 
       assertThrows(IllegalArgumentException.class,
           () -> user.addProject("TestName", "TestDescription",
-              "TestCategory", null, "TestStatus", new ArrayList<>(), new ArrayList<>(),
+              "TestCategory", null, new ArrayList<>(), new ArrayList<>(),
               new ArrayList<>(), new ArrayList<>()));
 
       assertThrows(IllegalArgumentException.class,
           () -> user.addProject("TestName", "TestDescription",
-              "TestCategory", LocalDate.now(), null, new ArrayList<>(), new ArrayList<>(),
+              "TestCategory", LocalDate.now(), null, new ArrayList<>(),
               new ArrayList<>(), new ArrayList<>()));
 
       assertThrows(IllegalArgumentException.class,
           () -> user.addProject("TestName", "TestDescription",
-              "TestCategory", LocalDate.now(), "TestStatus", null, new ArrayList<>(),
+              "TestCategory", LocalDate.now(), new ArrayList<>(), null,
               new ArrayList<>(), new ArrayList<>()));
 
       assertThrows(IllegalArgumentException.class,
-        () -> user.addProject("TestName", "TestDescription",
-          "TestCategory", LocalDate.now(), "TestStatus", new ArrayList<>(),
-          null, new ArrayList<>(), new ArrayList<>()));
-
-      assertThrows(IllegalArgumentException.class,
           () -> user.addProject("TestName", "TestDescription",
-              "TestCategory", LocalDate.now(), "TestStatus", new ArrayList<>(),
+              "TestCategory", LocalDate.now(), new ArrayList<>(),
               new ArrayList<>(), null, new ArrayList<>()));
 
       assertThrows(IllegalArgumentException.class,
           () -> user.addProject("TestName", "TestDescription",
-              "TestCategory", LocalDate.now(), "TestStatus", new ArrayList<>(),
+              "TestCategory", LocalDate.now(), new ArrayList<>(),
               new ArrayList<>(), new ArrayList<>(), null));
 
       assertDoesNotThrow(() -> user.addProject("TestName",
-          "TestDescription", "TestCategory", LocalDate.now(), "TestStatus",
-        new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+          "TestDescription", "TestCategory", LocalDate.now(),
+          new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
     }
 
     @Test
     @DisplayName("Test that addProject correctly adds a project to the projectRegistry")
     void testAddProject() {
-      user.addProject("TestName", "TestDescription", "TestCategory", LocalDate.now(), "TestStatus",
+      user.addProject("TestName", "TestDescription", "TestCategory", LocalDate.now(),
           new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
       assertEquals(2, user.getProjectRegistry().getProjects().size());
       
       // ArrayLists are initialized when a project is created, and is therefore equal to the one
       // added above
-      Project project = new Project("TestName", "TestDescription", "TestCategory", LocalDate.now(), "TestStatus");
+      Project project = new Project("TestName", "TestDescription", "TestCategory", LocalDate.now());
       assertEquals(user.getProjectRegistry().getProjects().get(1), project);
     }
   }
@@ -129,9 +124,9 @@ public class UserTest {
   void testEditProject() {
     Project toEdit = user.getProjectRegistry().getProjects().get(0);
     user.editProject(toEdit, "NewName", "NewDescription", "NewCategory", LocalDate.now(),
-      "TestStatus", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     
-    Project sameeProject = new Project("NewName", "NewDescription", "NewCategory", LocalDate.now(), "TestStatus");
+    Project sameeProject = new Project("NewName", "NewDescription", "NewCategory", LocalDate.now());
     assertEquals(user.getProjectRegistry().getProjects().get(0), sameeProject);
   }
 
@@ -144,11 +139,11 @@ public class UserTest {
 
   @Test
   void testGetProjectRegistry() {
-    User newUser = new User();
-    newUser.addProject("TestName", "TestDescription", "TestCategory", LocalDate.now(), "TestStatus",
+    User newUser = User.getInstance();
+    newUser.addProject("TestName", "TestDescription", "TestCategory", LocalDate.now(),
         new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
-    Project project = new Project("TestName", "TestDescription", "TestCategory", LocalDate.now(), "TestStatus");
+    Project project = new Project("TestName", "TestDescription", "TestCategory", LocalDate.now());
     assertEquals(newUser.getProjectRegistry().getProjects().get(0), project);
   }
 

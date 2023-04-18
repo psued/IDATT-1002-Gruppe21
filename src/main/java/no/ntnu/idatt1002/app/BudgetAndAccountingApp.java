@@ -50,7 +50,7 @@ public class BudgetAndAccountingApp extends Application {
     project1.getAccounting().addExpense(expense1);
     project1.getBudgeting().addExpense(expense2);
     
-    User user = new User();
+    User user = User.getInstance();
     user.addProject(project1);
 
     Project project2 = new Project("Project 2", "Description 2", "Category 2", LocalDate.now(), "Finished");

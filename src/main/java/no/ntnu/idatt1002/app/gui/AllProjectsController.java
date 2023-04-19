@@ -6,6 +6,7 @@ import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,7 +31,7 @@ public class AllProjectsController {
   @FXML private TableColumn<Project, String> category;
   @FXML private TableColumn<Project, Double> totalAccounting;
 
-  @FXML private Text errorMessage;
+  @FXML private Label errorMessage;
   
   /**
    * Sets up the table containing all relevant projects by loading from the serialized user.

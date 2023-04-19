@@ -110,9 +110,9 @@ public class EditProjectController {
   private int imageIndex = 0;
   
   //Total income, expense and amount overview
-  @FXML private Text totalIncome;
-  @FXML private Text totalExpense;
-  @FXML private Text totalAmount;
+  @FXML private Label totalIncome;
+  @FXML private Label totalExpense;
+  @FXML private Label totalAmount;
   
   //Error message
   @FXML private Label warningLabel = new Label();

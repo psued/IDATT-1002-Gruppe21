@@ -1,6 +1,6 @@
 .root {
-    -fx-base: #3d3d3d; /* Base color for the UI */
-    -fx-background: #3d3d3d; /* Background color for the UI */
+    -fx-base: #5b5b5b; /* Base color for the UI */
+    -fx-background: #494949; /* Background color for the UI */
 }
 
 /* Styles for buttons */
@@ -16,7 +16,10 @@
     -fx-border-color: #555555; /* Border color for text fields */
 }
 
+
+
+/*
 * {
     -fx-fill: #f2f2f2;
 }
-
+*/

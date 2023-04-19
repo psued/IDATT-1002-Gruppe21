@@ -3,8 +3,10 @@ package no.ntnu.idatt1002.app.bookkeeping;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import java.util.List;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
+import no.ntnu.idatt1002.app.transactions.Transaction;
 
 /**
  * The Budgeting class represents a bookkeeping system for tracking income and
@@ -53,7 +55,35 @@ public class Budgeting implements Bookkeeping, Serializable {
   public void addExpense(Expense expense) {
     expenseList.add(expense);
   }
-
+  
+  /**
+   * Method for adding a transaction to the income or expense list.
+   *
+   * @param transaction the transaction to be added
+   */
+  @Override
+  public void addTransaction(Transaction transaction) {
+    if (transaction instanceof Income income) {
+      addIncome(income);
+    } else if (transaction instanceof Expense expense) {
+      addExpense(expense);
+    }
+  }
+  
+  /**
+   * Removes a transaction from the income or expense list.
+   *
+   * @param transaction the transaction to be removed
+   */
+  @Override
+  public void removeTransaction(Transaction transaction) {
+    if (transaction instanceof Income income) {
+      incomeList.remove(income);
+    } else if (transaction instanceof Expense expense) {
+      expenseList.remove(expense);
+    }
+  }
+  
   /**
    * Method for adding expenses to the expense list.
    *
@@ -80,7 +110,15 @@ public class Budgeting implements Bookkeeping, Serializable {
   public ArrayList<Expense> getExpenseList() {
     return new ArrayList<>(expenseList);
   }
-
+  
+  @Override
+  public List<Transaction> getTransactions() {
+    List<Transaction> transactions = new ArrayList<>();
+    transactions.addAll(incomeList);
+    transactions.addAll(expenseList);
+    return transactions;
+  }
+  
   /**
    * Method for getting the total income.
    *

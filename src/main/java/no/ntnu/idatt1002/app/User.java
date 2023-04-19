@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
 import no.ntnu.idatt1002.app.registers.Project;
+import no.ntnu.idatt1002.app.registries.MonthlyBookkeepingRegistry;
 import no.ntnu.idatt1002.app.registries.ProjectRegistry;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
@@ -18,12 +20,14 @@ import no.ntnu.idatt1002.app.transactions.Income;
 public class User implements Serializable {
 
   private final ProjectRegistry projectRegistry;
+  private final MonthlyBookkeepingRegistry monthlyBookkeepingRegistry;
 
   /**
    * Constructs a User object with an empty ProjectRegistry.
    */
   public User() {
     this.projectRegistry = new ProjectRegistry();
+    this.monthlyBookkeepingRegistry = new MonthlyBookkeepingRegistry();
   }
 
   /**
@@ -35,6 +39,15 @@ public class User implements Serializable {
     return projectRegistry;
   }
 
+  /**
+   * Returns the user's monthly bookkeeping registry.
+   *
+   * @return The user's MonthlyBookkeepingRegistry.
+   */
+  public MonthlyBookkeepingRegistry getMonthlyBookkeepingRegistry() {
+    return monthlyBookkeepingRegistry;
+  }
+  
   /**
    * Adds a project to the user's project registry.
    *
@@ -102,6 +115,15 @@ public class User implements Serializable {
     addProject(name, description, category, dueDate, accountingExpenses, accountingEquities,
         budgetingExpenses, budgetingEquities);
   }
+  
+  public void addMonthlyBookkeeping(MonthlyBookkeeping monthlyBookkeeping) {
+    monthlyBookkeepingRegistry.addMonthlyBookkeeping(monthlyBookkeeping);
+  }
+  
+  public void removeMonthlyBookkeeping(MonthlyBookkeeping monthlyBookkeeping) {
+    monthlyBookkeepingRegistry.removeMonthlyBookkeeping(monthlyBookkeeping);
+  }
+  
   
   /**
    * Returns a string representation of the user object.

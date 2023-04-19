@@ -1,28 +1,27 @@
 package no.ntnu.idatt1002.app.registers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
+import java.time.YearMonth;
 import no.ntnu.idatt1002.app.bookkeeping.Accounting;
 import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 public class MonthlyBookkeepingTest {
 
     private MonthlyBookkeeping monthlyBookkeeping;
-    private Calendar calendar = Calendar.getInstance();
 
     @BeforeEach
     void init() {
-        monthlyBookkeeping = new MonthlyBookkeeping(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+        monthlyBookkeeping = new MonthlyBookkeeping(YearMonth.now());
     }
 
     @Test
@@ -34,14 +33,14 @@ public class MonthlyBookkeepingTest {
         Accounting accounting = monthlyBookkeeping.getAccounting();
 
         // Use a stream to get the expense list and assert that it is empty
-        assertTrue(accounting.getExpenseList().stream().count() == 0);
+        assertEquals(0, accounting.getExpenseList().size());
 
         // Use a stream to get the income list and assert that it is empty
-        assertTrue(accounting.getIncomeList().stream().count() == 0);
+        assertEquals(0, accounting.getIncomeList().size());
 
         // Assert that the total expenses is 0
-        assertTrue(accounting.getTotalExpense() == 0);
-        assertTrue(accounting.getTotalIncome() == 0);
+        assertEquals(0, accounting.getTotalExpense());
+        assertEquals(0, accounting.getTotalIncome());
 
         // Add some stuff to the accounting object
         Expense transaction1 = new Expense("Test transaction 1", "Category", 100.0, LocalDate.now());
@@ -63,14 +62,14 @@ public class MonthlyBookkeepingTest {
         Budgeting budgeting = monthlyBookkeeping.getBudgeting();
 
         // Use a stream to get the expense list and assert that it is empty
-        assertTrue(budgeting.getExpenseList().stream().count() == 0);
+        assertEquals(0, budgeting.getExpenseList().size());
 
         // Use a stream to get the income list and assert that it is empty
-        assertTrue(budgeting.getIncomeList().stream().count() == 0);
+        assertEquals(budgeting.getIncomeList().size(), 0);
 
         // Assert that the total expenses is 0
-        assertTrue(budgeting.getTotalExpense() == 0);
-        assertTrue(budgeting.getTotalIncome() == 0);
+        assertEquals(0, budgeting.getTotalExpense());
+        assertEquals(0, budgeting.getTotalIncome());
 
         // Add some stuff to the budgeting object
         Expense transaction1 = new Expense("Test transaction 1", "Category", 100.0, LocalDate.now());
@@ -90,58 +89,78 @@ public class MonthlyBookkeepingTest {
     @DisplayName("Test that the accounting net is correct")
     void testGetAccountingNet() {
         Accounting accounting = monthlyBookkeeping.getAccounting();
-
-        assertTrue(accounting.getExpenseList().stream().count() == 0);
-        assertTrue(accounting.getIncomeList().stream().count() == 0);
-
-        assertTrue(accounting.getTotalExpense() == 0);
-        assertTrue(accounting.getTotalIncome() == 0);
+        
+        assertEquals(0, accounting.getExpenseList().size());
+        assertEquals(0, accounting.getIncomeList().size());
+        
+        assertEquals(0, accounting.getTotalExpense());
+        assertEquals(0, accounting.getTotalIncome());
 
         Expense expense = new Expense("Test expense", "Category", 100.0, LocalDate.now());
         Income income = new Income("Test income", "Category", 200.0, LocalDate.now());
         accounting.addExpense(expense);
         accounting.addIncome(income);
-
-        assertTrue(monthlyBookkeeping.getAccountingNet() == income.getAmount() - expense.getAmount());
+        
+        assertEquals(monthlyBookkeeping.getAccountingNet(),
+            income.getAmount() - expense.getAmount());
     }
 
     @Test
     @DisplayName("Test that the budget net is correct")
     void testGetBudgetNet() {
         Budgeting budgeting = monthlyBookkeeping.getBudgeting();
-
-        assertTrue(budgeting.getExpenseList().stream().count() == 0);
-        assertTrue(budgeting.getIncomeList().stream().count() == 0);
-
-        assertTrue(budgeting.getTotalExpense() == 0);
-        assertTrue(budgeting.getTotalIncome() == 0);
+        
+        assertEquals(0, budgeting.getExpenseList().size());
+        assertEquals(0, budgeting.getIncomeList().size());
+        
+        assertEquals(0, budgeting.getTotalExpense());
+        assertEquals(0, budgeting.getTotalIncome());
 
         Expense expense = new Expense("Test expense", "Category", 100.0, LocalDate.now());
         Income income = new Income("Test income", "Category", 200.0, LocalDate.now());
         budgeting.addExpense(expense);
         budgeting.addIncome(income);
-
-        assertTrue(budgeting.getExpenseList().stream().count() == 1);
-        assertTrue(budgeting.getIncomeList().stream().count() == 1);
-        assertTrue(monthlyBookkeeping.getBudgetNet() == income.getAmount() - expense.getAmount());
+        
+        assertEquals(1, budgeting.getExpenseList().size());
+        assertEquals(1, budgeting.getIncomeList().size());
+        assertEquals(monthlyBookkeeping.getBudgetNet(), income.getAmount() - expense.getAmount());
     }
 
     @Test
-    @DisplayName("Test that the month is correct")
-    void testGetMonth() {
-        assertEquals(monthlyBookkeeping.getMonth(), calendar.get(Calendar.MONTH));
+    @DisplayName("Test that the YearMonth is correct")
+    void testGetYearMonth() {
+        YearMonth yearMonth = YearMonth.now();
+        assertEquals(monthlyBookkeeping.getYearMonth(), yearMonth);
     }
+    
 
-    @Test
-    @DisplayName("Test that the year is correct")
-    void testGetYear() {
-        assertEquals(monthlyBookkeeping.getYear(), calendar.get(Calendar.YEAR));
-    }
-
-    @Test
+    @Nested
     @DisplayName("Test equals method")
-    void testEquals() {
-        MonthlyBookkeeping monthlyBookkeeping2 = new MonthlyBookkeeping(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
-        assertTrue(monthlyBookkeeping.equals(monthlyBookkeeping2));
+    class TestEquals {
+        @Test
+        @DisplayName("Test that the equals method returns true when comparing the same object")
+        void testEqualsSameObject() {
+            assertEquals(monthlyBookkeeping, monthlyBookkeeping);
+        }
+
+        @Test
+        @DisplayName("Test that the equals method returns false when comparing to null")
+        void testEqualsNull() {
+            assertNotEquals(null, monthlyBookkeeping);
+        }
+
+        @Test
+        @DisplayName("Test that the equals method returns false when comparing to a different class")
+        void testEqualsDifferentClass() {
+            assertNotEquals(monthlyBookkeeping, LocalDate.now());
+        }
+
+        @Test
+        @DisplayName("Test that the equals method returns false when the YearMonth is different")
+        void testEqualsDifferentObject() {
+            MonthlyBookkeeping monthlyBookkeeping2 =
+                new MonthlyBookkeeping(YearMonth.now().plusMonths(1));
+            assertNotEquals(monthlyBookkeeping, monthlyBookkeeping2);
+        }
     }
 }

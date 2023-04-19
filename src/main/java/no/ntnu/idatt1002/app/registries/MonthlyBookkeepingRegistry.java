@@ -1,25 +1,29 @@
 package no.ntnu.idatt1002.app.registries;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.time.YearMonth;
+import java.util.HashMap;
+import java.util.Map;
 import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
 
 public class MonthlyBookkeepingRegistry implements Serializable {
 
-    private List<MonthlyBookkeeping> bookkeepingList;
+    private final Map<YearMonth, MonthlyBookkeeping> bookkeepingMap;
 
     public MonthlyBookkeepingRegistry() {
-        bookkeepingList = new ArrayList<>();
+        bookkeepingMap = new HashMap<>();
     }
 
     public void addMonthlyBookkeeping(MonthlyBookkeeping bookkeeping) {
-        bookkeepingList.add(bookkeeping);
+        bookkeepingMap.put(bookkeeping.getYearMonth(), bookkeeping);
+    }
+    
+    public void removeMonthlyBookkeeping(MonthlyBookkeeping bookkeeping) {
+        bookkeepingMap.remove(bookkeeping.getYearMonth());
     }
 
-    public List<MonthlyBookkeeping> getMonthlyBookkeepingList() {
-        return bookkeepingList;
+    public Map<YearMonth, MonthlyBookkeeping> getMonthlyBookkeepingMap() {
+        return new HashMap<>(bookkeepingMap);
     }
 
 }

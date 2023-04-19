@@ -3,26 +3,21 @@ package no.ntnu.idatt1002.app.registries;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-
+import java.time.YearMonth;
+import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
+import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
+import no.ntnu.idatt1002.app.transactions.Expense;
+import no.ntnu.idatt1002.app.transactions.Income;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
-import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
-import no.ntnu.idatt1002.app.registries.MonthlyBookkeepingRegistry;
-import no.ntnu.idatt1002.app.transactions.Expense;
-import no.ntnu.idatt1002.app.transactions.Income;
-
 public class MonthlyBookkeepingRegistryTest {
-
-    private Calendar calendar = Calendar.getInstance();
-
+    
     @Test
     @DisplayName("Test that the accounting object is the same object")
     void testAddAndGetMonthlyBookkeeping() {
         MonthlyBookkeepingRegistry monthlyBookkeepingRegistry = new MonthlyBookkeepingRegistry();
-        MonthlyBookkeeping monthlyBookkeeping = new MonthlyBookkeeping(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+        MonthlyBookkeeping monthlyBookkeeping = new MonthlyBookkeeping(YearMonth.now());
         
         Budgeting budgeting = monthlyBookkeeping.getBudgeting();
         Expense transaction1 = new Expense("Test transaction 1", "Category", 100.0, LocalDate.now());
@@ -31,7 +26,8 @@ public class MonthlyBookkeepingRegistryTest {
         budgeting.addIncome(transaction2);
         monthlyBookkeepingRegistry.addMonthlyBookkeeping(monthlyBookkeeping);
 
-        MonthlyBookkeeping monthlyBookkeeping2 = new MonthlyBookkeeping(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
-        assertEquals(monthlyBookkeepingRegistry.getMonthlyBookkeepingList().get(0), monthlyBookkeeping2);
+        MonthlyBookkeeping monthlyBookkeeping2 = new MonthlyBookkeeping(YearMonth.now());
+        assertEquals(monthlyBookkeepingRegistry.getMonthlyBookkeepingMap().get(YearMonth.now()),
+            monthlyBookkeeping2);
     }
 }

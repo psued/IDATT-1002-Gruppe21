@@ -2,6 +2,8 @@ package no.ntnu.idatt1002.app.registers;
 
 import java.io.Serializable;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import no.ntnu.idatt1002.app.bookkeeping.Accounting;
 import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
 
@@ -9,14 +11,12 @@ public class MonthlyBookkeeping implements Serializable {
 
     private final Budgeting budgeting;
     private final Accounting accounting;
-    private final int month;
-    private final int year;
+    private final YearMonth yearMonth;
 
-    public MonthlyBookkeeping(int month, int year) {
+    public MonthlyBookkeeping(YearMonth yearMonth) {
         budgeting = new Budgeting();
         accounting = new Accounting();
-        this.month = month;
-        this.year = year;
+        this.yearMonth = yearMonth;
     }
     public Budgeting getBudgeting() {
         return budgeting;
@@ -27,11 +27,15 @@ public class MonthlyBookkeeping implements Serializable {
     }
 
     public int getMonth() {
-        return month;   
+        return yearMonth.getMonthValue();
     }
 
     public int getYear() {
-        return year;
+        return yearMonth.getYear();
+    }
+    
+    public YearMonth getYearMonth() {
+        return yearMonth;
     }
 
     public double getBudgetNet() {
@@ -54,15 +58,11 @@ public class MonthlyBookkeeping implements Serializable {
             return false;
         }
         MonthlyBookkeeping monthlyBookkeeping = (MonthlyBookkeeping) o;
-        return month == monthlyBookkeeping.month && year == monthlyBookkeeping.year;
+        return yearMonth.equals(monthlyBookkeeping.getYearMonth());
     }
 
     @Override
-    public int hashCode()
-    {
-        int result = 17;
-        result = 31 * result + month;
-        result = 31 * result + year;
-        return result;
+    public int hashCode() {
+        return yearMonth.hashCode();
     }
 }

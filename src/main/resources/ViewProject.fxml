@@ -72,6 +72,12 @@
                                        </font>
                                     </Label>
                                     <Label fx:id="dueDate" text="Due date" />
+                                    <Label text="Status">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="status" text="Status" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="255.0" prefWidth="304.0" spacing="6.0">

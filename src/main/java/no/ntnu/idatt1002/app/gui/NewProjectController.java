@@ -55,6 +55,7 @@ public class NewProjectController {
   @FXML private MenuButton category;
   @FXML private TextArea description;
   @FXML private DatePicker dueDate;
+  @FXML private MenuButton status;
   
   //Accounting and Budgeting buttons
   @FXML private Button accounting;
@@ -117,14 +118,19 @@ public class NewProjectController {
     } catch (ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
-    
-    category.getItems().clear();
   
     // Add categories to category menu
     for (String category : tempUser.getProjectRegistry().getCategories()) {
       MenuItem menuItem = new MenuItem(category);
       menuItem.setOnAction(event -> this.category.setText(menuItem.getText()));
       this.category.getItems().add(menuItem);
+    }
+
+    //Add statuses to status menu
+    for (String status : tempUser.getProjectRegistry().getStatuses()) {
+      MenuItem menuItem = new MenuItem(status);
+      menuItem.setOnAction(event -> this.status.setText(menuItem.getText()));
+      this.status.getItems().add(menuItem);
     }
     
     // Add option to create new category
@@ -472,7 +478,7 @@ public class NewProjectController {
   public void saveProject() {
     try {
       Project project = new Project(name.getText(), description.getText(), category.getText(),
-          dueDate.getValue());
+          dueDate.getValue(), status.getText());
       
       accountingIncome.forEach(project.getAccounting()::addIncome);
       accountingExpense.forEach(project.getAccounting()::addExpense);

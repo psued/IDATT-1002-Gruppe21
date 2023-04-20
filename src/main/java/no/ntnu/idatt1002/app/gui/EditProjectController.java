@@ -66,6 +66,7 @@ public class EditProjectController {
   @FXML private MenuButton category;
   @FXML private TextArea description;
   @FXML private DatePicker dueDate;
+  @FXML private MenuButton status;
   
   //Accounting and Budgeting buttons
   @FXML private Button accounting;
@@ -136,9 +137,8 @@ public class EditProjectController {
     category.setText(originalProject.getCategory());
     description.setText(originalProject.getDescription());
     dueDate.setValue(originalProject.getDueDate());
-    
-    category.getItems().clear();
-  
+    status.setText(originalProject.getStatus());
+
     accountingIncome = originalProject.getAccounting().getIncomeList();
     accountingExpense = originalProject.getAccounting().getExpenseList();
     budgetingIncome = originalProject.getBudgeting().getIncomeList();
@@ -150,6 +150,13 @@ public class EditProjectController {
       MenuItem menuItem = new MenuItem(category);
       menuItem.setOnAction(event -> this.category.setText(menuItem.getText()));
       this.category.getItems().add(menuItem);
+    }
+
+    // Add statuses to the status menu button
+    for (String status: tempUser.getProjectRegistry().getStatuses()) {
+      MenuItem menuItem = new MenuItem(status);
+      menuItem.setOnAction(event -> this.status.setText(menuItem.getText()));
+      this.status.getItems().add(menuItem);
     }
     
     // Add option to create new category
@@ -532,7 +539,7 @@ public class EditProjectController {
   public void saveProject() {
     try {
       Project project = new Project(name.getText(), description.getText(), category.getText(),
-          dueDate.getValue());
+          dueDate.getValue(), status.getText());
   
       accountingIncome.forEach(project.getAccounting()::addIncome);
       accountingExpense.forEach(project.getAccounting()::addExpense);

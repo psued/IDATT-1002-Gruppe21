@@ -43,6 +43,7 @@ public class ViewProjectController {
   @FXML private Label name;
   @FXML private Label category;
   @FXML private Label dueDate;
+  @FXML private Label status;
   @FXML private Label description;
 
   @FXML private Button accounting;
@@ -60,7 +61,7 @@ public class ViewProjectController {
   @FXML private TableColumn<Expense, String> expenseDescription;
   @FXML private TableColumn<Expense, String> expenseCategory;
   @FXML private TableColumn<Expense, Double> expenseAmount;
-  
+
   @FXML private ImageView iconLeft;
   @FXML private ImageView iconRight;
   @FXML private VBox previousProjectBox;
@@ -103,10 +104,12 @@ public class ViewProjectController {
     viewTitle.setText("View " + project.getName());
     name.setText(project.getName());
     category.setText(project.getCategory());
+    status.setText(project.getStatus());
 
     String dueDateString =
             project.getDueDate() == null ? "No due date" : project.getDueDate().toString();
     dueDate.setText(dueDateString);
+
     description.setText(project.getDescription());
 
     accountingIncome = project.getAccounting().getIncomeList();

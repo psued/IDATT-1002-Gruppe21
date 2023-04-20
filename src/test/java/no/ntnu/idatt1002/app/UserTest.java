@@ -49,61 +49,16 @@ public class UserTest {
     budgetingIncome.add(income3);
     budgetingIncome.add(income4);
 
-    user.addProject("TestName", "TestDescription", "TestCategory",
-        LocalDate.now(), accountingExpenses, accountingIncome, budgetingExpenses, budgetingIncome);
+    Project currentproject = new Project("TestName", "TestDescription", "TestCategory",
+            LocalDate.now());
+
+    user.getProjectRegistry().addProject(currentproject);
+    user.getProjectRegistry().getProjects().get(0).editProject("TestName", "TestDescription", "TestCategory",
+            LocalDate.now(), accountingExpenses, accountingIncome, budgetingExpenses, budgetingIncome);
   }
 
   @Nested
   class AddProjectTest {
-
-    @Test
-    @DisplayName("Test that addProject throws IllegalArgumentException when given null values")
-    void testAddProjectExceptions() {
-      assertThrows(IllegalArgumentException.class,
-          () -> user.addProject(null, "TestDescription", "TestCategory",
-              LocalDate.now(), new ArrayList<>(), new ArrayList<>(),
-              new ArrayList<>(), new ArrayList<>()));
-
-      assertThrows(IllegalArgumentException.class,
-          () -> user.addProject("TestName", null, "TestCategory",
-              LocalDate.now(), new ArrayList<>(), new ArrayList<>(),
-              new ArrayList<>(), new ArrayList<>()));
-
-      assertThrows(IllegalArgumentException.class,
-          () -> user.addProject("TestName", "TestDescription", null,
-              LocalDate.now(), new ArrayList<>(), new ArrayList<>(),
-              new ArrayList<>(), new ArrayList<>()));
-
-      assertThrows(IllegalArgumentException.class,
-          () -> user.addProject("TestName", "TestDescription",
-              "TestCategory", null, new ArrayList<>(), new ArrayList<>(),
-              new ArrayList<>(), new ArrayList<>()));
-
-      assertThrows(IllegalArgumentException.class,
-          () -> user.addProject("TestName", "TestDescription",
-              "TestCategory", LocalDate.now(), null, new ArrayList<>(),
-              new ArrayList<>(), new ArrayList<>()));
-
-      assertThrows(IllegalArgumentException.class,
-          () -> user.addProject("TestName", "TestDescription",
-              "TestCategory", LocalDate.now(), new ArrayList<>(), null,
-              new ArrayList<>(), new ArrayList<>()));
-
-      assertThrows(IllegalArgumentException.class,
-          () -> user.addProject("TestName", "TestDescription",
-              "TestCategory", LocalDate.now(), new ArrayList<>(),
-              new ArrayList<>(), null, new ArrayList<>()));
-
-      assertThrows(IllegalArgumentException.class,
-          () -> user.addProject("TestName", "TestDescription",
-              "TestCategory", LocalDate.now(), new ArrayList<>(),
-              new ArrayList<>(), new ArrayList<>(), null));
-
-      assertDoesNotThrow(() -> user.addProject("TestName",
-          "TestDescription", "TestCategory", LocalDate.now(),
-          new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
-    }
-
     @Test
     @DisplayName("Test that addProject correctly adds a project to the projectRegistry")
     void testAddProject() {
@@ -130,8 +85,7 @@ public class UserTest {
   @Test
   void testGetProjectRegistry() {
     //User newUser = User.getInstance();
-    user.addProject("TestName", "TestDescription", "TestCategory", LocalDate.now(),
-        new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+    user.getProjectRegistry().addProject(new Project("TestName", "TestDescription", "TestCategory", LocalDate.now()));
 
     Project project = new Project("TestName", "TestDescription", "TestCategory", LocalDate.now());
     assertEquals(user.getProjectRegistry().getProjects().get(1), project);

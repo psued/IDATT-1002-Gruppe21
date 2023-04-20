@@ -546,7 +546,7 @@ public class NewProjectController {
       
       images.forEach(project::addImage);
       
-      tempUser.addProject(project);
+      tempUser.getProjectRegistry().addProject(project);
       
      
       try {

@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
+import no.ntnu.idatt1002.app.registers.Project;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,8 +48,7 @@ public class FileHandlingTest {
         budgetingIncome.add(income3);
         budgetingIncome.add(income4);
 
-        user.addProject("TestName", "TestDescription", "TestCategory",  LocalDate.now(), "TestStatus", accountingExpenses,
-                accountingIncome, budgetingExpenses, budgetingIncome);
+        user.getProjectRegistry().addProject(new Project("TestName", "TestDescription", "TestCategory", LocalDate.now()));
     }
 
     //TODO: Fix this test, it fails because of the singleton pattern, user cannot be instantiated twice

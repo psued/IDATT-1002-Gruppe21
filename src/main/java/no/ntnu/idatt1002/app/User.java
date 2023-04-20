@@ -61,16 +61,16 @@ public class User implements Serializable {
    * @param budgetingIncome    A list of budgeting income.
    * @throws IllegalArgumentException If one or more arguments are null.
    */
-  public void addProject(String name, String description, String category, LocalDate dueDate, String status,
+  public void addProject(String name, String description, String category, LocalDate dueDate,
       ArrayList<Expense> accountingExpenses, ArrayList<Income> accountingIncome,
          ArrayList<Expense> budgetingExpenses, ArrayList<Income> budgetingIncome) {
-    if (name == null || description == null || category == null || dueDate == null || status == null
+    if (name == null || description == null || category == null || dueDate == null
         || accountingExpenses == null || accountingIncome == null || budgetingExpenses == null
         || budgetingIncome == null) {
       throw new IllegalArgumentException("One or more arguments are null");
     }
 
-    Project newProject = new Project(name, description, category, dueDate, status);
+    Project newProject = new Project(name, description, category, dueDate);
 
     newProject.getAccounting().addExpenses(accountingExpenses);
     newProject.getAccounting().addEquities(accountingIncome);
@@ -108,11 +108,11 @@ public class User implements Serializable {
    * @param budgetingEquities  A list of the new budgeting equities.
    */
   public void editProject(Project project, String name, String description, String category,
-                          LocalDate dueDate, String status, ArrayList<Expense> accountingExpenses,
+        LocalDate dueDate, ArrayList<Expense> accountingExpenses,
         ArrayList<Income> accountingEquities, ArrayList<Expense> budgetingExpenses,
         ArrayList<Income> budgetingEquities) {
     removeProject(project);
-    addProject(name, description, category, dueDate, status, accountingExpenses, accountingEquities,
+    addProject(name, description, category, dueDate, accountingExpenses, accountingEquities,
         budgetingExpenses, budgetingEquities);
   }
   

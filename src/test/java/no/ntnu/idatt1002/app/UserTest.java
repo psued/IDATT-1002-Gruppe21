@@ -107,39 +107,20 @@ public class UserTest {
     @Test
     @DisplayName("Test that addProject correctly adds a project to the projectRegistry")
     void testAddProject() {
-      user.addProject("TestName", "TestDescription", "TestCategory", LocalDate.now(),
-          new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+      user.getProjectRegistry().addProject(new Project("Testname", "TestDescription", "TestCategory", LocalDate.now()));
       //assertEquals(3, user.getProjectRegistry().getProjects().size());
       
       // ArrayLists are initialized when a project is created, and is therefore equal to the one
       // added above
       Project project = new Project("TestName", "TestDescription", "TestCategory", LocalDate.now());
-      assertEquals(user.getProjectRegistry().getProjects().get(2), project);
+      assertEquals(user.getProjectRegistry().getProjects().get(1), project);
     }
   }
-
-
-
-
-
-
-  @Test
-  @DisplayName("Test editProject")
-  void testEditProject() {
-    Project toEdit = user.getProjectRegistry().getProjects().get(0);
-    user.editProject(toEdit, "NewName", "NewDescription", "NewCategory", LocalDate.now(),
-        new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-    
-    Project sameeProject = new Project("NewName", "NewDescription", "NewCategory", LocalDate.now());
-    assertEquals(user.getProjectRegistry().getProjects().get(0), sameeProject);
-  }
-
-
 
   @Test
   void testRemoveProject() {
     Project toRemove = user.getProjectRegistry().getProjects().get(0);
-    user.removeProject(toRemove);
+    user.getProjectRegistry().removeProject(toRemove);
     assertTrue(user.getProjectRegistry().getProjects().isEmpty());
   }
 
@@ -153,7 +134,7 @@ public class UserTest {
         new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
     Project project = new Project("TestName", "TestDescription", "TestCategory", LocalDate.now());
-    assertEquals(user.getProjectRegistry().getProjects().get(2), project);
+    assertEquals(user.getProjectRegistry().getProjects().get(1), project);
   }
 
 

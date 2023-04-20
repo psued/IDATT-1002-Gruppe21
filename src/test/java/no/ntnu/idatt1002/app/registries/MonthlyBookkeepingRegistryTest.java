@@ -1,33 +1,50 @@
 package no.ntnu.idatt1002.app.registries;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDate;
 import java.time.YearMonth;
-import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
 import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
-import no.ntnu.idatt1002.app.transactions.Expense;
-import no.ntnu.idatt1002.app.transactions.Income;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class MonthlyBookkeepingRegistryTest {
-    
-    @Test
-    @DisplayName("Test that the accounting object is the same object")
-    void testAddAndGetMonthlyBookkeeping() {
-        MonthlyBookkeepingRegistry monthlyBookkeepingRegistry = new MonthlyBookkeepingRegistry();
-        MonthlyBookkeeping monthlyBookkeeping = new MonthlyBookkeeping(YearMonth.now());
-        
-        Budgeting budgeting = monthlyBookkeeping.getBudgeting();
-        Expense transaction1 = new Expense("Test transaction 1", "Category", 100.0, LocalDate.now());
-        Income transaction2 = new Income("Test transaction 1", "Category", 100.0, LocalDate.now());
-        budgeting.addExpense(transaction1);
-        budgeting.addIncome(transaction2);
-        monthlyBookkeepingRegistry.addMonthlyBookkeeping(monthlyBookkeeping);
-
-        MonthlyBookkeeping monthlyBookkeeping2 = new MonthlyBookkeeping(YearMonth.now());
-        assertEquals(monthlyBookkeepingRegistry.getMonthlyBookkeepingMap().get(YearMonth.now()),
-            monthlyBookkeeping2);
-    }
+  
+  MonthlyBookkeepingRegistry monthlyBookkeepingRegistry;
+  YearMonth yearMonth;
+  
+  @BeforeEach
+  void init() {
+    monthlyBookkeepingRegistry = new MonthlyBookkeepingRegistry();
+    monthlyBookkeepingRegistry.addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now()));
+    yearMonth = YearMonth.now();
+  }
+  
+  @Test
+  @DisplayName("Test the getMonthlyBookkeeping method")
+  void testGetMonthlyBookkeeping() {
+    assertTrue(monthlyBookkeepingRegistry.getMonthlyBookkeeping(yearMonth) != null);
+  }
+  
+  @Test
+  @DisplayName("Test the getMonthlyBookkeepingMap method")
+  void testGetMonthlyBookkeepingMap() {
+    assertEquals(1, monthlyBookkeepingRegistry.getMonthlyBookkeepingMap().size());
+  }
+  
+  @Test
+  @DisplayName("Test the addMonthlyBookkeeping method")
+  void testAddMonthlyBookkeeping() {
+    monthlyBookkeepingRegistry.addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now().plusMonths(1)));
+    assertEquals(2, monthlyBookkeepingRegistry.getMonthlyBookkeepingMap().size());
+  }
+  
+  @Test
+  @DisplayName("Test the removeMonthlyBookkeeping method")
+  void testRemoveMonthlyBookkeeping() {
+    monthlyBookkeepingRegistry.removeMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now()));
+    assertEquals(0, monthlyBookkeepingRegistry.getMonthlyBookkeepingMap().size());
+  }
 }

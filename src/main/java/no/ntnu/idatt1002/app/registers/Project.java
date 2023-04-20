@@ -18,6 +18,7 @@ public class Project implements Serializable {
   private String name;
   private String description;
   private String category;
+  private String status;
   private final LocalDate dueDate;
   private final Accounting accounting;
   private final Budgeting budgeting;
@@ -33,7 +34,7 @@ public class Project implements Serializable {
    * @param dueDate The due date of the project.
    * @throws IllegalArgumentException If the name is null or blank.
    */
-  public Project(String name, String description, String category, LocalDate dueDate) {
+  public Project(String name, String description, String category, LocalDate dueDate, String status) {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Name cannot be null or blank");
     }
@@ -45,6 +46,7 @@ public class Project implements Serializable {
     this.description = description;
     this.category = category;
     this.dueDate = dueDate;
+    this.status = status;
     accounting = new Accounting();
     budgeting = new Budgeting();
     images = new ArrayList<>();
@@ -107,6 +109,24 @@ public class Project implements Serializable {
    */
   public void setCategory(String category) {
     this.category = category;
+  }
+
+  /**
+   * Returns the status of the project.
+   *
+   * @return The status of the project.
+   */
+  public String getStatus() {
+    return status;
+  }
+
+  /**
+   * Sets the status of the project.
+   *
+   * @param status The new status of the project.
+   */
+  public void setStatus(String status) {
+    this.status = status;
   }
 
   /**

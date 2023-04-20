@@ -74,6 +74,8 @@ public interface Bookkeeping {
    */
   double getTotalExpense();
 
+  void reset();
+
   /**
    * Determines if the Bookkeeping object is equal to the specified object.
    *

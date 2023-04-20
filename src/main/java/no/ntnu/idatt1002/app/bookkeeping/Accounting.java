@@ -135,6 +135,12 @@ public class Accounting implements Bookkeeping, Serializable {
     return expenseList.stream().mapToDouble(Expense::getAmount).sum();
   }
 
+  @Override
+  public void reset() {
+    incomeList.clear();
+    expenseList.clear();
+  }
+
   /**
    * Determines if the Accounting object is equal to the specified object.
    *

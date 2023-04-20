@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
@@ -17,15 +24,23 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.NewProjectController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.NewProjectController">
    <children>
       <VBox alignment="CENTER" layoutX="12.0" layoutY="14.0" maxWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="10.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Project">
-               <font>
-                  <Font name="System Bold" size="32.0" />
-               </font>
-            </Text>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="460.0">
+               <children>
+                  <Label text="New Project">
+                     <font>
+                        <Font name="System Bold" size="32.0" />
+                     </font>
+                  </Label>
+                  <ToggleButton mnemonicParsing="false" onMouseClicked="#switchTheme" text="Light / Dark">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></ToggleButton>
+               </children>
+            </HBox>
             <HBox alignment="CENTER" prefHeight="665.0" prefWidth="700.0" spacing="20.0">
                <children>
                   <VBox prefHeight="465.0" prefWidth="530.0" spacing="20.0">
@@ -34,17 +49,17 @@
                            <children>
                               <VBox prefHeight="198.0" prefWidth="170.0" spacing="6.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                                    <Label text="Name">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
-                                    </Text>
+                                    </Label>
                                     <TextField fx:id="name" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Project category">
+                                    <Label text="Project category">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
-                                    </Text>
+                                    </Label>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
                                           <MenuButton fx:id="category" mnemonicParsing="false" prefHeight="23.0" prefWidth="233.0" text="Freelance">
@@ -60,21 +75,21 @@
                                           </Button>
                                        </children>
                                     </HBox>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Due date">
+                                    <Label text="Due date">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
-                                    </Text>
+                                    </Label>
                                     <DatePicker fx:id="dueDate" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="198.0" prefWidth="331.0" spacing="6.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
+                                    <Label text="Description">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
-                                    </Text>
+                                    </Label>
                                     <TextArea fx:id="description" prefHeight="200.0" prefWidth="200.0" />
                                  </children>
                               </VBox>
@@ -86,11 +101,11 @@
                                  <children>
                                     <VBox alignment="CENTER_LEFT" prefHeight="16.0" prefWidth="284.0">
                                        <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Income">
+                                          <Label text="Income">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
-                                          </Text>
+                                          </Label>
                                        </children>
                                     </VBox>
                                     <HBox alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="290.0">
@@ -130,11 +145,11 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Expence">
+                              <Label text="Expence">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
-                              </Text>
+                              </Label>
                               <TableView fx:id="expenseTable" editable="true" maxHeight="120.0" minHeight="120.0" onMouseClicked="#selectedExpense" prefHeight="50.0" prefWidth="380.0" tableMenuButtonVisible="true">
                                  <columns>
                                     <TableColumn fx:id="expenseDate" prefWidth="75.0" text="Date" />
@@ -204,28 +219,28 @@
                         </HBox>
                         <VBox prefHeight="94.0" prefWidth="189.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" wrappingWidth="86.984375">
+                              <Label prefHeight="40.0" prefWidth="110.0" text="Total:">
                                  <font>
                                     <Font name="System Bold Italic" size="32.0" />
                                  </font>
-                              </Text>
+                              </Label>
                               <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <Text fx:id="totalIncome" strokeType="OUTSIDE" strokeWidth="0.0" text="0kr" textAlignment="RIGHT" wrappingWidth="180.0">
+                                    <Label fx:id="totalIncome" text="0kr">
                                        <font>
                                           <Font name="System Italic" size="32.0" />
                                        </font>
-                                    </Text>
-                                    <Text fx:id="totalExpense" strokeType="OUTSIDE" strokeWidth="0.0" text="-0kr" textAlignment="RIGHT" wrappingWidth="180.0">
+                                    </Label>
+                                    <Label fx:id="totalExpense" text="-0kr">
                                        <font>
                                           <Font name="System Italic" size="32.0" />
                                        </font>
-                                    </Text>
-                                    <Text fx:id="totalAmount" strokeType="OUTSIDE" strokeWidth="0.0" text="0kr" textAlignment="RIGHT" wrappingWidth="180.0">
+                                    </Label>
+                                    <Label fx:id="totalAmount" text="0kr">
                                        <font>
                                           <Font name="System Bold Italic" size="32.0" />
                                        </font>
-                                    </Text>
+                                    </Label>
                                  </children>
                               </VBox>
                            </children>
@@ -236,7 +251,7 @@
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onMouseClicked="#deleteProject" prefHeight="52.0" prefWidth="91.0" style="-fx-background-color: Red; -fx-background-radius: 15;" text="Delete" textFill="WHITE">
+                                          <Button mnemonicParsing="false" onMouseClicked="#deleteProject" prefHeight="52.0" prefWidth="100.0" style="-fx-background-color: Red; -fx-background-radius: 15;" text="Delete" textFill="WHITE">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>

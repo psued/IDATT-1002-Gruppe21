@@ -1,0 +1,25 @@
+.root {
+    -fx-base: #5b5b5b; /* Base color for the UI */
+    -fx-background: #494949; /* Background color for the UI */
+}
+
+/* Styles for buttons */
+.button {
+    -fx-background-color: #555555; /* Background color for buttons */
+    -fx-text-fill: #f2f2f2; /* Text color for buttons */
+}
+
+/* Styles for text fields */
+.text-field {
+    -fx-background-color: #292929; /* Background color for text fields */
+    -fx-text-fill: #f2f2f2; /* Text color for text fields */
+    -fx-border-color: #555555; /* Border color for text fields */
+}
+
+
+
+/*
+* {
+    -fx-fill: #f2f2f2;
+}
+*/

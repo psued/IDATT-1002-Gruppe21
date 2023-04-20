@@ -39,11 +39,11 @@ public class ViewProjectController {
   // Local Budgeting overview
   private ArrayList<Income> budgetingIncome = new ArrayList<>();
   private ArrayList<Expense> budgetingExpense = new ArrayList<>();
-  @FXML private Text viewTitle;
-  @FXML private Text name;
-  @FXML private Text category;
-  @FXML private Text dueDate;
-  @FXML private Text description;
+  @FXML private Label viewTitle;
+  @FXML private Label name;
+  @FXML private Label category;
+  @FXML private Label dueDate;
+  @FXML private Label description;
 
   @FXML private Button accounting;
   @FXML private Button budgeting;
@@ -72,9 +72,9 @@ public class ViewProjectController {
   private int imageIndex;
   private List<File> images;
   
-  @FXML private Text totalIncome;
-  @FXML private Text totalExpense;
-  @FXML private Text totalAmount;
+  @FXML private Label totalIncome;
+  @FXML private Label totalExpense;
+  @FXML private Label totalAmount;
   
   @FXML private Label warningLabel;
 
@@ -303,5 +303,9 @@ public class ViewProjectController {
     Project previousProject = tempUser.getProjectRegistry().getProjects().get(index - 1);
 
     initializeWithData(previousProject);
+  }
+
+  public void switchTheme() {
+    BudgetAndAccountingApp.setTheme();
   }
 }

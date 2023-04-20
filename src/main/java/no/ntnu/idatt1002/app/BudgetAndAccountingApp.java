@@ -27,6 +27,15 @@ public class BudgetAndAccountingApp extends Application {
   public static void setRoot(Parent root) {
     scene.setRoot(root);
   }
+
+  public static void setTheme() {
+    if (scene.getStylesheets().size() == 1) {
+      scene.getStylesheets().remove(0);
+    }
+    else {
+      scene.getStylesheets().add("styles/dark-theme.css");
+    }
+  }
   
   private void testData() {
     Project project1 = new Project("Project 1", "Description 1", "Category 1", LocalDate.now());
@@ -41,7 +50,7 @@ public class BudgetAndAccountingApp extends Application {
     
     User user = new User();
     user.addProject(project1);
-    
+
     Project project2 = new Project("Project 2", "Description 2", "Category 2", LocalDate.now());
     Income income3 = new Income("Income 3", "Category 1", 100, LocalDate.now());
     Income income4 = new Income("Income 4", "Category 2", 200, LocalDate.now());
@@ -68,6 +77,7 @@ public class BudgetAndAccountingApp extends Application {
         .load(Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
     
     scene = new Scene(root);
+
     primaryStage.setScene(scene);
     primaryStage.show();
   }

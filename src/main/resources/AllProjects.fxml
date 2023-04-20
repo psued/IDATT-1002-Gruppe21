@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.AllProjectsController">
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.AllProjectsController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="All Projects" textAlignment="CENTER" wrappingWidth="143.29510498046875">
-               <font>
-                  <Font name="System Bold" size="23.0" />
-               </font>
-            </Text>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="550.0">
+               <children>
+                  <Label text="All Projects">
+                     <font>
+                        <Font name="System Bold" size="32.0" />
+                     </font>
+                  </Label>
+                  <ToggleButton mnemonicParsing="false" onMouseClicked="#switchTheme" text="Light / Dark">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></ToggleButton>
+               </children>
+            </HBox>
             <HBox alignment="CENTER" prefHeight="700.0" prefWidth="800.0">
                <children>
                   <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="700.0">
@@ -30,17 +39,17 @@
                         <Insets />
                      </HBox.margin>
                   </TableView>
-                  <VBox alignment="CENTER" prefHeight="653.0" prefWidth="146.0" spacing="10.0">
+                  <VBox alignment="CENTER" prefHeight="643.0" prefWidth="160.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#newProject" text="New Project">
+                        <Button mnemonicParsing="false" onMouseClicked="#newProject" prefWidth="155.0" text="New Project">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Button>
-                        <Button mnemonicParsing="false" onMouseClicked="#viewProject" text="View Project">
+                        <Button mnemonicParsing="false" onMouseClicked="#viewProject" prefWidth="155.0" text="View Project">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Button>
-                        <Button mnemonicParsing="false" onMouseClicked="#editProject" text="Edit Project">
+                        <Button mnemonicParsing="false" onMouseClicked="#editProject" prefWidth="155.0" text="Edit Project">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Button>
@@ -48,7 +57,7 @@
                   </VBox>
                </children>
             </HBox>
-            <Text fx:id="errorMessage" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="198.599853515625" />
+            <Label fx:id="errorMessage" />
          </children>
       </VBox>
    </children>

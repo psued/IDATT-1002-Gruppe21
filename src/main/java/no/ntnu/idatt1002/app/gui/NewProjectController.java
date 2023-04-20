@@ -99,9 +99,9 @@ public class NewProjectController {
   private int imageIndex = 0;
   
   //Total income, expense and amount overview
-  @FXML private Text totalIncome;
-  @FXML private Text totalExpense;
-  @FXML private Text totalAmount;
+  @FXML private Label totalIncome;
+  @FXML private Label totalExpense;
+  @FXML private Label totalAmount;
   
   //Error message
   @FXML private Label warningLabel = new Label();
@@ -515,7 +515,6 @@ public class NewProjectController {
     
     if (result.isPresent() && result.get() == ButtonType.OK) {
       try {
-        System.out.println("Deleting project");
         Parent root = FXMLLoader.load(
             Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
@@ -524,5 +523,9 @@ public class NewProjectController {
         warningLabel.setText("Could not delete project, Error: " + e.getMessage());
       }
     }
+  }
+
+  public void switchTheme() {
+    BudgetAndAccountingApp.setTheme();
   }
 }

@@ -13,6 +13,7 @@ public class ProjectRegistry implements Serializable {
 
   private final ArrayList<Project> projects;
   private final List<String> categories = new ArrayList<>();
+  private final List<String> statuses = new ArrayList<>();
 
   /**
    * Cre new projectregistry.
@@ -22,7 +23,13 @@ public class ProjectRegistry implements Serializable {
     categories.add("Freelance");
     categories.add("Personal");
     categories.add("Miscellaneous");
+
+    statuses.add("Not started");
+    statuses.add("Doing");
+    statuses.add("Finished");
   }
+
+
 
   /**
    * A roject to theregistry.
@@ -70,6 +77,15 @@ public class ProjectRegistry implements Serializable {
    */
   public List<String> getCategories() {
     return new ArrayList<>(categories);
+  }
+
+  /**
+   * Gets all statuses from the registry
+   *
+   * @return the statuses
+   */
+  public List<String> getStatuses() {
+    return new ArrayList<>(statuses);
   }
   
   /**

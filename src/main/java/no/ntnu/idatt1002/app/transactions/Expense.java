@@ -39,8 +39,8 @@ public class Expense implements Transaction, Serializable {
     if (category.isBlank()) {
       throw new IllegalArgumentException("category cannot be blank");
     }
-    if (amount < 0) {
-      throw new IllegalArgumentException("amount cannot be less than zero");
+    if (amount <= 0) {
+      throw new IllegalArgumentException("amount cannot be less than or equal to zero");
     }
 
     this.description = description;
@@ -132,8 +132,8 @@ public class Expense implements Transaction, Serializable {
    */
   @Override
   public void setAmount(double newAmount) throws IllegalArgumentException {
-    if (newAmount < 0) {
-      throw new IllegalArgumentException("newAmount cannot be less than zero");
+    if (newAmount <= 0) {
+      throw new IllegalArgumentException("newAmount cannot be less than or equal to zero");
     }
     this.amount = newAmount;
   }

@@ -1,9 +1,9 @@
 package no.ntnu.idatt1002.app.bookkeeping;
 
-import java.util.ArrayList;
-
+import java.util.List;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
+import no.ntnu.idatt1002.app.transactions.Transaction;
 
 /**
  * Bookkeeping interface is used to keep track of all the income and expenses for either
@@ -26,18 +26,39 @@ public interface Bookkeeping {
   void addExpense(Expense expense);
   
   /**
+   * Method for adding a transaction to the transaction list.
+   *
+   * @param transaction the transaction to be added
+   */
+  void addTransaction(Transaction transaction);
+  
+  /**
+   * Remove a transaction from the either the income or expense list.
+   *
+   * @param transaction the transaction to be removed
+   */
+  void removeTransaction(Transaction transaction);
+  
+  /**
    * Method for getting the income list.
    *
    * @return the income list
    */
-  ArrayList<Income> getIncomeList();
+  List<Income> getIncomeList();
   
   /**
    * Method for getting the expense list.
    *
    * @return the expense list
    */
-  ArrayList<Expense> getExpenseList();
+  List<Expense> getExpenseList();
+  
+  /**
+   * Get all transactions.
+   *
+   * @return all transactions
+   */
+  List<Transaction> getTransactions();
   
   /**
    * Method for getting the total income.

@@ -515,7 +515,6 @@ public class NewProjectController {
     
     if (result.isPresent() && result.get() == ButtonType.OK) {
       try {
-        System.out.println("Deleting project");
         Parent root = FXMLLoader.load(
             Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);

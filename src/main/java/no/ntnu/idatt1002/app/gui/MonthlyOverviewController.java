@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.User;
 import no.ntnu.idatt1002.app.bookkeeping.Bookkeeping;
 import no.ntnu.idatt1002.app.filehandling.FileHandling;
@@ -294,5 +295,9 @@ public class MonthlyOverviewController {
     } catch (Exception e) {
       setWarning("Could not save user data" + e.getMessage());
     }
+  }
+
+  public void switchTheme() {
+    BudgetAndAccountingApp.setTheme();
   }
 }

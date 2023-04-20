@@ -13,9 +13,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import no.ntnu.idatt1002.app.User;
+import no.ntnu.idatt1002.app.bookkeeping.Bookkeeping;
 import no.ntnu.idatt1002.app.filehandling.FileHandling;
 import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
 import no.ntnu.idatt1002.app.transactions.Expense;
@@ -27,6 +27,14 @@ public class MonthlyOverviewController {
   private YearMonth chosenMonth;
   private MonthlyBookkeeping chosenMonthlyBookkeeping;
   private boolean isAccounting = true;
+  private boolean isPersonal = true;
+  private boolean isTotal = true;
+  
+  @FXML private Button accountingButton;
+  @FXML private Button budgetingButton;
+  @FXML private Button personalButton;
+  @FXML private Button workButton;
+  @FXML private Button totalButton;
   
   @FXML private ComboBox<Month> monthComboBox;
   @FXML private ComboBox<Integer> yearComboBox;
@@ -43,22 +51,17 @@ public class MonthlyOverviewController {
   @FXML private TextField categoryField;
   @FXML private TextField amountField;
  
-  @FXML private Button addIncomeButton;
-  @FXML private Button deleteIncomeButton;
+  @FXML private Button addTransactionButton;
+  @FXML private Button deleteTransactionButton;
   
   @FXML private Label incomeLabel;
   @FXML private Label incomeAmountLabel;
  
-  @FXML private Label expenceLabel;
-  @FXML private Label expenceAmountLabel;
+  @FXML private Label expenseLabel;
+  @FXML private Label expenseAmountLabel;
   
-  @FXML private Text totalAmount;
   @FXML private Label totalAmountLabel;
   
-  @FXML private Text totalIncome;
-  @FXML private Text totalExpense;
-  @FXML private Label totalLabel;
-
   @FXML private Label warningLabel;
   
   
@@ -75,7 +78,7 @@ public class MonthlyOverviewController {
       chosenMonth = YearMonth.now();
       chosenMonthlyBookkeeping = new MonthlyBookkeeping(chosenMonth);
       user.addMonthlyBookkeeping(chosenMonthlyBookkeeping);
-      //saveUser();
+      saveUser();
     } else {
       chosenMonth = user.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().keySet().iterator().next();
       chosenMonthlyBookkeeping = user.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().get(chosenMonth);
@@ -111,6 +114,8 @@ public class MonthlyOverviewController {
       }
     });
     
+    toggleAccounting();
+    togglePersonal();
     refreshOverview();
   }
   
@@ -123,11 +128,11 @@ public class MonthlyOverviewController {
     
     if (selectedTransaction != null) {
       if (amount > 0 && selectedTransaction instanceof Expense) {
-        chosenMonthlyBookkeeping.getAccounting().removeTransaction(selectedTransaction);
-        chosenMonthlyBookkeeping.getAccounting().addTransaction(new Income(description, category, amount, date));
+        chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).removeTransaction(selectedTransaction);
+        chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).addTransaction(new Income(description, category, amount, date));
       } else if (amount < 0 && selectedTransaction instanceof Income) {
-        chosenMonthlyBookkeeping.getAccounting().removeTransaction(selectedTransaction);
-        chosenMonthlyBookkeeping.getAccounting().addTransaction(new Expense(description, category, -amount, date));
+        chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).removeTransaction(selectedTransaction);
+        chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).addTransaction(new Expense(description, category, -amount, date));
       } else {
         selectedTransaction.setDate(date);
         selectedTransaction.setDescription(description);
@@ -135,15 +140,9 @@ public class MonthlyOverviewController {
         selectedTransaction.setAmount(amount > 0 ? amount : -amount);
       }
     } else {
-      if (isAccounting) {
-        chosenMonthlyBookkeeping.getAccounting().addTransaction(
-            amount > 0 ? new Income(description, category, amount, date) :
-                new Expense(description, category, -amount, date));
-      } else {
-        chosenMonthlyBookkeeping.getBudgeting().addTransaction(
-            amount > 0 ? new Income(description, category, amount, date) :
-                new Expense(description, category, -amount, date));
-      }
+      chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).addTransaction(amount > 0
+          ? new Income(description, category, amount, date)
+          : new Expense(description, category, -amount, date));
     }
     
     selectedTransaction = null;
@@ -155,11 +154,7 @@ public class MonthlyOverviewController {
   void deleteTransaction() {
     Transaction transaction = transactionTable.getSelectionModel().getSelectedItem();
     
-    if (isAccounting) {
-      chosenMonthlyBookkeeping.getAccounting().removeTransaction(transaction);
-    } else {
-      chosenMonthlyBookkeeping.getBudgeting().removeTransaction(transaction);
-    }
+    chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).removeTransaction(transaction);
     
     selectTransaction();
     refreshOverview();
@@ -167,32 +162,59 @@ public class MonthlyOverviewController {
   }
   
   @FXML
-  void toggleAccounting(MouseEvent event) {
+  void toggleAccounting() {
     isAccounting = true;
+    
+    accountingButton.setStyle("-fx-border-color: #000000;");
+    budgetingButton.setStyle("-fx-border-color: none;");
+    
     refreshOverview();
   }
   
   @FXML
-  void toggleBudget(MouseEvent event) {
+  void toggleBudget() {
     isAccounting = false;
+    
+    accountingButton.setStyle("-fx-border-color: none;");
+    budgetingButton.setStyle("-fx-border-color: #000000;");
+    
     refreshOverview();
   }
   
   @FXML
-  void togglePersonal(MouseEvent event) {
-  
+  void togglePersonal() {
+    isPersonal = true;
+    isTotal = false;
+    
+    personalButton.setStyle("-fx-border-color: #000000;");
+    workButton.setStyle("-fx-border-color: none;");
+    totalButton.setStyle("-fx-border-color: none;");
+    
+    refreshOverview();
   }
   
   @FXML
-  void toggleTotal(MouseEvent event) {
-  
+  void toggleWork() {
+    isPersonal = false;
+    isTotal = false;
+    
+    personalButton.setStyle("-fx-border-color: none;");
+    workButton.setStyle("-fx-border-color: #000000;");
+    totalButton.setStyle("-fx-border-color: none;");
+    
+    refreshOverview();
   }
   
   @FXML
-  void toggleWork(MouseEvent event) {
-  
+  void toggleTotal() {
+    isTotal = true;
+    
+    personalButton.setStyle("-fx-border-color: none;");
+    workButton.setStyle("-fx-border-color: none;");
+    totalButton.setStyle("-fx-border-color: #000000;");
+    
+    refreshOverview();
   }
-  
   
   /**
    * Checks if the user has selected a transaction in the table and updates the
@@ -207,6 +229,7 @@ public class MonthlyOverviewController {
     }
     
     selectedTransaction = isNewTransaction ? transactionTable.getSelectionModel().getSelectedItem() : null;
+    
     dateField.setValue(isNewTransaction ? (selectedTransaction.getDate() == null
         ? null : selectedTransaction.getDate()) : null);
     descriptionField.setText(isNewTransaction ? selectedTransaction.getDescription() : "");
@@ -223,24 +246,38 @@ public class MonthlyOverviewController {
   private void refreshOverview() {
     transactionTable.getItems().clear();
     
-    transactionTable.getItems().addAll(isAccounting ?
-        chosenMonthlyBookkeeping.getAccounting().getTransactions() :
-        chosenMonthlyBookkeeping.getBudgeting().getTransactions());
+    Bookkeeping chosenBookkeeping = isTotal
+        ? chosenMonthlyBookkeeping.getTotalBookkeeping(isAccounting)
+        : chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal);
     
-    double totalIncome = isAccounting ?
-        chosenMonthlyBookkeeping.getAccounting().getTotalIncome() :
-        chosenMonthlyBookkeeping.getBudgeting().getTotalIncome();
-    incomeLabel.setText(isAccounting ? "Accounting income" : "Budgeting income");
+    transactionTable.getItems().addAll(chosenBookkeeping.getTransactions());
+    
+    StringBuilder incomeLabelBuilder = new StringBuilder();
+    incomeLabelBuilder.append(isTotal ? "Total " : (isPersonal ? "Personal " : "Work ")).
+        append(isAccounting ? "accounting " : "budgeting ").append("income");
+    incomeLabel.setText(incomeLabelBuilder.toString());
+    
+    double totalIncome = chosenBookkeeping.getTotalIncome();
     incomeAmountLabel.setText(totalIncome + "kr");
     
-    double totalExpense = isAccounting ?
-        chosenMonthlyBookkeeping.getAccounting().getTotalExpense() :
-        chosenMonthlyBookkeeping.getBudgeting().getTotalExpense();
-    expenceLabel.setText(isAccounting ? "Accounting expense" : "Budgeting expense");
-    expenceAmountLabel.setText("-" + totalExpense + "kr");
+    StringBuilder expenseLabelBuilder = new StringBuilder();
+    expenseLabelBuilder.append(isTotal ? "Total " : (isPersonal ? "Personal " : "Work ")).
+        append(isAccounting ? "accounting " : "budgeting ").append("expenses");
+    expenseLabel.setText(expenseLabelBuilder.toString());
     
-    totalAmountLabel.setText(totalIncome - totalExpense + "kr");
+    double totalExpense = chosenBookkeeping.getTotalExpense();
+    expenseAmountLabel.setText(totalExpense + "kr");
+
+    totalAmountLabel.setText((totalIncome - totalExpense) + "kr");
+    
+    dateField.setDisable(isTotal);
+    descriptionField.setDisable(isTotal);
+    categoryField.setDisable(isTotal);
+    amountField.setDisable(isTotal);
+    addTransactionButton.setDisable(isTotal);
+    deleteTransactionButton.setDisable(isTotal);
   }
+  
   
   private void setWarning(String warning) {
     warningLabel.setText(warning);

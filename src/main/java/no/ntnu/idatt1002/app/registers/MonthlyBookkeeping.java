@@ -1,51 +1,75 @@
 package no.ntnu.idatt1002.app.registers;
 
 import java.io.Serializable;
-
-import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.List;
+import java.util.stream.Stream;
 import no.ntnu.idatt1002.app.bookkeeping.Accounting;
+import no.ntnu.idatt1002.app.bookkeeping.Bookkeeping;
 import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
+import no.ntnu.idatt1002.app.transactions.Transaction;
 
 public class MonthlyBookkeeping implements Serializable {
 
-    private final Budgeting budgeting;
-    private final Accounting accounting;
+    private final Budgeting budgetingPersonal;
+    private final Budgeting budgetingWork;
+    private final Accounting accountingPersonal;
+    private final Accounting accountingWork;
     private final YearMonth yearMonth;
 
     public MonthlyBookkeeping(YearMonth yearMonth) {
-        budgeting = new Budgeting();
-        accounting = new Accounting();
+        budgetingPersonal = new Budgeting();
+        budgetingWork = new Budgeting();
+        accountingPersonal = new Accounting();
+        accountingWork = new Accounting();
+        
         this.yearMonth = yearMonth;
     }
-    public Budgeting getBudgeting() {
-        return budgeting;
+    
+    public Budgeting getBudgetingPersonal() {
+        return budgetingPersonal;
+    }
+    
+    public Budgeting getBudgetingWork() {
+        return budgetingWork;
     }
 
-    public Accounting getAccounting() {
-        return accounting;
+    public Accounting getAccountingPersonal() {
+        return accountingPersonal;
     }
-
-    public int getMonth() {
-        return yearMonth.getMonthValue();
+    
+    public Accounting getAccountingWork() {
+        return accountingWork;
     }
-
-    public int getYear() {
-        return yearMonth.getYear();
+    
+    public Bookkeeping getBookkeeping(boolean isAccounting, boolean isPersonal) {
+        return isAccounting
+            ? (isPersonal ? accountingPersonal : accountingWork)
+            : (isPersonal ? budgetingPersonal : budgetingWork);
+    }
+    
+    public Bookkeeping getTotalBookkeeping(boolean isAccounting) {
+        if (isAccounting) {
+            Accounting totalAccounting = new Accounting();
+            List<Transaction> transactions = Stream.concat(
+                accountingPersonal.getTransactions().stream(),
+                accountingWork.getTransactions().stream()
+            ).toList();
+            transactions.forEach(totalAccounting::addTransaction);
+            return totalAccounting;
+        } else {
+            Budgeting totalBudgeting = new Budgeting();
+            List<Transaction> transactions = Stream.concat(
+                budgetingPersonal.getTransactions().stream(),
+                budgetingWork.getTransactions().stream()
+            ).toList();
+            transactions.forEach(totalBudgeting::addTransaction);
+            return totalBudgeting;
+        }
     }
     
     public YearMonth getYearMonth() {
         return yearMonth;
-    }
-
-    public double getBudgetNet() {
-        // Get the difference between the income and expenses
-        return budgeting.getTotalIncome() - budgeting.getTotalExpense();
-    }
-
-    public double getAccountingNet() {
-        // Get the difference between the income and expenses
-        return accounting.getTotalIncome() - accounting.getTotalExpense();
     }
 
     @Override

@@ -44,7 +44,7 @@ public class MonthlyBookkeepingRegistryTest {
   @Test
   @DisplayName("Test the removeMonthlyBookkeeping method")
   void testRemoveMonthlyBookkeeping() {
-    monthlyBookkeepingRegistry.removeMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now()));
+    monthlyBookkeepingRegistry.removeMonthlyBookkeeping(yearMonth);
     assertEquals(0, monthlyBookkeepingRegistry.getMonthlyBookkeepingMap().size());
   }
 }

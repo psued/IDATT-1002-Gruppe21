@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -17,190 +18,196 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="663.0" prefWidth="1003.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.ViewProjectController">
+<AnchorPane prefHeight="750.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.ViewProjectController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="12.0" layoutY="14.0" maxWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="20.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-         <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="460.0">
+      <HBox alignment="CENTER" prefHeight="750.0" prefWidth="1250.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <children>
+            <VBox alignment="CENTER" maxWidth="-Infinity" prefHeight="750.0" prefWidth="900.0" spacing="20.0">
                <children>
-                  <Label fx:id="viewTitle" text="Project Name">
-                     <font>
-                        <Font name="System Bold" size="32.0" />
-                     </font>
-                  </Label>
-                  <ToggleButton mnemonicParsing="false" onMouseClicked="#switchTheme" text="Light / Dark">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font></ToggleButton>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="478.0" prefWidth="953.0" spacing="20.0">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="478.0">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="460.0">
                      <children>
-                        <VBox fx:id="previousProjectBox" onMouseClicked="#previousProject">
-                           <children>
-                              <ImageView fx:id="iconLeft" fitHeight="43.0" fitWidth="46.0" nodeOrientation="RIGHT_TO_LEFT" preserveRatio="true">
-                                 <image>
-                                    <Image url="@54240.png" />
-                                 </image>
-                              </ImageView>
-                           </children></VBox>
+                        <Label fx:id="viewTitle" text="Project Name">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <ToggleButton mnemonicParsing="false" onMouseClicked="#switchTheme" text="Light / Dark">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </ToggleButton>
                      </children>
-                  </VBox>
-                  <VBox prefHeight="492.0" prefWidth="450.0" spacing="20.0">
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="478.0" prefWidth="953.0" spacing="20.0">
                      <children>
-                        <HBox prefHeight="198.0" prefWidth="258.0" spacing="20.0">
+                        <VBox alignment="CENTER" prefHeight="478.0">
                            <children>
-                              <VBox prefHeight="198.0" prefWidth="170.0" spacing="6.0">
+                              <VBox fx:id="previousProjectBox" onMouseClicked="#previousProject">
                                  <children>
-                                    <Label text="Project name">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="name" text="Project name" />
-                                    <Label prefHeight="21.0" prefWidth="163.0" text="Project category">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="category" text="Project category" />
-                                    <Label text="Due date">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="dueDate" text="Due date" />
-                                    <Label text="Status">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="status" text="Status" />
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="255.0" prefWidth="304.0" spacing="6.0">
-                                 <children>
-                                    <Label text="Description">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="description" text="Project description" />
+                                    <ImageView fx:id="iconLeft" fitHeight="43.0" fitWidth="46.0" nodeOrientation="RIGHT_TO_LEFT" preserveRatio="true">
+                                       <image>
+                                          <Image url="@54240.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </VBox>
                            </children>
-                        </HBox>
-                        <VBox maxWidth="1000.0" prefHeight="244.0" prefWidth="530.0" spacing="6.0">
+                        </VBox>
+                        <VBox prefHeight="492.0" prefWidth="450.0" spacing="20.0">
                            <children>
-                              <HBox prefHeight="44.0" prefWidth="508.0">
+                              <HBox prefHeight="198.0" prefWidth="258.0" spacing="20.0">
                                  <children>
-                                    <VBox alignment="CENTER_LEFT" prefHeight="16.0" prefWidth="284.0">
+                                    <VBox prefHeight="198.0" prefWidth="170.0" spacing="6.0">
                                        <children>
-                                          <Label text="Income">
+                                          <Label text="Project name">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
                                           </Label>
+                                          <Label fx:id="name" text="Project name" />
+                                          <Label prefHeight="21.0" prefWidth="163.0" text="Project category">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="category" text="Project category" />
+                                          <Label text="Due date">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="dueDate" text="Due date" />
+                                          <Label text="Status">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="status" text="Status" />
                                        </children>
                                     </VBox>
-                                    <HBox alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="290.0">
+                                    <VBox prefHeight="255.0" prefWidth="304.0" spacing="6.0">
                                        <children>
-                                          <Button fx:id="accounting" mnemonicParsing="false" onAction="#toggleAccounting" text="Accounting" />
-                                          <Button fx:id="budgeting" mnemonicParsing="false" onAction="#toggleBudgeting" text="Budgeting" />
+                                          <Label text="Description">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="description" text="Project description" />
                                        </children>
-                                    </HBox>
+                                    </VBox>
                                  </children>
                               </HBox>
-                              <TableView fx:id="incomeTable" editable="true" maxHeight="120.0" minHeight="120.0" prefHeight="120.0" prefWidth="523.0" tableMenuButtonVisible="true">
-                                 <columns>
-                                    <TableColumn fx:id="incomeDate" prefWidth="75.0" text="Date" />
-                                    <TableColumn fx:id="incomeDescription" prefWidth="75.0" text="Description" />
-                                    <TableColumn fx:id="incomeCategory" prefWidth="72.79998779296875" text="Category" />
-                                    <TableColumn fx:id="incomeAmount" minWidth="6.39996337890625" prefWidth="77.5999755859375" text="Amount" />
-                                 </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                              <Label text="Expense">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <TableView fx:id="expenseTable" editable="true" maxHeight="120.0" minHeight="120.0" prefHeight="50.0" prefWidth="380.0" tableMenuButtonVisible="true">
-                                 <columns>
-                                    <TableColumn fx:id="expenseDate" prefWidth="75.0" text="Date" />
-                                    <TableColumn fx:id="expenseDescription" prefWidth="75.0" text="Description" />
-                                    <TableColumn fx:id="expenseCategory" prefWidth="75.0" text="Category" />
-                                    <TableColumn fx:id="expenseAmount" prefWidth="75.0" text="Amount" />
-                                 </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="535.0" prefWidth="348.0" spacing="20.0">
-                     <children>
-                        <ImageView fx:id="imagePreview" fitHeight="245.0" fitWidth="306.0" pickOnBounds="true" preserveRatio="true" />
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                           <children>
-                              <Button fx:id="imageLeft" mnemonicParsing="false" onMouseClicked="#imageIndexLeft" text="&lt;">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="imageRight" mnemonicParsing="false" onMouseClicked="#imageIndexRight" text="&gt;">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <VBox alignment="BOTTOM_CENTER" prefHeight="442.0" prefWidth="226.0">
-                           <children>
-                              <VBox prefHeight="94.0" prefWidth="189.0">
+                              <VBox maxWidth="1000.0" prefHeight="244.0" prefWidth="530.0" spacing="6.0">
                                  <children>
-                                    <Label text="Total:">
+                                    <HBox prefHeight="44.0" prefWidth="508.0">
+                                       <children>
+                                          <VBox alignment="CENTER_LEFT" prefHeight="16.0" prefWidth="284.0">
+                                             <children>
+                                                <Label text="Income">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <HBox alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="290.0">
+                                             <children>
+                                                <Button fx:id="accounting" mnemonicParsing="false" onAction="#toggleAccounting" text="Accounting" />
+                                                <Button fx:id="budgeting" mnemonicParsing="false" onAction="#toggleBudgeting" text="Budgeting" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
+                                    <TableView fx:id="incomeTable" editable="true" maxHeight="120.0" minHeight="120.0" prefHeight="120.0" prefWidth="523.0" tableMenuButtonVisible="true">
+                                       <columns>
+                                          <TableColumn fx:id="incomeDate" prefWidth="75.0" text="Date" />
+                                          <TableColumn fx:id="incomeDescription" prefWidth="75.0" text="Description" />
+                                          <TableColumn fx:id="incomeCategory" prefWidth="72.79998779296875" text="Category" />
+                                          <TableColumn fx:id="incomeAmount" minWidth="6.39996337890625" prefWidth="77.5999755859375" text="Amount" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                    <Label text="Expense">
                                        <font>
-                                          <Font name="System Bold Italic" size="32.0" />
+                                          <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                                    <TableView fx:id="expenseTable" editable="true" maxHeight="120.0" minHeight="120.0" prefHeight="50.0" prefWidth="380.0" tableMenuButtonVisible="true">
+                                       <columns>
+                                          <TableColumn fx:id="expenseDate" prefWidth="75.0" text="Date" />
+                                          <TableColumn fx:id="expenseDescription" prefWidth="75.0" text="Description" />
+                                          <TableColumn fx:id="expenseCategory" prefWidth="75.0" text="Category" />
+                                          <TableColumn fx:id="expenseAmount" prefWidth="75.0" text="Amount" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="535.0" prefWidth="348.0" spacing="20.0">
+                           <children>
+                              <ImageView fx:id="imagePreview" fitHeight="245.0" fitWidth="306.0" pickOnBounds="true" preserveRatio="true" />
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                 <children>
+                                    <Button fx:id="imageLeft" mnemonicParsing="false" onMouseClicked="#imageIndexLeft" text="&lt;">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="imageRight" mnemonicParsing="false" onMouseClicked="#imageIndexRight" text="&gt;">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <VBox alignment="BOTTOM_CENTER" prefHeight="442.0" prefWidth="226.0">
+                                 <children>
+                                    <VBox prefHeight="94.0" prefWidth="189.0">
                                        <children>
-                                          <Label fx:id="totalIncome" text="0kr">
-                                             <font>
-                                                <Font name="System Italic" size="32.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="totalExpense" text="-0kr">
-                                             <font>
-                                                <Font name="System Italic" size="32.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="totalAmount" text="0kr">
+                                          <Label text="Total:">
                                              <font>
                                                 <Font name="System Bold Italic" size="32.0" />
                                              </font>
                                           </Label>
-                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                          <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
                                              <children>
-                                                <Button mnemonicParsing="false" onAction="#goToAllProjects" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: Lightgray; -fx-background-radius: 15;" text="All projects">
+                                                <Label fx:id="totalIncome" text="0kr">
                                                    <font>
-                                                      <Font name="System Bold" size="20.0" />
+                                                      <Font name="System Italic" size="32.0" />
                                                    </font>
-                                                </Button>
-                                                <Button mnemonicParsing="false" onAction="#editProject" prefHeight="38.0" prefWidth="200.0" scaleShape="false" style="-fx-background-color: Green; -fx-background-radius: 15;" text="Edit" textFill="WHITE">
+                                                </Label>
+                                                <Label fx:id="totalExpense" text="-0kr">
                                                    <font>
-                                                      <Font name="System Bold" size="20.0" />
+                                                      <Font name="System Italic" size="32.0" />
                                                    </font>
-                                                </Button>
+                                                </Label>
+                                                <Label fx:id="totalAmount" text="0kr">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="32.0" />
+                                                   </font>
+                                                </Label>
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                                   <children>
+                                                      <Button mnemonicParsing="false" onAction="#goToAllProjects" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: Lightgray; -fx-background-radius: 15;" text="All projects">
+                                                         <font>
+                                                            <Font name="System Bold" size="20.0" />
+                                                         </font>
+                                                      </Button>
+                                                      <Button mnemonicParsing="false" onAction="#editProject" prefHeight="38.0" prefWidth="200.0" scaleShape="false" style="-fx-background-color: Green; -fx-background-radius: 15;" text="Edit" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="System Bold" size="20.0" />
+                                                         </font>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
                                              </children>
-                                          </HBox>
+                                          </VBox>
                                        </children>
                                     </VBox>
                                  </children>
@@ -208,23 +215,30 @@
                            </children>
                         </VBox>
                      </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="478.0">
+                  </HBox>
+                  <Label fx:id="warningLabel" text="Warning Label" />
+               </children>
+            </VBox>
+            <VBox prefHeight="750.0" prefWidth="300.0" alignment="CENTER">
+               <children>
+                  <PieChart fx:id="pieIncome" prefHeight="280.0" prefWidth="300.0" title="Income" />
+                  <PieChart fx:id="pieExpense" prefHeight="280.0" prefWidth="300.0" title="Expense" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="478.0">
+               <children>
+                  <VBox fx:id="nextProjectBox" onMouseClicked="#nextProject">
                      <children>
-                        <VBox fx:id="nextProjectBox" onMouseClicked="#nextProject">
-                           <children>
-                              <ImageView fx:id="iconRight" fitHeight="43.0" fitWidth="106.0" preserveRatio="true">
-                                 <image>
-                                    <Image url="@54240.png" />
-                                 </image>
-                              </ImageView>
-                           </children></VBox>
+                        <ImageView fx:id="iconRight" fitHeight="43.0" fitWidth="106.0" preserveRatio="true">
+                           <image>
+                              <Image url="@54240.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </VBox>
                </children>
-            </HBox>
-            <Label fx:id="warningLabel" text="Warning Label" />
+            </VBox>
          </children>
-      </VBox>
+      </HBox>
    </children>
 </AnchorPane>

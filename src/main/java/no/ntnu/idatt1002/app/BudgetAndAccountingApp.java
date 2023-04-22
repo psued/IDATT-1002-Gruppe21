@@ -79,6 +79,10 @@ public class BudgetAndAccountingApp extends Application {
     scene = new Scene(root);
 
     primaryStage.setScene(scene);
+
+    primaryStage.setWidth(1250);
+    primaryStage.setHeight(750);
+
     primaryStage.show();
   }
 }

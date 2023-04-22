@@ -47,7 +47,7 @@ public class FileHandlingTest {
         budgetingIncome.add(income3);
         budgetingIncome.add(income4);
 
-        user.addProject("TestName", "TestDescription", "TestCategory", LocalDate.now(), accountingExpenses,
+        user.addProject("TestName", "TestDescription", "TestCategory",  LocalDate.now(), "TestStatus", accountingExpenses,
                 accountingIncome, budgetingExpenses, budgetingIncome);
     }
 

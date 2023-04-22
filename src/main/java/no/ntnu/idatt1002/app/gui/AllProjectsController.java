@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
@@ -58,6 +59,29 @@ public class AllProjectsController {
       table.getItems().addAll(tempUser.getProjectRegistry().getProjects());
     }
     table.refresh();
+
+    table.setRowFactory(tv -> new TableRow<Project>() {
+      @Override
+      public void updateItem(Project item, boolean empty) {
+        super.updateItem(item, empty);
+        if (item == null || empty) {
+          setStyle("");
+        } else {
+          if (item.getStatus().equals("Not started")) {
+            setStyle("-fx-background-color: red;");
+          }
+          else if (item.getStatus().equals("Doing")) {
+            setStyle("-fx-background-color: orange;");
+          }
+          else if (item.getStatus().equals("Finished")) {
+            setStyle("-fx-background-color: green");
+          }
+          else {
+            setStyle("");
+          }
+        }
+      }
+    });
   }
   
   /**

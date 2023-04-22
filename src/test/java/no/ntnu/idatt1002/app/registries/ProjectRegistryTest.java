@@ -45,14 +45,14 @@ public class ProjectRegistryTest {
 
     @Test
     void testAddProject() {
-        Project project = new Project("name", "description", "category", LocalDate.now());
+        Project project = new Project("name", "description", "category", LocalDate.now(), "TestStatus");
         projectRegistry.addProject(project);
         assertTrue(projectRegistry.getProjects().contains(project));
     }
     
     @Test
     void testRemoveProject() {
-        Project project = new Project("name", "description", "category", LocalDate.now());
+        Project project = new Project("name", "description", "category", LocalDate.now(), "TestStatus");
         projectRegistry.addProject(project);
         projectRegistry.removeProject(project);
         assertTrue(!projectRegistry.getProjects().contains(project));
@@ -60,8 +60,8 @@ public class ProjectRegistryTest {
 
     @Test
     void testGetProjects() {
-        Project project1 = new Project("name", "description", "category", LocalDate.now());
-        Project project2 = new Project("name2", "description2", "category2", LocalDate.now());
+        Project project1 = new Project("name", "description", "category", LocalDate.now(), "TestStatus");
+        Project project2 = new Project("name2", "description2", "category2", LocalDate.now(), "TestStatus");
 
         projectRegistry.addProject(project1);
         projectRegistry.addProject(project2);

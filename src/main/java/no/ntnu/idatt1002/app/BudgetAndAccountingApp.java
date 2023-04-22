@@ -38,7 +38,7 @@ public class BudgetAndAccountingApp extends Application {
   }
   
   private void testData() {
-    Project project1 = new Project("Project 1", "Description 1", "Category 1", LocalDate.now());
+    Project project1 = new Project("Project 1", "Description 1", "Category 1", LocalDate.now(), "Doing");
     Income income1 = new Income("Income 1", "Category 1", 100, LocalDate.now());
     Income income2 = new Income("Income 2", "Category 2", 200, LocalDate.now());
     project1.getAccounting().addIncome(income1);
@@ -51,7 +51,7 @@ public class BudgetAndAccountingApp extends Application {
     User user = new User();
     user.addProject(project1);
 
-    Project project2 = new Project("Project 2", "Description 2", "Category 2", LocalDate.now());
+    Project project2 = new Project("Project 2", "Description 2", "Category 2", LocalDate.now(), "Finished");
     Income income3 = new Income("Income 3", "Category 1", 100, LocalDate.now());
     Income income4 = new Income("Income 4", "Category 2", 200, LocalDate.now());
     project2.getAccounting().addIncome(income3);

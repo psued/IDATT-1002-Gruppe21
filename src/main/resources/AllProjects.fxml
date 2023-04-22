@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -55,6 +56,28 @@
                            </font></Button>
                      </children>
                   </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Not started - " />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="    Doing - " />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="ORANGE" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Finished - " />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+                     </children>
+                  </HBox>
                </children>
             </HBox>
             <Label fx:id="errorMessage" />

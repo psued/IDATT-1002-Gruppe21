@@ -4,37 +4,38 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * Class that represents an expense.
- * Implements the Transaction interface and is Serializable for serialization
- * and deserialization.
+ * <b>Expense class</b>
+ *
+ * <p>Class that represents an expense. Implements the Transaction interface and is Serializable
+ * for serialization and deserialization.
  */
 public class Expense implements Transaction, Serializable {
 
-  private String description; 
+  private LocalDate date;
+  private String description;
   private String category;
   private double amount;
-  private LocalDate date;
-
+  
   /**
    * Creates an expense that is an instance of Transaction.
    *
+   * @param date                      The date of the Expense.
    * @param description               The description of the Expense.
    * @param category                  The category of the Expense.
    * @param amount                    The amount of the Expense.
-   * @param date                      The date of the Expense.
    * @throws IllegalArgumentException If description or category is null or blank
    *                                  or if amount is less than zero.
    */
   public Expense(String description, String category, double amount, LocalDate date)
       throws IllegalArgumentException {
     if (description == null) {
-      throw new IllegalArgumentException("description cannot be null.");
+      throw new IllegalArgumentException("description cannot be null");
     }
     if (description.isBlank()) {
       throw new IllegalArgumentException("description cannot be blank");
     }
     if (category == null) {
-      throw new IllegalArgumentException("category cannot be null.");
+      throw new IllegalArgumentException("category cannot be null");
     }
     if (category.isBlank()) {
       throw new IllegalArgumentException("category cannot be blank");
@@ -48,49 +49,77 @@ public class Expense implements Transaction, Serializable {
     this.amount = amount;
     this.date = date;
   }
-
+  
   /**
-   * Method that gets the description of the Expense.
+   * Deep copy constructor.
    *
-   * @return description as String.
+   * @param expense The expense to copy.
+   * @throws IllegalArgumentException if expense is null or not an instance of Expense.
    */
-  @Override
-  public String getDescription() {
-    return this.description;
+  public Expense(Expense expense) throws IllegalArgumentException {
+    if (expense == null) {
+      throw new IllegalArgumentException("expense cannot be null");
+    }
+    
+    this.description = expense.getDescription();
+    this.category = expense.getCategory();
+    this.amount = expense.getAmount();
+    this.date = expense.getDate();
   }
 
   /**
-   * Method that gets the category of the Expense.
-   *
-   * @return category as String.
-   */
-  @Override
-  public String getCategory() {
-    return this.category;
-  }
-
-  /**
-   * Method that gets the amount of the Expense.
-   *
-   * @return amount as int.
-   */
-  @Override
-  public double getAmount() {
-    return this.amount;
-  }
-
-  /**
-   * Method that gets the date of the Expense.
+   * Get a deep copy of the date.
    *
    * @return date as LocalDate.
    */
   @Override
   public LocalDate getDate() {
-    return this.date;
+    return date == null ? null : LocalDate.of(date.getYear(), date.getMonth(),
+        date.getDayOfMonth());
+  }
+  
+  /**
+   * Get the description of the Expense.
+   *
+   * @return description as String.
+   */
+  @Override
+  public String getDescription() {
+    return description;
   }
 
   /**
-   * Method that sets a new description for the Expense.
+   * Get the category of the Expense.
+   *
+   * @return category as String.
+   */
+  @Override
+  public String getCategory() {
+    return category;
+  }
+
+  /**
+   * Get the amount of the Expense.
+   *
+   * @return amount as int.
+   */
+  @Override
+  public double getAmount() {
+    return amount;
+  }
+
+  /**
+   * Set a new amount for the Expense.
+   *
+   * @param newDate The new date of the Expense.
+   */
+  @Override
+  public void setDate(LocalDate newDate) {
+    date = newDate;
+  }
+
+  /**
+   * Set a new description for the Expense.
    *
    * @param newDescription The new description of the Expense.
    * @throws IllegalArgumentException if newDescription is null or blank.
@@ -98,17 +127,17 @@ public class Expense implements Transaction, Serializable {
   @Override
   public void setDescription(String newDescription) throws IllegalArgumentException {
     if (newDescription == null) {
-      throw new IllegalArgumentException("newDescription cannot be null.");
+      throw new IllegalArgumentException("newDescription cannot be null");
     }
     if (newDescription.isBlank()) {
       throw new IllegalArgumentException("newDescription cannot be blank");
     }
     
-    this.description = newDescription;
+    description = newDescription;
   }
 
   /**
-   * Method that sets a new category for the Expense.
+   * Set a new category for the Expense.
    *
    * @param newCategory The new category of the Expense.
    * @throws IllegalArgumentException if newCategory is null or blank.
@@ -116,16 +145,16 @@ public class Expense implements Transaction, Serializable {
   @Override
   public void setCategory(String newCategory) throws IllegalArgumentException {
     if (newCategory == null) {
-      throw new IllegalArgumentException("newCategory cannot be null.");
+      throw new IllegalArgumentException("newCategory cannot be null");
     }
     if (newCategory.isBlank()) {
       throw new IllegalArgumentException("newCategory cannot be blank");
     }
-    this.category = newCategory;
+    category = newCategory;
   }
 
   /**
-   * Method that sets a new amount for the Expense.
+   * Set a new amount for the Expense.
    *
    * @param newAmount The new amount of the Expense.
    * @throws IllegalArgumentException if amount is less than zero.
@@ -135,18 +164,9 @@ public class Expense implements Transaction, Serializable {
     if (newAmount <= 0) {
       throw new IllegalArgumentException("newAmount cannot be less than or equal to zero");
     }
-    this.amount = newAmount;
+    amount = newAmount;
   }
 
-  /**
-   * Method that sets a new date for the Expense.
-   *
-   * @param newDate The new date of the Expense.
-   */
-  @Override
-  public void setDate(LocalDate newDate) {
-    this.date = newDate;
-  }
 
   /**
    * Determines if the Expense object is equal to the specified object.
@@ -163,11 +183,11 @@ public class Expense implements Transaction, Serializable {
       return false;
     }
     
-    boolean equalsDate = expense.getDate() == null ? this.getDate() == null :
-        expense.getDate().equals(this.getDate());
+    boolean equalsDate = expense.getDate() == null ? getDate() == null :
+        expense.getDate().equals(getDate());
   
-    return expense.getDescription().equals(this.description)
-        && expense.getCategory().equals(this.category)
-        && expense.getAmount() == this.amount && equalsDate;
+    return expense.getDescription().equals(description)
+        && expense.getCategory().equals(category)
+        && expense.getAmount() == amount && equalsDate;
   }
 }

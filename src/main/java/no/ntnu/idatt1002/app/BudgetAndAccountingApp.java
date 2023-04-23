@@ -2,6 +2,7 @@ package no.ntnu.idatt1002.app;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Objects;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import no.ntnu.idatt1002.app.filehandling.FileHandling;
+import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
 import no.ntnu.idatt1002.app.registers.Project;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
@@ -62,6 +64,10 @@ public class BudgetAndAccountingApp extends Application {
     project2.getBudgeting().addExpense(expense4);
     user.addProject(project2);
     
+    user.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now()));
+    user.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now().plusYears(3)));
+    user.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now().plusYears(6)));
+    
     try {
       FileHandling.writeUserToFile(user);
     } catch (IOException e) {
@@ -71,10 +77,9 @@ public class BudgetAndAccountingApp extends Application {
   
   @Override
   public void start(Stage primaryStage) throws IOException {
-    testData();
     
     Parent root = FXMLLoader
-        .load(Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
+        .load(Objects.requireNonNull(getClass().getResource("/MonthlyOverview.fxml")));
     
     scene = new Scene(root);
 
@@ -84,5 +89,22 @@ public class BudgetAndAccountingApp extends Application {
     primaryStage.setHeight(750);
 
     primaryStage.show();
+    primaryStage.setOnCloseRequest(event -> {
+      try {
+        User user = FileHandling.readUserFromFile();
+        for (MonthlyBookkeeping monthlyBookkeeping :
+            user.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().values()) {
+          if (user.getMonthlyBookkeepingRegistry().isYearEmpty(monthlyBookkeeping.getYearMonth())) {
+            user.getMonthlyBookkeepingRegistry().removeMonthlyBookkeeping(monthlyBookkeeping.getYearMonth());
+          }
+        }
+        
+        FileHandling.writeUserToFile(user);
+      } catch (IOException e) {
+        e.printStackTrace();
+      } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+      }
+    });
   }
 }

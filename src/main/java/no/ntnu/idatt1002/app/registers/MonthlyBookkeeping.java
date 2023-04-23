@@ -52,6 +52,13 @@ public class MonthlyBookkeeping implements Serializable {
     return yearMonth;
   }
   
+  public boolean isEmpty() {
+    return budgetingPersonal.getTransactions().isEmpty() &&
+        budgetingWork.getTransactions().isEmpty() &&
+        accountingPersonal.getTransactions().isEmpty() &&
+        accountingWork.getTransactions().isEmpty();
+  }
+  
   @Override
   public boolean equals(Object o) {
     if (o == this) {

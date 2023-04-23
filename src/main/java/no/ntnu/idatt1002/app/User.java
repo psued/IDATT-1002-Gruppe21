@@ -120,10 +120,6 @@ public class User implements Serializable {
     monthlyBookkeepingRegistry.addMonthlyBookkeeping(monthlyBookkeeping);
   }
   
-  public void removeMonthlyBookkeeping(MonthlyBookkeeping monthlyBookkeeping) {
-    monthlyBookkeepingRegistry.removeMonthlyBookkeeping(monthlyBookkeeping);
-  }
-  
   
   /**
    * Returns a string representation of the user object.

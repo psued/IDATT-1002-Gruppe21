@@ -3,13 +3,14 @@ package no.ntnu.idatt1002.app.gui;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -114,6 +115,10 @@ public class EditProjectController {
   @FXML private Label totalIncome;
   @FXML private Label totalExpense;
   @FXML private Label totalAmount;
+
+  // Pie charts
+  @FXML private PieChart pieIncome;
+  @FXML private PieChart pieExpense;
   
   //Error message
   @FXML private Label warningLabel = new Label();
@@ -441,6 +446,60 @@ public class EditProjectController {
     // Reset error message
     warningLabel.setVisible(false);
     warningLabel.setText("");
+
+    updatePieCharts();
+  }
+
+  private void updatePieCharts() {
+    // Update pieChart income
+    ObservableList<PieChart.Data> pieChartDataIncome = FXCollections.observableArrayList();
+    HashMap<String, Double> categoriesIncome = new HashMap<>();
+
+    for (int i = 0; i < incomeTable.getItems().size(); i++) {
+      String categoryIncome = incomeTable.getItems().get(i).getCategory();
+      Double amountIncome = incomeTable.getItems().get(i).getAmount();
+
+      if(categoriesIncome.containsKey(categoryIncome)){
+        Double currentAmount = categoriesIncome.get(categoryIncome);
+        categoriesIncome.put(categoryIncome, currentAmount + amountIncome);
+      }else{
+        categoriesIncome.put(categoryIncome, amountIncome);
+      }
+    }
+
+    for (Map.Entry<String, Double> entry : categoriesIncome.entrySet()) {
+      String categoryIncome = entry.getKey();
+      Double amountIncome = entry.getValue();
+
+      pieChartDataIncome.add(new PieChart.Data(categoryIncome, amountIncome));
+    }
+
+
+    // Update pieChart Expense
+    ObservableList<PieChart.Data> pieChartDataExpense = FXCollections.observableArrayList();
+    HashMap<String, Double> categoriesExpense = new HashMap<>();
+
+    for (int i = 0; i < expenseTable.getItems().size(); i++) {
+      String categoryExpense = expenseTable.getItems().get(i).getCategory();
+      Double amountExpense = expenseTable.getItems().get(i).getAmount();
+
+      if(categoriesExpense.containsKey(categoryExpense)){
+        Double currentAmount = categoriesExpense.get(categoryExpense);
+        categoriesExpense.put(categoryExpense, currentAmount + amountExpense);
+      }else{
+        categoriesExpense.put(categoryExpense, amountExpense);
+      }
+    }
+
+    for (Map.Entry<String, Double> entry : categoriesExpense.entrySet()) {
+      String categoryExpense = entry.getKey();
+      Double amountExpense = entry.getValue();
+
+      pieChartDataExpense.add(new PieChart.Data(categoryExpense, amountExpense));
+    }
+
+    pieIncome.setData(pieChartDataIncome);
+    pieExpense.setData(pieChartDataExpense);
   }
   
   // Resets the income fields

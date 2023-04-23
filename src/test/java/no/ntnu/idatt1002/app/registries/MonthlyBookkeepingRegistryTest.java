@@ -1,10 +1,12 @@
 package no.ntnu.idatt1002.app.registries;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.YearMonth;
 import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
+import no.ntnu.idatt1002.app.transactions.Expense;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -46,5 +48,14 @@ public class MonthlyBookkeepingRegistryTest {
   void testRemoveMonthlyBookkeeping() {
     monthlyBookkeepingRegistry.removeMonthlyBookkeeping(yearMonth);
     assertEquals(0, monthlyBookkeepingRegistry.getMonthlyBookkeepingMap().size());
+  }
+  
+  @Test
+  @DisplayName("Test the getEmptyYears method")
+  void testGetEmptyYears() {
+    assertTrue(monthlyBookkeepingRegistry.isYearEmpty(yearMonth));
+    monthlyBookkeepingRegistry.getMonthlyBookkeeping(yearMonth).getBookkeeping(true, true)
+        .addTransaction(new Expense("Test", "Test", 100, null));
+    assertFalse(monthlyBookkeepingRegistry.isYearEmpty(yearMonth));
   }
 }

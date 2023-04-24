@@ -68,8 +68,8 @@ public class MonthlyBookkeeping implements Serializable {
    */
   public Bookkeeping getBookkeeping(boolean isAccounting, boolean isPersonal) {
     return isAccounting ?
-        new Accounting(isPersonal ? accountingPersonal : accountingWork) :
-        new Budgeting(isPersonal ? budgetingPersonal : budgetingWork);
+        (isPersonal ? accountingPersonal : accountingWork) :
+        (isPersonal ? budgetingPersonal : budgetingWork);
   }
   
   /**

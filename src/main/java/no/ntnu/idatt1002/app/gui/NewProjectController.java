@@ -146,8 +146,6 @@ public class NewProjectController {
     });
     category.getItems().add(newCategoryItem);
     
-    // Set default category
-    accounting.setStyle("-fx-border-color: #000000");
     
     // Accounting table
     incomeDate.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -266,7 +264,6 @@ public class NewProjectController {
         (isAccounting ? newProject.getAccounting() : newProject.getBudgeting())
             .addTransaction(newIncome);
       }
-      
       
       tempUser.getProjectRegistry().updateProject(tempProject, newProject);
       tempProject = newProject;

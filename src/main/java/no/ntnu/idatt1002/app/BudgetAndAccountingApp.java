@@ -62,7 +62,7 @@ public class BudgetAndAccountingApp extends Application {
     Expense expense4 = new Expense("Expense 4", "Category 2", 200, LocalDate.now());
     project2.getAccounting().addTransaction(expense3);
     project2.getBudgeting().addTransaction(expense4);
-    user.addProject(project2);
+    user.getProjectRegistry().addProject(project2);
     
     user.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now()));
     user.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now().plusYears(3)));

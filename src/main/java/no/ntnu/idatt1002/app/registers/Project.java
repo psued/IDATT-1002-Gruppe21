@@ -218,22 +218,7 @@ public class Project implements Serializable {
   public void removeImage(File image) {
     images.remove(image);
   }
-
-  public void editProject(String name, String description, String category,
-                          LocalDate dueDate, ArrayList<Expense> accountingExpenses,
-                          ArrayList<Income> accountingEquities, ArrayList<Expense> budgetingExpenses,
-                          ArrayList<Income> budgetingEquities) {
-    this.name = name;
-    this.description = description;
-    this.category = category;
-    this.getAccounting().reset();
-    this.getBudgeting().reset();
-    this.getAccounting().addExpenses(accountingExpenses);
-    this.getAccounting().addEquities(accountingEquities);
-    this.getBudgeting().addExpenses(budgetingExpenses);
-    this.getBudgeting().addEquities(budgetingEquities);
-  }
-
+  
   /**
    * Indicates whether the specified object is equal to this project object.
    *

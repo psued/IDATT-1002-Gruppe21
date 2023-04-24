@@ -62,17 +62,14 @@ public class MonthlyBookkeeping implements Serializable {
   /**
    * Get the chosen bookkeeping object based on the parameters.
    *
-   * <p>Does not return a deep copy as this would make it impossible to modify the bookkeeping
-   * objects.
-   *
    * @param isAccounting true if accounting, false if budgeting
    * @param isPersonal true if personal, false if work
    * @return the chosen bookkeeping object
    */
   public Bookkeeping getBookkeeping(boolean isAccounting, boolean isPersonal) {
     return isAccounting ?
-        (isPersonal ? accountingPersonal : accountingWork) :
-        (isPersonal ? budgetingPersonal : budgetingWork);
+        new Accounting(isPersonal ? accountingPersonal : accountingWork) :
+        new Budgeting(isPersonal ? budgetingPersonal : budgetingWork);
   }
   
   /**

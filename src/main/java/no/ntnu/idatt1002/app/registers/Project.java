@@ -32,7 +32,7 @@ public class Project implements Serializable {
    * @param description The description of the project.
    * @param category The category of the project.
    * @param dueDate The due date of the project.
-   * @throws IllegalArgumentException If the name is null or blank.
+   * @throws IllegalArgumentException If the name or category is null or blank.
    */
   public Project(String name, String description, String category, LocalDate dueDate, String status) {
     if (name == null || name.isBlank()) {

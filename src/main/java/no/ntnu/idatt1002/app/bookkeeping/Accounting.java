@@ -2,10 +2,9 @@ package no.ntnu.idatt1002.app.bookkeeping;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import java.util.List;
-import no.ntnu.idatt1002.app.transactions.Income;
 import no.ntnu.idatt1002.app.transactions.Expense;
+import no.ntnu.idatt1002.app.transactions.Income;
 import no.ntnu.idatt1002.app.transactions.Transaction;
 
 /**
@@ -51,6 +50,37 @@ public class Accounting implements Bookkeeping, Serializable {
       expenseList.add(expense);
     }
   }
+  
+  /**
+   * Updates a Transaction object. Handles weather all possible combinations of different types
+   * the old and new Transaction objects are.
+   *
+   * @param oldTransaction the old Transaction object to update from.
+   * @param newTransaction the new Transaction object to update to.
+   */
+  @Override
+  public void updateTransaction(Transaction oldTransaction, Transaction newTransaction) {
+    if (oldTransaction == null || newTransaction == null) {
+      throw new IllegalArgumentException("All arguments must be non-null");
+    }
+    
+    if (newTransaction instanceof Income newIncome) {
+      if (oldTransaction instanceof Income oldIncome) {
+        incomeList.set(incomeList.indexOf(oldIncome), newIncome);
+      } else if (oldTransaction instanceof Expense oldExpense) {
+        incomeList.add(newIncome);
+        expenseList.remove(oldExpense);
+      }
+    } else if (newTransaction instanceof Expense expense) {
+      if (oldTransaction instanceof Income income) {
+        expenseList.add(expense);
+        incomeList.remove(income);
+      } else if (oldTransaction instanceof Expense oldExpense) {
+        expenseList.set(expenseList.indexOf(oldExpense), expense);
+      }
+    }
+  }
+  
   
   /**
    * Removes a Transaction object from the income or expense list.

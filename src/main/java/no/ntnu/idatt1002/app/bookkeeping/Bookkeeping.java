@@ -19,6 +19,14 @@ public interface Bookkeeping {
   void addTransaction(Transaction transaction);
   
   /**
+   * Update a transaction in either the income or expense list.
+   *
+   * @param oldTransaction the old transaction to be updated
+   * @param newTransaction the new transaction to update to
+   */
+  void updateTransaction(Transaction oldTransaction, Transaction newTransaction);
+  
+  /**
    * Remove a transaction from either the income or expense list.
    *
    * @param transaction the transaction to be removed

@@ -9,8 +9,8 @@ import no.ntnu.idatt1002.app.transactions.Income;
 import no.ntnu.idatt1002.app.transactions.Transaction;
 
 /**
- * The Budgeting class represents a bookkeeping system for tracking income and
- * expenses for the budgeting of a project.
+ * The Budgeting class represents a bookkeeping system for tracking transactions related to the
+ * budget of a project or other uses.
  *
  * <p>It implements the Bookkeeping interface and is Serializable for serialization
  * and deserialization.
@@ -26,34 +26,16 @@ public class Budgeting implements Bookkeeping, Serializable {
   public Budgeting() {
     incomeList = new ArrayList<>();
     expenseList = new ArrayList<>();
-
-  }
-
-  /**
-   * Method for adding an income to the income list.
-   *
-   * @param income the income to be added
-   */
-  public void addIncome(Income income) {
-    incomeList.add(income);
   }
   
   /**
-   * Method for adding incomes to the income list.
+   * Deep copy constructor for this class.
    *
-   * @param incomes the incomes to be added
+   * @param budgeting the Budgeting object to be copied
    */
-  public void addEquities(ArrayList<Income> incomes) {
-    incomeList.addAll(incomes);
-  }
-
-  /**
-   * Method for adding an expense to the expense list.
-   *
-   * @param expense the expense to be added
-   */
-  public void addExpense(Expense expense) {
-    expenseList.add(expense);
+  public Budgeting(Budgeting budgeting) {
+    incomeList = new ArrayList<>(budgeting.getIncomeList());
+    expenseList = new ArrayList<>(budgeting.getExpenseList());
   }
   
   /**
@@ -64,9 +46,9 @@ public class Budgeting implements Bookkeeping, Serializable {
   @Override
   public void addTransaction(Transaction transaction) {
     if (transaction instanceof Income income) {
-      addIncome(income);
+      incomeList.add(income);
     } else if (transaction instanceof Expense expense) {
-      addExpense(expense);
+      expenseList.add(expense);
     }
   }
   
@@ -83,53 +65,57 @@ public class Budgeting implements Bookkeeping, Serializable {
       expenseList.remove(expense);
     }
   }
-  
-  /**
-   * Method for adding expenses to the expense list.
-   *
-   * @param expenses the expenses to be added
-   */
-  public void addExpenses(ArrayList<Expense> expenses) {
-    expenseList.addAll(expenses);
-  }
 
   /**
-   * Method for getting the income list.
+   * Get a deep copy of the income list.
    *
-   * @return the income list
+   * @return a deep copy of the income list
    */
   public ArrayList<Income> getIncomeList() {
-    return new ArrayList<>(incomeList);
+    ArrayList<Income> copy = new ArrayList<>();
+    for (Income income : incomeList) {
+      copy.add(new Income(income));
+    }
+    return copy;
   }
 
   /**
-   * Method for getting the expense list.
+   * Get a deep copy of the expense list.
    *
-   * @return the expense list
+   * @return a deep copy of the expense list
    */
   public ArrayList<Expense> getExpenseList() {
-    return new ArrayList<>(expenseList);
-  }
-  
-  @Override
-  public List<Transaction> getTransactions() {
-    List<Transaction> transactions = new ArrayList<>();
-    transactions.addAll(incomeList);
-    transactions.addAll(expenseList);
-    return transactions;
+    ArrayList<Expense> copy = new ArrayList<>();
+    for (Expense expense : expenseList) {
+      copy.add(new Expense(expense));
+    }
+    return copy;
   }
   
   /**
-   * Method for getting the total income.
+   * Get a deep copy of the transaction list.
    *
-   * @return the total income
+   * @return a deep copy of the transaction list
+   */
+  @Override
+  public List<Transaction> getTransactions() {
+    List<Transaction> copy = new ArrayList<>();
+    copy.addAll(getIncomeList());
+    copy.addAll(getExpenseList());
+    return copy;
+  }
+  
+  /**
+   * Get the sum of all income amounts.
+   *
+   * @return the total amount of income
    */
   public double getTotalIncome() {
     return incomeList.stream().mapToDouble(Income::getAmount).sum();
   }
 
   /**
-   * Method for getting the total expense.
+   * Get the sum of all expense amounts.
    *
    * @return the total expense
    */

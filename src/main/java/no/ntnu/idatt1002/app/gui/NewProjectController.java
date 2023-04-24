@@ -533,10 +533,10 @@ public class NewProjectController {
       Project project = new Project(name.getText(), description.getText(), category.getText(),
           dueDate.getValue(), status.getText());
       
-      accountingIncome.forEach(project.getAccounting()::addIncome);
-      accountingExpense.forEach(project.getAccounting()::addExpense);
-      budgetingIncome.forEach(project.getBudgeting()::addIncome);
-      budgetingExpense.forEach(project.getBudgeting()::addExpense);
+      accountingIncome.forEach(project.getAccounting()::addTransaction);
+      accountingExpense.forEach(project.getAccounting()::addTransaction);
+      budgetingIncome.forEach(project.getBudgeting()::addTransaction);
+      budgetingExpense.forEach(project.getBudgeting()::addTransaction);
       
       images.forEach(project::addImage);
       

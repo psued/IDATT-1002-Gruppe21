@@ -2,6 +2,7 @@ package no.ntnu.idatt1002.app;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Objects;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import no.ntnu.idatt1002.app.filehandling.FileHandling;
+import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
 import no.ntnu.idatt1002.app.registers.Project;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
@@ -41,12 +43,12 @@ public class BudgetAndAccountingApp extends Application {
     Project project1 = new Project("Project 1", "Description 1", "Category 1", LocalDate.now(), "Doing");
     Income income1 = new Income("Income 1", "Category 1", 100, LocalDate.now());
     Income income2 = new Income("Income 2", "Category 2", 200, LocalDate.now());
-    project1.getAccounting().addIncome(income1);
-    project1.getBudgeting().addIncome(income2);
+    project1.getAccounting().addTransaction(income1);
+    project1.getBudgeting().addTransaction(income2);
     Expense expense1 = new Expense("Expense 1", "Category 1", 100, LocalDate.now());
     Expense expense2 = new Expense("Expense 2", "Category 2", 200, LocalDate.now());
-    project1.getAccounting().addExpense(expense1);
-    project1.getBudgeting().addExpense(expense2);
+    project1.getAccounting().addTransaction(expense1);
+    project1.getBudgeting().addTransaction(expense2);
     
     User user = User.getInstance();
     user.getProjectRegistry().addProject(project1);
@@ -54,13 +56,17 @@ public class BudgetAndAccountingApp extends Application {
     Project project2 = new Project("Project 2", "Description 2", "Category 2", LocalDate.now(), "Finished");
     Income income3 = new Income("Income 3", "Category 1", 100, LocalDate.now());
     Income income4 = new Income("Income 4", "Category 2", 200, LocalDate.now());
-    project2.getAccounting().addIncome(income3);
-    project2.getBudgeting().addIncome(income4);
+    project2.getAccounting().addTransaction(income3);
+    project2.getBudgeting().addTransaction(income4);
     Expense expense3 = new Expense("Expense 3", "Category 1", 100, LocalDate.now());
     Expense expense4 = new Expense("Expense 4", "Category 2", 200, LocalDate.now());
-    project2.getAccounting().addExpense(expense3);
-    project2.getBudgeting().addExpense(expense4);
-    user.getProjectRegistry().addProject(project2);
+    project2.getAccounting().addTransaction(expense3);
+    project2.getBudgeting().addTransaction(expense4);
+    user.addProject(project2);
+    
+    user.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now()));
+    user.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now().plusYears(3)));
+    user.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now().plusYears(6)));
     
     try {
       FileHandling.writeUserToFile(user);
@@ -83,6 +89,27 @@ public class BudgetAndAccountingApp extends Application {
     scene = new Scene(root);
 
     primaryStage.setScene(scene);
+
+    primaryStage.setWidth(1250);
+    primaryStage.setHeight(750);
+
     primaryStage.show();
+    primaryStage.setOnCloseRequest(event -> {
+      try {
+        User user = FileHandling.readUserFromFile();
+        for (MonthlyBookkeeping monthlyBookkeeping :
+            user.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().values()) {
+          if (user.getMonthlyBookkeepingRegistry().isYearEmpty(monthlyBookkeeping.getYearMonth())) {
+            user.getMonthlyBookkeepingRegistry().removeMonthlyBookkeeping(monthlyBookkeeping.getYearMonth());
+          }
+        }
+        
+        FileHandling.writeUserToFile(user);
+      } catch (IOException e) {
+        e.printStackTrace();
+      } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+      }
+    });
   }
 }

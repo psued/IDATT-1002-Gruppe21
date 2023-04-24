@@ -2,12 +2,10 @@ package no.ntnu.idatt1002.app.registers;
 
 import java.io.Serializable;
 import java.time.YearMonth;
-import java.util.List;
 import java.util.stream.Stream;
 import no.ntnu.idatt1002.app.bookkeeping.Accounting;
 import no.ntnu.idatt1002.app.bookkeeping.Bookkeeping;
 import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
-import no.ntnu.idatt1002.app.transactions.Transaction;
 
 public class MonthlyBookkeeping implements Serializable {
   
@@ -35,15 +33,13 @@ public class MonthlyBookkeeping implements Serializable {
   public Bookkeeping getTotalBookkeeping(boolean isAccounting) {
     if (isAccounting) {
       Accounting totalAccounting = new Accounting();
-      List<Transaction> transactions = Stream.concat(accountingPersonal.getTransactions().stream(),
-          accountingWork.getTransactions().stream()).toList();
-      transactions.forEach(totalAccounting::addTransaction);
+      Stream.concat(accountingPersonal.getTransactions().stream(),
+          accountingWork.getTransactions().stream()).forEach(totalAccounting::addTransaction);
       return totalAccounting;
     } else {
       Budgeting totalBudgeting = new Budgeting();
-      List<Transaction> transactions = Stream.concat(budgetingPersonal.getTransactions().stream(),
-          budgetingWork.getTransactions().stream()).toList();
-      transactions.forEach(totalBudgeting::addTransaction);
+      Stream.concat(budgetingPersonal.getTransactions().stream(),
+          budgetingWork.getTransactions().stream()).forEach(totalBudgeting::addTransaction);
       return totalBudgeting;
     }
   }

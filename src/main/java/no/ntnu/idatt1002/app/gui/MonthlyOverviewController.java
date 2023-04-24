@@ -2,24 +2,18 @@ package no.ntnu.idatt1002.app.gui;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Year;
 import java.time.YearMonth;
-import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.util.Callback;
+import javafx.scene.text.Text;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.User;
 import no.ntnu.idatt1002.app.bookkeeping.Bookkeeping;
@@ -31,7 +25,7 @@ import no.ntnu.idatt1002.app.transactions.Transaction;
 
 public class MonthlyOverviewController {
   private User user;
-  private YearMonth chosenYearMonth;
+  private YearMonth chosenMonth;
   private MonthlyBookkeeping chosenMonthlyBookkeeping;
   private boolean isAccounting = true;
   private boolean isPersonal = true;
@@ -44,7 +38,7 @@ public class MonthlyOverviewController {
   @FXML private Button totalButton;
   
   @FXML private ComboBox<Month> monthComboBox;
-  @FXML private ComboBox<String> yearComboBox;
+  @FXML private ComboBox<Integer> yearComboBox;
   
   @FXML private TableView<Transaction> transactionTable;
   @FXML private TableColumn<Transaction, LocalDate> dateColumn;
@@ -82,71 +76,20 @@ public class MonthlyOverviewController {
     }
     
     if (user.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().isEmpty()) {
-      chosenYearMonth = YearMonth.now();
-      chosenMonthlyBookkeeping = new MonthlyBookkeeping(chosenYearMonth);
-      user.addMonthlyBookkeeping(chosenMonthlyBookkeeping);
+      chosenMonth = YearMonth.now();
+      chosenMonthlyBookkeeping = new MonthlyBookkeeping(chosenMonth);
+      user.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(chosenMonthlyBookkeeping);
       saveUser();
     } else {
-      chosenYearMonth = user.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().keySet().iterator().next();
-      chosenMonthlyBookkeeping = user.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().get(
-          chosenYearMonth);
+      chosenMonth = user.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().keySet().iterator().next();
+      chosenMonthlyBookkeeping = user.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().get(chosenMonth);
     }
     
-    // Set up the month combo box
-    monthComboBox.setValue(chosenYearMonth.getMonth());
+    monthComboBox.setValue(chosenMonth.getMonth());
+    yearComboBox.setValue(chosenMonth.getYear());
+    
     monthComboBox.getItems().addAll(Month.values());
-    monthComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-      chosenYearMonth = chosenYearMonth.withMonth(newValue.getValue());
-      MonthlyBookkeeping monthlyBookkeeping = user.getMonthlyBookkeepingRegistry().getMonthlyBookkeeping(chosenYearMonth);
-      chosenMonthlyBookkeeping = monthlyBookkeeping == null
-              ? new MonthlyBookkeeping(chosenYearMonth)
-              : user.getMonthlyBookkeepingRegistry().getMonthlyBookkeeping(chosenYearMonth);
-          
-      refreshOverview();
-    });
-    
-    
-    // Set up the year combo box
-    yearComboBox.setValue(Integer.toString(chosenYearMonth.getYear()));
-    yearComboBox.getItems().addAll(user.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().keySet().stream().map(YearMonth::getYear).distinct().sorted().map(String::valueOf).toArray(String[]::new));
-    yearComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-      //Refresh the month combo box to show the months that have transactions
-      chosenYearMonth = chosenYearMonth.withYear(Integer.parseInt(newValue));
-      MonthlyBookkeeping monthlyBookkeeping = user.getMonthlyBookkeepingRegistry().getMonthlyBookkeeping(chosenYearMonth);
-      
-      chosenMonthlyBookkeeping = monthlyBookkeeping == null
-              ? new MonthlyBookkeeping(chosenYearMonth)
-              : user.getMonthlyBookkeepingRegistry().getMonthlyBookkeeping(chosenYearMonth);
-      
-      refreshOverview();
-    });
- 
-    
-    yearComboBox.setEditable(true);
-    yearComboBox.focusedProperty().addListener((observable, oldValue, newValue) -> {
-      if (!newValue) {
-        yearComboBox.getEditor().addEventFilter(KeyEvent.KEY_RELEASED, event -> {
-          if (event.getCode() == KeyCode.ENTER) {
-            try {
-              int newYear = Integer.parseInt(yearComboBox.getEditor().getText());
-              if (newYear < 2000 || newYear > 2100) {
-                throw new NumberFormatException("Year must be between 2000 and 2100");
-              } else if (yearComboBox.getItems().contains(Integer.toString(newYear))) {
-                throw new NumberFormatException("Year already exists");
-              }
-              
-              yearComboBox.getItems().add(Integer.toString(newYear));
-              chosenYearMonth = chosenYearMonth.withYear(newYear);
-            } catch (NumberFormatException e) {
-              yearComboBox.setValue(Integer.toString(chosenYearMonth.getYear()));
-              yearComboBox.getEditor().setText(Integer.toString(chosenYearMonth.getYear()));
-              setWarning(e.getMessage());
-            }
-          }
-        });
-      }
-    });
-    
+    yearComboBox.getItems().addAll(YearMonth.now().getYear(), YearMonth.now().getYear() + 1);
     
     dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
     descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -172,39 +115,10 @@ public class MonthlyOverviewController {
       }
     });
     
-    
     toggleAccounting();
     togglePersonal();
     refreshOverview();
   }
-  
-  private void setCellColor() {
-    monthComboBox.setCellFactory(new Callback<>() {
-      @Override
-      public ListCell<Month> call(ListView<Month> param) {
-        return new ListCell<>() {
-          @Override
-          protected void updateItem(Month month, boolean empty) {
-            super.updateItem(month, empty);
-            if (empty || month == null) {
-              setText(null);
-              setStyle("");
-            } else {
-              setText(month.toString());
-              YearMonth yearMonth = YearMonth.of(chosenYearMonth.getYear(), month);
-              MonthlyBookkeeping monthlyBookkeeping = user.getMonthlyBookkeepingRegistry().getMonthlyBookkeeping(yearMonth);
-              if (monthlyBookkeeping != null && !monthlyBookkeeping.isEmpty()) {
-                setStyle("-fx-background-color: #90EE90");
-              } else {
-                setStyle("");
-              }
-            }
-          }
-        };
-      }
-    });
-  }
-  
   
   @FXML
   void addTransaction() {
@@ -232,13 +146,6 @@ public class MonthlyOverviewController {
           : new Expense(description, category, -amount, date));
     }
     
-    if (user.getMonthlyBookkeepingRegistry().getMonthlyBookkeeping(chosenYearMonth) == null) {
-      user.addMonthlyBookkeeping(chosenMonthlyBookkeeping);
-    } else {
-      user.getMonthlyBookkeepingRegistry().removeMonthlyBookkeeping(chosenYearMonth);
-      user.addMonthlyBookkeeping(chosenMonthlyBookkeeping);
-    }
-    
     selectedTransaction = null;
     refreshOverview();
     saveUser();
@@ -249,9 +156,6 @@ public class MonthlyOverviewController {
     Transaction transaction = transactionTable.getSelectionModel().getSelectedItem();
     
     chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).removeTransaction(transaction);
-    
-    user.getMonthlyBookkeepingRegistry().removeMonthlyBookkeeping(chosenYearMonth);
-    user.addMonthlyBookkeeping(chosenMonthlyBookkeeping);
     
     selectTransaction();
     refreshOverview();
@@ -341,8 +245,6 @@ public class MonthlyOverviewController {
   }
   
   private void refreshOverview() {
-    clearWarning();
-    
     transactionTable.getItems().clear();
     
     Bookkeeping chosenBookkeeping = isTotal
@@ -351,16 +253,18 @@ public class MonthlyOverviewController {
     
     transactionTable.getItems().addAll(chosenBookkeeping.getTransactions());
     
-    String incomeLabelBuilder = (isTotal ? "Total " : (isPersonal ? "Personal " : "Work ")) +
-        (isAccounting ? "accounting " : "budgeting ") + "income";
-    incomeLabel.setText(incomeLabelBuilder);
+    StringBuilder incomeLabelBuilder = new StringBuilder();
+    incomeLabelBuilder.append(isTotal ? "Total " : (isPersonal ? "Personal " : "Work ")).
+        append(isAccounting ? "accounting " : "budgeting ").append("income");
+    incomeLabel.setText(incomeLabelBuilder.toString());
     
     double totalIncome = chosenBookkeeping.getTotalIncome();
     incomeAmountLabel.setText(totalIncome + "kr");
     
-    String expenseLabelBuilder = (isTotal ? "Total " : (isPersonal ? "Personal " : "Work ")) +
-        (isAccounting ? "accounting " : "budgeting ") + "expenses";
-    expenseLabel.setText(expenseLabelBuilder);
+    StringBuilder expenseLabelBuilder = new StringBuilder();
+    expenseLabelBuilder.append(isTotal ? "Total " : (isPersonal ? "Personal " : "Work ")).
+        append(isAccounting ? "accounting " : "budgeting ").append("expenses");
+    expenseLabel.setText(expenseLabelBuilder.toString());
     
     double totalExpense = chosenBookkeeping.getTotalExpense();
     expenseAmountLabel.setText(totalExpense + "kr");
@@ -373,14 +277,8 @@ public class MonthlyOverviewController {
     amountField.setDisable(isTotal);
     addTransactionButton.setDisable(isTotal);
     deleteTransactionButton.setDisable(isTotal);
-    
-    if (user.getMonthlyBookkeepingRegistry().isYearEmpty(chosenYearMonth)) {
-      setWarning("There are no transactions for this whole year. If you quit now, the year will " +
-          "be deleted.");
-    }
-    
-    setCellColor();
   }
+  
   
   private void setWarning(String warning) {
     warningLabel.setText(warning);

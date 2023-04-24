@@ -1,22 +1,17 @@
 package no.ntnu.idatt1002.app;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import no.ntnu.idatt1002.app.registers.Project;
+import no.ntnu.idatt1002.app.transactions.Expense;
+import no.ntnu.idatt1002.app.transactions.Income;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import no.ntnu.idatt1002.app.User;
-import no.ntnu.idatt1002.app.registers.Project;
-import no.ntnu.idatt1002.app.transactions.Expense;
-import no.ntnu.idatt1002.app.transactions.Income;
 
 public class UserTest {
 
@@ -50,7 +45,7 @@ public class UserTest {
     budgetingIncome.add(income4);
 
     Project currentproject = new Project("TestName", "TestDescription", "TestCategory",
-            LocalDate.now());
+            LocalDate.now(), "TestStatus");
 
     user.getProjectRegistry().addProject(currentproject);
     user.getProjectRegistry().getProjects().get(0).editProject("TestName", "TestDescription", "TestCategory",
@@ -62,12 +57,14 @@ public class UserTest {
     @Test
     @DisplayName("Test that addProject correctly adds a project to the projectRegistry")
     void testAddProject() {
-      user.getProjectRegistry().addProject(new Project("Testname", "TestDescription", "TestCategory", LocalDate.now()));
+      user.getProjectRegistry().addProject(new Project("Testname", "TestDescription",
+          "TestCategory", LocalDate.now(), "TestStatus"));
       //assertEquals(3, user.getProjectRegistry().getProjects().size());
       
       // ArrayLists are initialized when a project is created, and is therefore equal to the one
       // added above
-      Project project = new Project("TestName", "TestDescription", "TestCategory", LocalDate.now());
+      Project project = new Project("TestName", "TestDescription", "TestCategory",
+          LocalDate.now(), "TestStatus");
       assertEquals(user.getProjectRegistry().getProjects().get(1), project);
     }
   }
@@ -85,9 +82,10 @@ public class UserTest {
   @Test
   void testGetProjectRegistry() {
     //User newUser = User.getInstance();
-    user.getProjectRegistry().addProject(new Project("TestName", "TestDescription", "TestCategory", LocalDate.now()));
+    user.getProjectRegistry().addProject(new Project("TestName", "TestDescription", "TestCategory", LocalDate.now(), "TestStatus"));
 
-    Project project = new Project("TestName", "TestDescription", "TestCategory", LocalDate.now());
+    Project project = new Project("TestName", "TestDescription", "TestCategory", LocalDate.now(),
+        "TestStatus");
     assertEquals(user.getProjectRegistry().getProjects().get(1), project);
   }
 

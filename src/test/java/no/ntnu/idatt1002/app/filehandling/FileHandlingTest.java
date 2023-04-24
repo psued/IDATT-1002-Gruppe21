@@ -48,7 +48,8 @@ public class FileHandlingTest {
         budgetingIncome.add(income3);
         budgetingIncome.add(income4);
 
-        user.getProjectRegistry().addProject(new Project("TestName", "TestDescription", "TestCategory", LocalDate.now()));
+        user.getProjectRegistry().addProject(new Project("TestName", "TestDescription",
+            "TestCategory", LocalDate.now(), "TestStat"));
     }
 
     //TODO: Fix this test, it fails because of the singleton pattern, user cannot be instantiated twice

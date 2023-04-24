@@ -607,8 +607,8 @@ public class EditProjectController {
       
       images.forEach(project::addImage);
       
-      tempUser.removeProject(originalProject);
-      tempUser.addProject(project);
+      tempUser.getProjectRegistry().removeProject(originalProject);
+      tempUser.getProjectRegistry().addProject(project);
       
       try {
         FileHandling.writeUserToFile(tempUser);
@@ -640,7 +640,7 @@ public class EditProjectController {
     Optional<ButtonType> result = alert.showAndWait();
     
     if (result.isPresent() && result.get() == ButtonType.OK) {
-      tempUser.removeProject(originalProject);
+      tempUser.getProjectRegistry().removeProject(originalProject);
       try {
         
         FileHandling.writeUserToFile(tempUser);

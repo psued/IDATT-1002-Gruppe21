@@ -116,13 +116,7 @@ public class NewProjectController {
    * Initializes the controller class.
    */
   public void initialize() {
-    try {
-      tempUser = FileHandling.readUserFromFile();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ClassNotFoundException e) {
-      throw new RuntimeException(e);
-    }
+    tempUser = User.getInstance();
   
     // Add categories to category menu
     for (String category : tempUser.getProjectRegistry().getCategories()) {

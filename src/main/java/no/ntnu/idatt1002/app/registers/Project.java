@@ -8,6 +8,8 @@ import java.util.List;
 
 import no.ntnu.idatt1002.app.bookkeeping.Accounting;
 import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
+import no.ntnu.idatt1002.app.transactions.Expense;
+import no.ntnu.idatt1002.app.transactions.Income;
 
 /**
  * A Project class representing a project with a name, description, category, due date,
@@ -181,6 +183,21 @@ public class Project implements Serializable {
    */
   public List<File> getImages() {
     return images;
+  }
+
+  public void editProject(String name, String description, String category,
+                          LocalDate dueDate, ArrayList<Expense> accountingExpenses,
+                          ArrayList<Income> accountingEquities, ArrayList<Expense> budgetingExpenses,
+                          ArrayList<Income> budgetingEquities) {
+    this.name = name;
+    this.description = description;
+    this.category = category;
+    this.getAccounting().reset();
+    this.getBudgeting().reset();
+    this.getAccounting().addExpenses(accountingExpenses);
+    this.getAccounting().addEquities(accountingEquities);
+    this.getBudgeting().addExpenses(budgetingExpenses);
+    this.getBudgeting().addEquities(budgetingEquities);
   }
 
   /**

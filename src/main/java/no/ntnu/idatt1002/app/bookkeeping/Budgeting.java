@@ -137,12 +137,20 @@ public class Budgeting implements Bookkeeping, Serializable {
     return expenseList.stream().mapToDouble(Expense::getAmount).sum();
   }
 
+  @Override
+  public void reset() {
+    incomeList.clear();
+    expenseList.clear();
+  }
+
   /**
    * Determines if the Budgeting object is equal to the specified object.
    *
    * @param obj the object to compare to
    * @return true if the objects are equal, false otherwise
    */
+
+
   @Override
   public boolean equals(Object obj) {
     if (obj == this) {

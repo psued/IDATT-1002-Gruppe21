@@ -3,11 +3,10 @@ package no.ntnu.idatt1002.app.registries;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import no.ntnu.idatt1002.app.registers.Project;
 
 /**
- * Registry class for all roject for auser.
+ * Registry class for all projects. Provides methods to add and remove projects.
  */
 public class ProjectRegistry implements Serializable {
 
@@ -16,7 +15,7 @@ public class ProjectRegistry implements Serializable {
   private final List<String> statuses = new ArrayList<>();
 
   /**
-   * Cre new projectregistry.
+   * Constructor for ProjectRegistry. Initializes the registry with preset categories and statuses.
    */
   public ProjectRegistry() {
     this.projects = new ArrayList<>();
@@ -29,24 +28,13 @@ public class ProjectRegistry implements Serializable {
     statuses.add("Finished");
   }
 
-
-
   /**
-   * A roject to theregistry.
+   * Adds a project to the registry.
    *
    * @param project the project to be added
    */
   public void addProject(Project project) {
     projects.add(project);
-  }
-
-  /**
-   * Gets all projects from the registry.
-   *
-   * @return the projects
-   */
-  public List<Project> getProjects() {
-    return new ArrayList<>(projects);
   }
   
   /**
@@ -56,6 +44,29 @@ public class ProjectRegistry implements Serializable {
    */
   public void removeProject(Project project) {
     projects.remove(project);
+  }
+  
+  /**
+   * Updates a project in the registry.
+   *
+   * @param oldProject the old project that is still in the registry
+   * @param newProject the project to be updated to
+   */
+  public void updateProject(Project oldProject, Project newProject) {
+    projects.set(projects.indexOf(oldProject), newProject);
+  }
+  
+  /**
+   * Gets a deep copy of all projects from the registry.
+   *
+   * @return the projects
+   */
+  public List<Project> getProjects() {
+    List<Project> copy = new ArrayList<>();
+    for (Project project : projects) {
+      copy.add(new Project(project));
+    }
+    return copy;
   }
   
   /**
@@ -80,15 +91,6 @@ public class ProjectRegistry implements Serializable {
   }
 
   /**
-   * Gets all statuses from the registry
-   *
-   * @return the statuses
-   */
-  public List<String> getStatuses() {
-    return new ArrayList<>(statuses);
-  }
-  
-  /**
    * Removes a category from the registry.
    *
    * @param category the category to be removed
@@ -99,6 +101,16 @@ public class ProjectRegistry implements Serializable {
     }
     categories.remove(category);
   }
+
+  /**
+   * Gets all statuses from the registry
+   *
+   * @return the statuses
+   */
+  public List<String> getStatuses() {
+    return new ArrayList<>(statuses);
+  }
+  
 
   /**
    * Returns a string representation of the project registry object.

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1002.app.gui.StartController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="800.0" prefWidth="1000.0" spacing="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Accounting and Budgeting">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Label>
+            <Button mnemonicParsing="false" onMouseClicked="#projects" prefHeight="50.0" prefWidth="300.0" text="Projects" />
+            <Button mnemonicParsing="false" onMouseClicked="#monthly" prefHeight="50.0" prefWidth="300.0" text="Monthly" />
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="About" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

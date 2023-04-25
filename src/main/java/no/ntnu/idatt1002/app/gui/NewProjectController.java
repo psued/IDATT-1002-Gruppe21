@@ -294,7 +294,7 @@ public class NewProjectController {
       updateProject(newProject);
       
       refreshLocalOverview();
-      resetIncomeFields();
+      resetExpenseFields();
     } catch (NumberFormatException e) {
       setWarning("Please enter a valid amount that is greater than 0");
     } catch (IllegalArgumentException e) {
@@ -511,7 +511,6 @@ public class NewProjectController {
     refreshImages();
   }
   
-  
   /**
    * Refreshes the image preview and the buttons to navigate between images. Will disable the
    */
@@ -583,8 +582,8 @@ public class NewProjectController {
    * @return The last project in the singleton user's project registry.
    */
   private Project getProject() {
-    return singelton.getProjectRegistry().getProjects().get(
-        singelton.getProjectRegistry().getProjects().size() - 1);
+    return new Project(singelton.getProjectRegistry().getProjects().get(
+        singelton.getProjectRegistry().getProjects().size() - 1));
   }
   
   /**

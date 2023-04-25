@@ -62,8 +62,8 @@ public class Project implements Serializable {
     this.category = project.getCategory();
     this.dueDate = project.getDueDate();
     this.status = project.getStatus();
-    this.accounting = project.getAccounting();
-    this.budgeting = project.getBudgeting();
+    this.accounting = new Accounting(project.getAccounting());
+    this.budgeting = new Budgeting(project.getBudgeting());
     this.images = project.getImages();
   }
 

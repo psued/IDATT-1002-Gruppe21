@@ -27,7 +27,7 @@
    <children>
       <HBox alignment="CENTER" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="800.0" prefWidth="1200.0" spacing="45.0">
+            <VBox alignment="CENTER" prefHeight="800.0" prefWidth="1200.0" spacing="20.0">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1200.0" spacing="66.0">
                      <children>
@@ -57,9 +57,9 @@
                         </HBox>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="600.0" prefWidth="740.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="650.0" prefWidth="740.0">
                      <children>
-                        <VBox alignment="BOTTOM_LEFT" prefHeight="600.0" prefWidth="900.0" spacing="30.0">
+                        <VBox alignment="BOTTOM_LEFT" prefHeight="650.0" prefWidth="900.0" spacing="20.0">
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="62.0" prefWidth="900.0" spacing="63.0">
                                  <children>
@@ -101,24 +101,60 @@
                                     <TableColumn fx:id="amountColumn" prefWidth="200.0" text="Amount" />
                                 </columns>
                               </TableView>
-                              <HBox prefHeight="30.0" prefWidth="900.0" spacing="2.0">
+                              <VBox prefHeight="50.0" prefWidth="100.0" spacing="2.0">
                                  <children>
-                                    <DatePicker fx:id="dateField" prefHeight="30.0" prefWidth="100.0" promptText="Date" />
-                                    <TextField fx:id="descriptionField" prefHeight="30.0" prefWidth="200.0" promptText="Description" />
-                                    <TextField fx:id="categoryField" prefHeight="30.0" prefWidth="150.0" promptText="Category" />
-                                    <TextField fx:id="amountField" prefHeight="30.0" prefWidth="100.0" promptText="Amount" />
-                                    <Button fx:id="addTransactionButton" mnemonicParsing="false" onAction="#addTransaction" prefHeight="30.0" prefWidth="30.0" text="+">
+                                    <Label text="Income">
                                        <font>
-                                          <Font name="System Bold" size="15.0" />
+                                          <Font name="System Bold" size="20.0" />
                                        </font>
-                                    </Button>
-                                    <Button fx:id="deleteTransactionButton" mnemonicParsing="false" onAction="#deleteTransaction" prefHeight="30.0" prefWidth="30.0" text="x">
-                                       <font>
-                                          <Font name="System Bold" size="15.0" />
-                                       </font>
-                                    </Button>
+                                    </Label>
+                                    <HBox prefHeight="30.0" prefWidth="900.0" spacing="2.0">
+                                       <children>
+                                          <DatePicker fx:id="dateField" prefHeight="30.0" prefWidth="100.0" promptText="Date" />
+                                          <TextField fx:id="descriptionField" prefHeight="30.0" prefWidth="200.0" promptText="Description" />
+                                          <TextField fx:id="categoryField" prefHeight="30.0" prefWidth="150.0" promptText="Category" />
+                                          <TextField fx:id="amountField" prefHeight="30.0" prefWidth="100.0" promptText="Amount" />
+                                          <Button fx:id="addTransactionButton" mnemonicParsing="false" onAction="#addTransaction" prefHeight="30.0" prefWidth="30.0" text="+">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="deleteTransactionButton" mnemonicParsing="false" onAction="#deleteTransaction" prefHeight="30.0" prefWidth="30.0" text="x">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </HBox>
                                  </children>
-                              </HBox>
+                              </VBox>
+                              <VBox prefHeight="50.0" prefWidth="100.0" spacing="2.0">
+                                 <children>
+                                    <Label text="Expense">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefHeight="30.0" prefWidth="900.0" spacing="2.0">
+                                       <children>
+                                          <DatePicker fx:id="dateField1" prefHeight="30.0" prefWidth="100.0" promptText="Date" />
+                                          <TextField fx:id="descriptionField1" prefHeight="30.0" prefWidth="200.0" promptText="Description" />
+                                          <TextField fx:id="categoryField1" prefHeight="30.0" prefWidth="150.0" promptText="Category" />
+                                          <TextField fx:id="amountField1" prefHeight="30.0" prefWidth="100.0" promptText="Amount" />
+                                          <Button fx:id="addTransactionButton1" mnemonicParsing="false" onAction="#addTransaction" prefHeight="30.0" prefWidth="30.0" text="+">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="deleteTransactionButton1" mnemonicParsing="false" onAction="#deleteTransaction" prefHeight="30.0" prefWidth="30.0" text="x">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                               <GridPane gridLinesVisible="true">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="601.0" minWidth="10.0" prefWidth="451.0" />

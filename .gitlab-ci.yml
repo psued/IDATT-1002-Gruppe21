@@ -67,7 +67,10 @@ pages:
     - mvn javadoc:javadoc
     - mvn jacoco:prepare-agent install jacoco:report
     - mkdir .public
-    - cp -rf target/site/apidocs/* .public
+    - cd .public
+    - mkdir apidocs
+    - cd ..
+    - cp -rf target/site/apidocs/* .public/apidocs/
     - cp -rf target/site/jacoco/* .public
     - mv -f .public public
   artifacts:

@@ -32,7 +32,10 @@ public class Accounting implements Bookkeeping, Serializable {
    *
    * @param accounting the Accounting object to copy.
    */
-  public Accounting(Accounting accounting) {
+  public Accounting(Accounting accounting) throws IllegalArgumentException {
+    if (accounting == null) {
+      throw new IllegalArgumentException("accounting cannot be null");
+    }
     incomeList = new ArrayList<>(accounting.getIncomeList());
     expenseList = new ArrayList<>(accounting.getExpenseList());
   }
@@ -43,7 +46,10 @@ public class Accounting implements Bookkeeping, Serializable {
    * @param transaction the Transaction object to add.
    */
   @Override
-  public void addTransaction(Transaction transaction) {
+  public void addTransaction(Transaction transaction) throws IllegalArgumentException{
+    if (transaction == null) {
+      throw new IllegalArgumentException("transaction cannot be null");
+    }
     if (transaction instanceof Income income) {
       incomeList.add(income);
     } else if (transaction instanceof Expense expense) {
@@ -59,9 +65,10 @@ public class Accounting implements Bookkeeping, Serializable {
    * @param newTransaction the new Transaction object to update to.
    */
   @Override
-  public void updateTransaction(Transaction oldTransaction, Transaction newTransaction) {
+  public void updateTransaction(Transaction oldTransaction, Transaction newTransaction) throws
+      IllegalArgumentException {
     if (oldTransaction == null || newTransaction == null) {
-      throw new IllegalArgumentException("All arguments must be non-null");
+      throw new IllegalArgumentException("neither oldTransaction nor newTransaction can be null");
     }
     
     if (newTransaction instanceof Income newIncome) {
@@ -81,14 +88,16 @@ public class Accounting implements Bookkeeping, Serializable {
     }
   }
   
-  
   /**
    * Removes a Transaction object from the income or expense list.
    *
    * @param transaction the Transaction object to remove.
    */
   @Override
-  public void removeTransaction(Transaction transaction) {
+  public void removeTransaction(Transaction transaction) throws IllegalArgumentException {
+    if (transaction == null) {
+      throw new IllegalArgumentException("transaction cannot be null");
+    }
     if (transaction instanceof Income income) {
       incomeList.remove(income);
     } else if (transaction instanceof Expense expense) {
@@ -151,12 +160,6 @@ public class Accounting implements Bookkeeping, Serializable {
    */
   public double getTotalExpense() {
     return expenseList.stream().mapToDouble(Expense::getAmount).sum();
-  }
-
-  @Override
-  public void reset() {
-    incomeList.clear();
-    expenseList.clear();
   }
 
   /**

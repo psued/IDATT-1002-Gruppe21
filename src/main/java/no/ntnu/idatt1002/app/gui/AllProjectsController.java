@@ -114,6 +114,26 @@ public class AllProjectsController {
     }
     
   }
+
+  public void monthly() {
+    try {
+      Parent root = FXMLLoader.load(
+        Objects.requireNonNull(getClass().getResource("/MonthlyOverview.fxml")));
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void start() {
+    try {
+      Parent root = FXMLLoader.load(
+        Objects.requireNonNull(getClass().getResource("/Start.fxml")));
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
   
   /**
    * Opens the new project page.

@@ -8,6 +8,9 @@ import java.time.LocalDate;
  *
  * <p>Class that represents an income. Implements the Transaction interface and is Serializable
  * for serialization and deserialization.
+ *
+ * @see Transaction
+ * @see Serializable
  */
 public class Income implements Transaction, Serializable {
 
@@ -51,7 +54,8 @@ public class Income implements Transaction, Serializable {
   }
   
   /**
-   * Deep copy constructor.
+   * Deep copy constructor. Creates a deep copy of the income by copying all fields from the
+   * given income and setting them to the new income.
    *
    * @param income The income to copy.
    * @throws IllegalArgumentException if income is null or not an instance of Income.
@@ -116,7 +120,7 @@ public class Income implements Transaction, Serializable {
   }
 
   /**
-   * Gets the type of the Income.
+   * Sets a new description for the Income.
    *
    * @param description The new description of the Income.
    * @throws IllegalArgumentException if description is null or blank.
@@ -164,7 +168,9 @@ public class Income implements Transaction, Serializable {
   }
   
   /**
-   * Determines if the Income object is equal to the specified object.
+   * Determines if the Income object is equal to the specified object. Checks if the
+   * object is an instance, then checks if the object is an instance of Income and
+   * finally checks if all fields are equal.
    *
    * @param obj The object to compare to.
    * @return true if the objects are equal, false otherwise.

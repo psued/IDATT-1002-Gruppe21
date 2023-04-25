@@ -7,6 +7,8 @@ import java.time.LocalDate;
  *
  * <p>A transaction can either be an expense or an income.
  * <p>It has a date, a description, a category and an amount.
+ * <p>Both the description and category must not be null or blank and the amount must be larger
+ * than zero.
  */
 public interface Transaction {
   /**

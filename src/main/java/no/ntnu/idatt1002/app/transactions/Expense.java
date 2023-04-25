@@ -8,6 +8,9 @@ import java.time.LocalDate;
  *
  * <p>Class that represents an expense. Implements the Transaction interface and is Serializable
  * for serialization and deserialization.
+ *
+ * @see Transaction
+ * @see Serializable
  */
 public class Expense implements Transaction, Serializable {
 
@@ -24,7 +27,7 @@ public class Expense implements Transaction, Serializable {
    * @param category                  The category of the Expense.
    * @param amount                    The amount of the Expense.
    * @throws IllegalArgumentException If description or category is null or blank
-   *                                  or if amount is less than zero.
+   *                                  or if amount is less than or equal to zero.
    */
   public Expense(String description, String category, double amount, LocalDate date)
       throws IllegalArgumentException {
@@ -51,7 +54,8 @@ public class Expense implements Transaction, Serializable {
   }
   
   /**
-   * Deep copy constructor.
+   * Deep copy constructor. Creates a deep copy of the expense by copying all fields from the
+   * given expense and setting them to the new expense.
    *
    * @param expense The expense to copy.
    * @throws IllegalArgumentException if expense is null or not an instance of Expense.
@@ -68,7 +72,7 @@ public class Expense implements Transaction, Serializable {
   }
 
   /**
-   * Get a deep copy of the date.
+   * Get the date of the Expense.
    *
    * @return date as LocalDate.
    */
@@ -169,7 +173,9 @@ public class Expense implements Transaction, Serializable {
 
 
   /**
-   * Determines if the Expense object is equal to the specified object.
+   * Determines if the Expense object is equal to the specified object. Checks first if the
+   * object is the same instance, then checks if the object is an instance of Expense and
+   * finally checks if all fields are equal.
    *
    * @param obj The object to compare to.
    * @return true if the objects are equal, false otherwise.

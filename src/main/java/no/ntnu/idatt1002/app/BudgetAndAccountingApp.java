@@ -79,16 +79,16 @@ public class BudgetAndAccountingApp extends Application {
   
   @Override
   public void start(Stage primaryStage) throws IOException {
-    testData();
+    //testData();
     
     try {
-      User GlobalUser = FileHandling.readUserFromFile();
+      User.getInstance().loadUser(FileHandling.readUserFromFile());
     } catch (Exception e) {
       e.printStackTrace();
     }
     
     Parent root = FXMLLoader
-        .load(Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
+        .load(Objects.requireNonNull(getClass().getResource("/MonthlyOverview.fxml")));
     
     scene = new Scene(root);
 
@@ -98,22 +98,22 @@ public class BudgetAndAccountingApp extends Application {
     primaryStage.setHeight(750);
 
     primaryStage.show();
+    
+    //Delete all empty years when closing the program
     primaryStage.setOnCloseRequest(event -> {
       try {
-        User user = FileHandling.readUserFromFile();
         for (MonthlyBookkeeping monthlyBookkeeping :
-            user.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().values()) {
-          if (user.getMonthlyBookkeepingRegistry().isYearEmpty(monthlyBookkeeping.getYearMonth())) {
-            user.getMonthlyBookkeepingRegistry().removeMonthlyBookkeeping(monthlyBookkeeping.getYearMonth());
+            User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().values()) {
+          if (User.getInstance().getMonthlyBookkeepingRegistry().isYearEmpty(monthlyBookkeeping.getYearMonth())) {
+            User.getInstance().getMonthlyBookkeepingRegistry().removeMonthlyBookkeeping(monthlyBookkeeping.getYearMonth());
           }
         }
         
-        FileHandling.writeUserToFile(user);
-      } catch (IOException e) {
-        e.printStackTrace();
-      } catch (ClassNotFoundException e) {
+        FileHandling.writeUserToFile(User.getInstance());
+      } catch (Exception e) {
         e.printStackTrace();
       }
     });
+    
   }
 }

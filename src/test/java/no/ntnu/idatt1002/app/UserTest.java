@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
 import no.ntnu.idatt1002.app.registers.Project;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
@@ -87,5 +89,13 @@ public class UserTest {
     assertEquals(user.getProjectRegistry().getProjects().get(1), project);
   }
 
-
+  @Test
+  void singletonFuncitonality() {
+    User user1 = User.getInstance();
+    assertEquals(0, user1.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().size());
+    User user2 = User.getInstance();
+    user2.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now()));
+    assertEquals(user1.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().size(),
+        user2.getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().size());
+  }
 }

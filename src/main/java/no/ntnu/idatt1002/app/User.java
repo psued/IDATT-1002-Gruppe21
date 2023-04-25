@@ -21,11 +21,25 @@ public class User implements Serializable {
     monthlyBookkeepingRegistry = new MonthlyBookkeepingRegistry();
   }
 
+  /**
+   * Returns the user instance. If the instance is null, a new instance is created.
+   *
+   * @return The user instance.
+   */
   public static User getInstance() {
     if (instance == null) {
       instance = new User();
     }
     return instance;
+  }
+  
+  /**
+   * Loads a user instance. This method is used when loading a user from a file.
+   *
+   * @param user The user instance to load.
+   */
+  public void loadUser(User user) {
+    instance = user;
   }
   
   /**
@@ -45,4 +59,6 @@ public class User implements Serializable {
   public MonthlyBookkeepingRegistry getMonthlyBookkeepingRegistry() {
     return monthlyBookkeepingRegistry;
   }
+  
+  
 }

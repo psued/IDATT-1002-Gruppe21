@@ -3,45 +3,49 @@ package no.ntnu.idatt1002.app.transactions;
 import java.time.LocalDate;
 
 /**
- * Interface for a transaction.
- * A transaction consists of the following attributes:
- * -Description
- * -Category
- * -Amount
- * -Date
+ * <b>Transaction interface</b>
+ *
+ * <p>A transaction can either be an expense or an income.
+ * <p>It has a date, a description, a category and an amount.
  */
 public interface Transaction {
-
   /**
-   * Method that gets the description of a transaction.
-   *
-   * @return Description as String.
-   */
-  String getDescription();
-
-  /**
-   * Method that gets the category of a transaction.
-   *
-   * @return Category as String.
-   */
-  String getCategory();
-
-  /**
-   * Method that gets the amount of a transaction.
-   *
-   * @return Amount as double.
-   */
-  double getAmount();
-
-  /**
-   * Method that gets the date of a transaction.
+   * Get the date of a transaction, can be null.
    *
    * @return Date as LocalDate.
    */
   LocalDate getDate();
 
   /**
-   * Method that sets a new description for a transaction.
+   * Get the description of a transaction.
+   *
+   * @return Description as String.
+   */
+  String getDescription();
+
+  /**
+   * Get the category of a transaction.
+   *
+   * @return Category as String.
+   */
+  String getCategory();
+
+  /**
+   * Get the amount of a transaction. Amount is always larger than zero.
+   *
+   * @return Amount as double.
+   */
+  double getAmount();
+  
+  /**
+   * Set the date of a transaction.
+   *
+   * @param newDate The new date of the transaction.
+   */
+  void setDate(LocalDate newDate);
+  
+  /**
+   * Set the description of a transaction.
    *
    * @param newDescription The new description of the transaction.
    * @throws IllegalArgumentException if newDescription is null or blank.
@@ -49,7 +53,7 @@ public interface Transaction {
   void setDescription(String newDescription) throws IllegalArgumentException;
 
   /**
-   * Method that sets a new category for a transaction.
+   * Set the category of a transaction.
    *
    * @param newCategory The new category of the transaction.
    * @throws IllegalArgumentException if newCategory is null or blank.
@@ -57,20 +61,13 @@ public interface Transaction {
   void setCategory(String newCategory) throws IllegalArgumentException;
 
   /**
-   * Method that sets a new amount for a transaction.
+   * Set the amount of a transaction.
    *
    * @param newAmount The new amount of the transaction.
-   * @throws IllegalArgumentException if amount is less than zero.
+   * @throws IllegalArgumentException if amount is less than or equal to zero.
    */
   void setAmount(double newAmount) throws IllegalArgumentException;
 
-  /**
-   * Method that sets a new date for a transaction.
-   *
-   * @param newDate The new date of the transaction.
-   * @throws IllegalArgumentException if date is not valid.
-   */
-  void setDate(LocalDate newDate);
 
   /**
    * Determines if the Transaction object is equal to the specified object.

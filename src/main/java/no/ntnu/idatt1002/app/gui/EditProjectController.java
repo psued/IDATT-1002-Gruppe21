@@ -3,8 +3,12 @@ package no.ntnu.idatt1002.app.gui;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,7 +30,6 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.User;
@@ -600,10 +603,10 @@ public class EditProjectController {
       Project project = new Project(name.getText(), description.getText(), category.getText(),
           dueDate.getValue(), status.getText());
   
-      accountingIncome.forEach(project.getAccounting()::addIncome);
-      accountingExpense.forEach(project.getAccounting()::addExpense);
-      budgetingIncome.forEach(project.getBudgeting()::addIncome);
-      budgetingExpense.forEach(project.getBudgeting()::addExpense);
+      accountingIncome.forEach(project.getAccounting()::addTransaction);
+      accountingExpense.forEach(project.getAccounting()::addTransaction);
+      budgetingIncome.forEach(project.getBudgeting()::addTransaction);
+      budgetingExpense.forEach(project.getBudgeting()::addTransaction);
       
       images.forEach(project::addImage);
       

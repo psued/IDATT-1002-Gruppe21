@@ -6,48 +6,42 @@ import no.ntnu.idatt1002.app.transactions.Income;
 import no.ntnu.idatt1002.app.transactions.Transaction;
 
 /**
- * Bookkeeping interface is used to keep track of all the income and expenses for either
- * budgeting for accounting.
+ * <b>Bookkeeping interface</b>
+ *
+ * <p>Bookkeeping interface is used for adding, getting and removing transactions in a list.
  */
 public interface Bookkeeping {
-  
   /**
-   * Method for adding an income to the income list.
-   *
-   * @param income the income to be added
-   */
-  void addIncome(Income income);
-  
-  /**
-   * Method for adding an expense to the expense list.
-   *
-   * @param expense the expense to be added
-   */
-  void addExpense(Expense expense);
-  
-  /**
-   * Method for adding a transaction to the transaction list.
+   * Add a transaction to either the income or expense list.
    *
    * @param transaction the transaction to be added
    */
   void addTransaction(Transaction transaction);
   
   /**
-   * Remove a transaction from the either the income or expense list.
+   * Update a transaction in either the income or expense list.
+   *
+   * @param oldTransaction the old transaction to be updated
+   * @param newTransaction the new transaction to update to
+   */
+  void updateTransaction(Transaction oldTransaction, Transaction newTransaction);
+  
+  /**
+   * Remove a transaction from either the income or expense list.
    *
    * @param transaction the transaction to be removed
    */
   void removeTransaction(Transaction transaction);
   
   /**
-   * Method for getting the income list.
+   * Get the income list.
    *
    * @return the income list
    */
   List<Income> getIncomeList();
   
   /**
-   * Method for getting the expense list.
+   * Get the expense list.
    *
    * @return the expense list
    */
@@ -61,14 +55,14 @@ public interface Bookkeeping {
   List<Transaction> getTransactions();
   
   /**
-   * Method for getting the total income.
+   * Get the total income amount.
    *
    * @return the total income amount
    */
   double getTotalIncome();
   
   /**
-   * Method for getting the total expense.
+   * Get the total expense amount.
    *
    * @return the total expense amount
    */

@@ -30,14 +30,14 @@ public class ProjectTest {
     @Test
     void testGetAccounting() {
         Accounting accounting = project.getAccounting();
-        accounting.addExpense(new Expense("test", "test", 100, LocalDate.now()));
+        accounting.addTransaction(new Expense("test", "test", 100, LocalDate.now()));
         assertEquals(100, accounting.getTotalExpense());
     }
 
     @Test
     void testGetBudgeting() {
         Budgeting budgeting = project.getBudgeting();
-        budgeting.addExpense(new Expense("test", "test", 100, LocalDate.now()));
+        budgeting.addTransaction(new Expense("test", "test", 100, LocalDate.now()));
         assertEquals(100, budgeting.getTotalExpense());
     }
 

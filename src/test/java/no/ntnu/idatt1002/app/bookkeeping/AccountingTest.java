@@ -21,33 +21,13 @@ public class AccountingTest {
     }
 
     @Test
-    public void testAddExpense() {
-        Expense expense = new Expense("test", "test", 100, LocalDate.now());
-        accounting.addExpense(expense);
-        assertEquals(1, accounting.getExpenseList().size());
-
-        Expense addedExpense = accounting.getExpenseList().get(0);
-        assertEquals(expense, addedExpense);
-    }
-
-    @Test
-    public void testAddIncome() {
-        Income income = new Income("test", "test", 100, LocalDate.now());
-        accounting.addIncome(income);
-        assertEquals(1, accounting.getIncomeList().size());
-
-        Income addedIncome = accounting.getIncomeList().get(0);
-        assertEquals(income, addedIncome);
-    }
-
-    @Test
     public void testGetExpenseList() {
         Expense expense1 = new Expense("tes1", "test1", 100, LocalDate.now());
-        accounting.addExpense(expense1);
+        accounting.addTransaction(expense1);
         assertEquals(1, accounting.getExpenseList().size());
         
         Expense expense2 = new Expense("test2", "test2", 100, LocalDate.now());
-        accounting.addExpense(expense2);
+        accounting.addTransaction(expense2);
         assertEquals(2, accounting.getExpenseList().size());
 
         Expense addedExpense1 = accounting.getExpenseList().get(0);
@@ -60,11 +40,11 @@ public class AccountingTest {
     @Test
     public void testGetIncomeList() {
         Income expense1 = new Income("test1", "test1", 100, LocalDate.now());
-        accounting.addIncome(expense1);
+        accounting.addTransaction(expense1);
         assertEquals(1, accounting.getIncomeList().size());
         
         Income expense2 = new Income("test2", "test2", 100, LocalDate.now());
-        accounting.addIncome(expense2);
+        accounting.addTransaction(expense2);
         assertEquals(2, accounting.getIncomeList().size());
 
         Income addedIncome1 = accounting.getIncomeList().get(0);
@@ -78,8 +58,8 @@ public class AccountingTest {
     public void testGetTotalExpense() {
         Expense expense1 = new Expense("test1", "test1", 100, LocalDate.now());
         Expense expense2 = new Expense("test2", "test2", 100, LocalDate.now());
-        accounting.addExpense(expense1);
-        accounting.addExpense(expense2);
+        accounting.addTransaction(expense1);
+        accounting.addTransaction(expense2);
 
         assertEquals(200, accounting.getTotalExpense());
     }
@@ -88,8 +68,8 @@ public class AccountingTest {
     public void testGetTotalIncome() {
         Income expense1 = new Income("test1", "test1", 100, LocalDate.now());
         Income expense2 = new Income("test2", "test2", 100, LocalDate.now());
-        accounting.addIncome(expense1);
-        accounting.addIncome(expense2);
+        accounting.addTransaction(expense1);
+        accounting.addTransaction(expense2);
 
         assertEquals(200, accounting.getTotalIncome());
     }

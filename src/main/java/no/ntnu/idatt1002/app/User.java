@@ -36,11 +36,11 @@ public class User implements Serializable {
   public ProjectRegistry getProjectRegistry() {
     return projectRegistry;
   }
-  
+
   /**
    * Returns the user's monthly bookkeeping registry.
    *
-   * @return
+   * @return The user's MonthlyBookkeepingRegistry.
    */
   public MonthlyBookkeepingRegistry getMonthlyBookkeepingRegistry() {
     return monthlyBookkeepingRegistry;

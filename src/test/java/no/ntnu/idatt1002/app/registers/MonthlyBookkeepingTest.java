@@ -1,15 +1,18 @@
 package no.ntnu.idatt1002.app.registers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
 import no.ntnu.idatt1002.app.bookkeeping.Accounting;
+import no.ntnu.idatt1002.app.bookkeeping.Bookkeeping;
 import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -46,9 +49,9 @@ public class MonthlyBookkeepingTest {
       monthlyBookkeeping.getBookkeeping(false, true).addTransaction(expense);
       
       // Test that getBookkeeping returns different objects for different parameters
-      assertNotEquals(monthlyBookkeeping.getBookkeeping(true, true),
+      assertFalse(monthlyBookkeeping.getBookkeeping(true, true) ==
           monthlyBookkeeping.getBookkeeping(true, false));
-      assertNotEquals(monthlyBookkeeping.getBookkeeping(false, true),
+      assertFalse(monthlyBookkeeping.getBookkeeping(false, true) ==
           monthlyBookkeeping.getBookkeeping(false, false));
       
       // Test that getBookkeeping returns correct object and that they are updated
@@ -77,10 +80,13 @@ public class MonthlyBookkeepingTest {
       Income income = new Income("Description", "Category", 100, null);
       Expense expense = new Expense("Description", "Category", 100, null);
       
+      
+      
       monthlyBookkeeping.getBookkeeping(true, true).addTransaction(income);
       monthlyBookkeeping.getBookkeeping(false, true).addTransaction(expense);
       
       // Test that getTotalBookkeeping returns correct object and that they are updated
+      assertTrue(monthlyBookkeeping.getTotalBookkeeping(true).getTransactions().get(0).equals(income));
       assertEquals(monthlyBookkeeping.getTotalBookkeeping(true).getTransactions().get(0), income);
       assertEquals(monthlyBookkeeping.getTotalBookkeeping(false).getTransactions().get(0), expense);
       

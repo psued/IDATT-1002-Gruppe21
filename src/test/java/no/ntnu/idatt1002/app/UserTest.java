@@ -48,8 +48,6 @@ public class UserTest {
             LocalDate.now(), "TestStatus");
 
     user.getProjectRegistry().addProject(currentproject);
-    user.getProjectRegistry().getProjects().get(0).editProject("TestName", "TestDescription", "TestCategory",
-            LocalDate.now(), accountingExpenses, accountingIncome, budgetingExpenses, budgetingIncome);
   }
 
   @Nested

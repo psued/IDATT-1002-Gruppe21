@@ -221,8 +221,8 @@ public class ViewProjectController {
       controller.initializeWithData(chosenProject);
 
       BudgetAndAccountingApp.setRoot(root);
-    } catch (IOException | NullPointerException e) {
-      e.printStackTrace();
+    } catch (Exception e) {
+      setWarning("Could not edit project, error: " + e.getMessage());
     }
   }
 
@@ -234,8 +234,8 @@ public class ViewProjectController {
       Parent root = FXMLLoader.load(
               Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
       BudgetAndAccountingApp.setRoot(root);
-    } catch (IOException e) {
-      e.printStackTrace();
+    } catch (Exception e) {
+      setWarning("Could not switch page, error: " + e.getMessage());
     }
   }
 
@@ -302,6 +302,16 @@ public class ViewProjectController {
    */
   private Project getProject() {
     return new Project(chosenProject);
+  }
+  
+  /**
+   * Sets the warning label to display the given warning.
+   *
+   * @param warning The warning to display.
+   */
+  private void setWarning(String warning) {
+    warningLabel.setText(warning);
+    warningLabel.setVisible(true);
   }
   
   /**

@@ -5,10 +5,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.image.Image;
 import no.ntnu.idatt1002.app.bookkeeping.Accounting;
 import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
-import no.ntnu.idatt1002.app.transactions.Expense;
-import no.ntnu.idatt1002.app.transactions.Income;
 
 /**
  * A Project class representing a project with a name, description, category, due date,
@@ -137,11 +136,7 @@ public class Project implements Serializable {
    * @return The images of the project.
    */
   public List<File> getImages() {
-    List<File> copy = new ArrayList<>();
-    for (File image : images) {
-      copy.add(new File(image.getAbsolutePath()));
-    }
-    return copy;
+    return new ArrayList<>(images);
   }
   
   
@@ -185,6 +180,9 @@ public class Project implements Serializable {
    * @param category The new category of the project.
    */
   public void setCategory(String category) {
+    if (category == null || category.isBlank()) {
+      throw new IllegalArgumentException("Category cannot be null or blank");
+    }
     this.category = category;
   }
   
@@ -218,6 +216,21 @@ public class Project implements Serializable {
   public void removeImage(File image) {
     images.remove(image);
   }
+
+  /**
+   * Returns the index of the specified image.
+   *
+   * @param image The image to get the index of.
+   */
+  public int getImageIndex(Image image) {
+    for (int i = 0; i < images.size(); i++) {
+      Image img = new Image(images.get(i).toURI().toString());
+      if (img.getUrl().equals(image.getUrl())) {
+        return i;
+      }
+    }
+    return -1;
+  }
   
   /**
    * Indicates whether the specified object is equal to this project object.
@@ -236,23 +249,12 @@ public class Project implements Serializable {
     
     boolean equalsDate = project.getDueDate() == null ? dueDate == null
         : project.getDueDate().equals(dueDate);
+    boolean equalsDescription = project.getDescription() == null ? description == null
+        : project.getDescription().equals(description);
     
-    return project.getName().equals(name) && project.getDescription().equals(this.description)
+    return project.getName().equals(name) && equalsDescription
         && project.getCategory().equals(category)
         && project.getAccounting().equals(accounting)
         && project.getBudgeting().equals(budgeting) && equalsDate;
   }
-
-  /**
-   * Returns a string representation of the project object.
-   *
-   * @return A string representation of the project object.
-   */
-  @Override
-  public String toString() {
-    return "Project{" + "name='" + name + '\'' + ", description='" + description + '\''
-        + ", category='" + category + '\'' + ", creationDate=" + dueDate + ", accounting="
-        + accounting + ", budgeting=" + budgeting + '}';
-  }
-
 }

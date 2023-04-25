@@ -107,6 +107,11 @@
                                           </VBox>
                                           <HBox alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="290.0">
                                              <children>
+                                                <Label fx:id="toggleLabel" text="ToggleLabel">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
+                                                </Label>
                                                 <ToggleButton fx:id="toggleButton" mnemonicParsing="false" onAction="#refreshLocalOverview" text="Accounting / Budgeting" />
                                              </children>
                                           </HBox>
@@ -139,9 +144,17 @@
                                                 <Font name="Arial Black" size="10.0" />
                                              </font>
                                           </Button>
+                                          <Button mnemonicParsing="false" onAction="#resetIncomeFields" prefHeight="23.0" prefWidth="56.0" text="Clear">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Button>
                                        </children>
                                     </HBox>
-                                    <Label text="Expence">
+                                    <Label text="Expense">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -172,6 +185,14 @@
                                              <font>
                                                 <Font name="Arial Black" size="10.0" />
                                              </font>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#resetExpenseFields" prefHeight="23.0" prefWidth="56.0" text="Clear">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
                                           </Button>
                                        </children>
                                     </HBox>

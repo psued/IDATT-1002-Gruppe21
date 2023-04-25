@@ -40,7 +40,8 @@ public class BudgetAndAccountingApp extends Application {
   }
   
   private void testData() {
-    Project project1 = new Project("Project 1", "Description 1", "Category 1", LocalDate.now(), "Doing");
+    Project project1 = new Project("Project 1", "Description 1", "Personal", LocalDate.now(),
+        "Doing");
     Income income1 = new Income("Income 1", "Category 1", 100, LocalDate.now());
     Income income2 = new Income("Income 2", "Category 2", 200, LocalDate.now());
     project1.getAccounting().addTransaction(income1);
@@ -53,7 +54,8 @@ public class BudgetAndAccountingApp extends Application {
     User user = User.getInstance();
     user.getProjectRegistry().addProject(project1);
 
-    Project project2 = new Project("Project 2", "Description 2", "Category 2", LocalDate.now(), "Finished");
+    Project project2 = new Project("Project 2", "Description 2", "Freelance", LocalDate.now(),
+        "Finished");
     Income income3 = new Income("Income 3", "Category 1", 100, LocalDate.now());
     Income income4 = new Income("Income 4", "Category 2", 200, LocalDate.now());
     project2.getAccounting().addTransaction(income3);
@@ -77,6 +79,8 @@ public class BudgetAndAccountingApp extends Application {
   
   @Override
   public void start(Stage primaryStage) throws IOException {
+    testData();
+    
     try {
       User GlobalUser = FileHandling.readUserFromFile();
     } catch (Exception e) {

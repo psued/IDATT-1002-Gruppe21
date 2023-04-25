@@ -1,9 +1,7 @@
 package no.ntnu.idatt1002.app.gui;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,15 +37,13 @@ import no.ntnu.idatt1002.app.filehandling.FileHandling;
 import no.ntnu.idatt1002.app.registers.Project;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
-import no.ntnu.idatt1002.app.transactions.Transaction;
 
 /**
  * FXML Controller class for the New Project page. Only mandatory field is the name of the project.
  */
 public class NewProjectController {
   
-  private User tempUser;
-  private Project tempProject;
+  private User singelton;
   
   // Fundamental project information
   @FXML private TextField name;
@@ -58,9 +54,7 @@ public class NewProjectController {
   
   //Accounting and Budgeting toggle button
   @FXML private ToggleButton toggleButton;
-  
-  //Selected transaction status
-  private Transaction selectedTransaction = null;
+  @FXML private Label toggleLabel;
   
   //Income Table
   @FXML private TableView<Income> incomeTable;
@@ -93,8 +87,6 @@ public class NewProjectController {
   @FXML private Button imageLeft;
   @FXML private Button imageRight;
   @FXML private Button deleteImageButton;
-  private final List<File> images = new ArrayList<>();
-  private int imageIndex = 0;
   
   //Total income, expense and amount overview
   @FXML private Label totalIncome;
@@ -113,20 +105,15 @@ public class NewProjectController {
    * categories and statuses to the menu buttons.
    */
   public void initialize() {
-    tempUser = User.getInstance();
+    singelton = User.getInstance();
+    singelton.getProjectRegistry().addProject(new Project("New Project", null,
+        singelton.getProjectRegistry().getCategories().get(0), null, "Not started"));
     
     // Add categories to category menu
-    for (String category : tempUser.getProjectRegistry().getCategories()) {
+    for (String category : singelton.getProjectRegistry().getCategories()) {
       MenuItem menuItem = new MenuItem(category);
       menuItem.setOnAction(event -> this.category.setText(menuItem.getText()));
       this.category.getItems().add(menuItem);
-    }
-
-    //Add statuses to status menu
-    for (String status : tempUser.getProjectRegistry().getStatuses()) {
-      MenuItem menuItem = new MenuItem(status);
-      menuItem.setOnAction(event -> this.status.setText(menuItem.getText()));
-      this.status.getItems().add(menuItem);
     }
     
     // Add option to create new category
@@ -146,6 +133,12 @@ public class NewProjectController {
     });
     category.getItems().add(newCategoryItem);
     
+    //Add statuses to status menu
+    for (String status : singelton.getProjectRegistry().getStatuses()) {
+      MenuItem menuItem = new MenuItem(status);
+      menuItem.setOnAction(event -> this.status.setText(menuItem.getText()));
+      this.status.getItems().add(menuItem);
+    }
     
     // Accounting table
     incomeDate.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -161,14 +154,15 @@ public class NewProjectController {
     
     //Set default values
     name.setPromptText("New project");
-    category.setText("Freelance");
+    category.setText(singelton.getProjectRegistry().getCategories().get(0));
+    status.setText("Not started");
     
-    // Set up the tables to display the transactions of the project that is being edited
     refreshLocalOverview();
+    refreshImages();
+    
     resetIncomeFields();
     resetExpenseFields();
     
-    refreshImages();
     clearWarning();
   }
   
@@ -181,14 +175,13 @@ public class NewProjectController {
         .filter(item -> item.getText().equals(category.getText())).findFirst().orElse(null);
     
     try {
-      tempUser.getProjectRegistry().removeCategory(category.getText());
+      singelton.getProjectRegistry().removeCategory(category.getText());
       category.getItems().remove(chosenCategory);
       category.setText("");
       
-      warningLabel.setVisible(false);
+      clearWarning();
     } catch (IllegalArgumentException e) {
-      warningLabel.setText(e.getMessage());
-      warningLabel.setVisible(true);
+      setWarning(e.getMessage());
     }
   }
   
@@ -201,18 +194,18 @@ public class NewProjectController {
    * effect of updating the chosen income rather than creating a new one.
    */
   public void selectedIncome() {
-    if (incomeTable.getSelectionModel().getSelectedItem() != selectedTransaction) {
-      selectedTransaction = incomeTable.getSelectionModel().getSelectedItem();
-      incomeDatePicker.setValue(selectedTransaction.getDate() == null
-          ? null : selectedTransaction.getDate());
-      incomeDescriptionField.setText(selectedTransaction.getDescription());
-      incomeCategoryField.setText(selectedTransaction.getCategory());
-      incomeAmountField.setText(String.valueOf(selectedTransaction.getAmount()));
+    Income selectedIncome = incomeTable.getSelectionModel().getSelectedItem();
+    
+    if (selectedIncome != null) {
+      incomeDatePicker.setValue(selectedIncome.getDate() == null
+          ? null : selectedIncome.getDate());
+      incomeDescriptionField.setText(selectedIncome.getDescription());
+      incomeCategoryField.setText(selectedIncome.getCategory());
+      incomeAmountField.setText(String.valueOf(selectedIncome.getAmount()));
       
       deleteIncomeButton.setDisable(false);
     } else {
       incomeTable.getSelectionModel().clearSelection();
-      selectedTransaction = null;
       resetIncomeFields();
     }
   }
@@ -226,18 +219,17 @@ public class NewProjectController {
    * effect of updating the chosen expense rather than creating a new one.
    */
   public void selectedExpense() {
-    if (expenseTable.getSelectionModel().getSelectedItem() != selectedTransaction) {
-      selectedTransaction = expenseTable.getSelectionModel().getSelectedItem();
-      expenseDatePicker.setValue(selectedTransaction.getDate() == null
-          ? null : selectedTransaction.getDate());
-      expenseDescriptionField.setText(selectedTransaction.getDescription());
-      expenseCategoryField.setText(selectedTransaction.getCategory());
-      expenseAmountField.setText(String.valueOf(selectedTransaction.getAmount()));
+    Expense selectedExpense = expenseTable.getSelectionModel().getSelectedItem();
+    if (selectedExpense != null) {
+      expenseDatePicker.setValue(selectedExpense.getDate() == null
+          ? null : selectedExpense.getDate());
+      expenseDescriptionField.setText(selectedExpense.getDescription());
+      expenseCategoryField.setText(selectedExpense.getCategory());
+      expenseAmountField.setText(String.valueOf(selectedExpense.getAmount()));
       
       deleteExpenseButton.setDisable(false);
     } else {
       expenseTable.getSelectionModel().clearSelection();
-      selectedTransaction = null;
       resetExpenseFields();
     }
   }
@@ -255,7 +247,7 @@ public class NewProjectController {
           incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()),
           incomeDatePicker.getValue());
       
-      Project newProject = new Project(tempProject);
+      Project newProject = getProject();
       
       if (selectedIncome != null) {
         (isAccounting ? newProject.getAccounting() : newProject.getBudgeting())
@@ -265,8 +257,7 @@ public class NewProjectController {
             .addTransaction(newIncome);
       }
       
-      tempUser.getProjectRegistry().updateProject(tempProject, newProject);
-      tempProject = newProject;
+      updateProject(newProject);
       
       refreshLocalOverview();
       resetIncomeFields();
@@ -290,7 +281,7 @@ public class NewProjectController {
           expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()),
           expenseDatePicker.getValue());
       
-      Project newProject = new Project(tempProject);
+      Project newProject = getProject();
       
       if (selectedExpense != null) {
         (isAccounting ? newProject.getAccounting() : newProject.getBudgeting())
@@ -300,9 +291,7 @@ public class NewProjectController {
             .addTransaction(newExpense);
       }
       
-      
-      tempUser.getProjectRegistry().updateProject(tempProject, newProject);
-      tempProject = newProject;
+      updateProject(newProject);
       
       refreshLocalOverview();
       resetIncomeFields();
@@ -318,13 +307,12 @@ public class NewProjectController {
    */
   public void deleteIncome() {
     boolean isAccounting = toggleButton.isSelected();
-    Project newProject = new Project(tempProject);
+    Project newProject = getProject();
     
     (isAccounting ? newProject.getAccounting() : newProject.getBudgeting()).removeTransaction(
         incomeTable.getSelectionModel().getSelectedItem());
     
-    tempUser.getProjectRegistry().updateProject(tempProject, newProject);
-    tempProject = newProject;
+    updateProject(newProject);
     
     refreshLocalOverview();
     resetIncomeFields();
@@ -335,13 +323,12 @@ public class NewProjectController {
    */
   public void deleteExpense() {
     boolean isAccounting = toggleButton.isSelected();
-    Project newProject = new Project(tempProject);
+    Project newProject = getProject();
     
     (isAccounting ? newProject.getAccounting() : newProject.getBudgeting()).removeTransaction(
         expenseTable.getSelectionModel().getSelectedItem());
     
-    tempUser.getProjectRegistry().updateProject(tempProject, newProject);
-    tempProject = newProject;
+    updateProject(newProject);
     
     refreshLocalOverview();
     resetExpenseFields();
@@ -352,14 +339,15 @@ public class NewProjectController {
    * and resets the error message.
    */
   public void refreshLocalOverview() {
-    selectedTransaction = null;
-    
     // Update tables
     incomeTable.getItems().clear();
     expenseTable.getItems().clear();
     
     boolean isAccounting = toggleButton.isSelected();
-    Bookkeeping currentBookkeeping = isAccounting ? tempProject.getAccounting() : tempProject.getBudgeting();
+    toggleLabel.setText(isAccounting ? "Accounting - " : "Budgeting - ");
+    
+    Bookkeeping currentBookkeeping = isAccounting ? getProject().getAccounting() :
+        getProject().getBudgeting();
     
     incomeTable.getItems().addAll(currentBookkeeping.getIncomeList());
     expenseTable.getItems().addAll(currentBookkeeping.getExpenseList());
@@ -432,21 +420,23 @@ public class NewProjectController {
   }
   
   // Resets the income fields
-  private void resetIncomeFields() {
+  public void resetIncomeFields() {
     incomeDatePicker.setValue(null);
     incomeDescriptionField.setText("");
     incomeCategoryField.setText("");
     incomeAmountField.setText("");
     deleteIncomeButton.setDisable(true);
+    incomeTable.getSelectionModel().clearSelection();
   }
   
   // Resets the expense fields
-  private void resetExpenseFields() {
+  public void resetExpenseFields() {
     expenseDatePicker.setValue(null);
     expenseDescriptionField.setText("");
     expenseCategoryField.setText("");
     expenseAmountField.setText("");
     deleteExpenseButton.setDisable(true);
+    expenseTable.getSelectionModel().clearSelection();
   }
   
   /**
@@ -459,29 +449,11 @@ public class NewProjectController {
     File selectedFile = fileChooser.showOpenDialog(null);
     
     if (selectedFile != null) {
-      images.add(selectedFile);
-      imageIndex = images.size() - 1;
+      Project newProject = getProject();
+      newProject.addImage(selectedFile);
+      imagePreview.setImage(new Image(selectedFile.toURI().toString()));
+      updateProject(newProject);
       
-      refreshImages();
-    }
-  }
-  
-  /**
-   * Lets a user look backwards through added images.
-   */
-  public void imageIndexBackwards() {
-    if (imageIndex > 0) {
-      imageIndex--;
-      refreshImages();
-    }
-  }
-  
-  /**
-   * Lets a user look forwards through added images.
-   */
-  public void imageIndexForwards() {
-    if (imageIndex < images.size() - 1) {
-      imageIndex++;
       refreshImages();
     }
   }
@@ -490,34 +462,65 @@ public class NewProjectController {
    * Deletes the currently selected image.
    */
   public void deleteImage() {
-    if (imageIndex > 0 && imageIndex == images.size() - 1) {
-      images.remove(imageIndex);
-      imageIndex--;
+    Project newProject = getProject();
+    
+    int imageIndex = newProject.getImageIndex(imagePreview.getImage());
+    newProject.removeImage(newProject.getImages().get(imageIndex));
+    
+    updateProject(newProject);
+
+    if (newProject.getImages().size() == 0) {
+      imagePreview.setImage(null);
     } else {
-      images.remove(imageIndex);
+      imagePreview.setImage(new Image(newProject.getImages().get(0).toString()));
     }
     
     refreshImages();
   }
   
   /**
+   * Lets a user look backwards through added images.
+   */
+  public void imageIndexBackwards() {
+    int imageIndex = getProject().getImageIndex(imagePreview.getImage());
+    List<File> images = getProject().getImages();
+    
+    if (imageIndex == 0) {
+      imagePreview.setImage(new Image(images.get(images.size() - 1).toURI().toString()));
+    } else {
+      imagePreview.setImage(new Image(images.get(imageIndex - 1).toURI().toString()));
+    }
+    
+    refreshImages();
+  }
+  
+  /**
+   * Lets a user look forwards through added images.
+   */
+  public void imageIndexForwards() {
+    int imageIndex = getProject().getImageIndex(imagePreview.getImage());
+    List<File> images = getProject().getImages();
+    imagePreview.setImage(null);
+    
+    if (imageIndex == images.size() - 1) {
+      imagePreview.setImage(new Image(images.get(0).toURI().toString()));
+    } else {
+      imagePreview.setImage(new Image(images.get(imageIndex + 1).toURI().toString()));
+    }
+
+    refreshImages();
+  }
+  
+  
+  /**
    * Refreshes the image preview and the buttons to navigate between images. Will disable the
    */
   private void refreshImages() {
-    if (images.isEmpty()) {
-      imageLeft.setDisable(true);
-      imageRight.setDisable(true);
-      imagePreview.setImage(null);
-      deleteImageButton.setDisable(true);
-      return;
-    }
+    List<File> images = getProject().getImages();
     
-    Image image = new Image(images.get(imageIndex).toURI().toString());
-    imagePreview.setImage(image);
-    
-    deleteImageButton.setDisable(false);
-    imageLeft.setDisable(imageIndex == 0);
-    imageRight.setDisable(imageIndex == images.size() - 1);
+    imageLeft.setDisable(images.size() < 2);
+    imageRight.setDisable(images.size() < 2);
+    deleteImageButton.setDisable(images.size() < 1);
   }
   
   /**
@@ -526,7 +529,20 @@ public class NewProjectController {
    */
   public void saveProject() {
     try {
-      FileHandling.writeUserToFile(tempUser);
+      Project newProject = getProject();
+      
+      if (name.getText().isEmpty()) {
+        throw new IllegalArgumentException("Project name cannot be empty");
+      }
+      
+      newProject.setName(name.getText());
+      newProject.setCategory(category.getText());
+      newProject.setDueDate(dueDate.getValue());
+      newProject.setDescription(description.getText());
+      
+      updateProject(newProject);
+      
+      FileHandling.writeUserToFile(singelton);
       
       Parent root = FXMLLoader.load(
           Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
@@ -550,20 +566,36 @@ public class NewProjectController {
     
     if (result.isPresent() && result.get() == ButtonType.OK) {
       try {
+        singelton = FileHandling.readUserFromFile();
         Parent root = FXMLLoader.load(
             Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
-      } catch (IOException e) {
+      } catch (Exception e) {
         warningLabel.setVisible(true);
         warningLabel.setText("Could not delete project, Error: " + e.getMessage());
       }
     }
   }
   
-  private void updateTempProject(Project newProject) {
-    tempUser.getProjectRegistry().updateProject(tempProject, newProject);
-    tempProject = newProject;
+  /**
+   * Get the last project in the singleton user's project registry, which is the current project.
+   * 
+   * @return The last project in the singleton user's project registry.
+   */
+  private Project getProject() {
+    return singelton.getProjectRegistry().getProjects().get(
+        singelton.getProjectRegistry().getProjects().size() - 1);
   }
+  
+  /**
+   * Update the last project in the singleton user's project registry, which is the current project.
+   * 
+   * @param newProject The edited project to update the singleton with.
+   */
+  private void updateProject(Project newProject) {
+    singelton.getProjectRegistry().updateProject(getProject(), newProject);
+  }
+  
   
   /**
    * Sets the warning label to display the given warning.

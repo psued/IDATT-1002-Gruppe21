@@ -8,13 +8,15 @@ import no.ntnu.idatt1002.app.transactions.Transaction;
 /**
  * <b>Bookkeeping interface</b>
  *
- * <p>Bookkeeping interface is used for adding, getting and removing transactions in a list.
+ * <p>A bookkeeping object is used to keep track of {@link Transaction transactions} related to
+ * either the budget or accounting of a project.
  */
 public interface Bookkeeping {
   /**
    * Add a transaction to either the income or expense list.
    *
    * @param transaction the transaction to be added
+   * @throws IllegalArgumentException if the transaction is null
    */
   void addTransaction(Transaction transaction) throws IllegalArgumentException;
   
@@ -23,6 +25,7 @@ public interface Bookkeeping {
    *
    * @param oldTransaction the old transaction to be updated
    * @param newTransaction the new transaction to update to
+   * @throws IllegalArgumentException if either transaction is null
    */
   void updateTransaction(Transaction oldTransaction, Transaction newTransaction) throws
       IllegalArgumentException;
@@ -31,6 +34,7 @@ public interface Bookkeeping {
    * Remove a transaction from either the income or expense list.
    *
    * @param transaction the transaction to be removed
+   * @throws IllegalArgumentException if the transaction is null
    */
   void removeTransaction(Transaction transaction) throws IllegalArgumentException;
   

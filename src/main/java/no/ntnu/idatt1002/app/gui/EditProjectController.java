@@ -517,7 +517,6 @@ public class EditProjectController {
   public void imageIndexForwards() {
     int imageIndex = getProject().getImageIndex(imagePreview.getImage());
     List<File> images = getProject().getImages();
-    imagePreview.setImage(null);
     
     if (imageIndex == images.size() - 1) {
       imagePreview.setImage(new Image(images.get(0).toURI().toString()));

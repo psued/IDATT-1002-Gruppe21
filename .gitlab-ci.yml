@@ -62,7 +62,6 @@ generatepdf:
 # til roten av prosjektet. Ellers vil denne delen feile.
 pages:
   stage: package
-  when: manual
   script:
     - mvn clean package
     - mvn javadoc:javadoc
@@ -77,3 +76,5 @@ pages:
   artifacts:
     paths:
       - public
+  only:
+    -web

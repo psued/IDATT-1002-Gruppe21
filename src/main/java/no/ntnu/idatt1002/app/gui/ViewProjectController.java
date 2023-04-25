@@ -3,7 +3,6 @@ package no.ntnu.idatt1002.app.gui;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,13 +17,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.User;
-import no.ntnu.idatt1002.app.filehandling.FileHandling;
+import no.ntnu.idatt1002.app.bookkeeping.Bookkeeping;
 import no.ntnu.idatt1002.app.registers.Project;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
@@ -34,26 +34,21 @@ import no.ntnu.idatt1002.app.transactions.Income;
  * either edit the project or go back to the all projects view.
  */
 public class ViewProjectController {
-
-  private Project project;
-
-  private ArrayList<Income> accountingIncome = new ArrayList<>();
-  private ArrayList<Expense> accountingExpense = new ArrayList<>();
-
-  // Local Budgeting overview
-  private ArrayList<Income> budgetingIncome = new ArrayList<>();
-  private ArrayList<Expense> budgetingExpense = new ArrayList<>();
+  
+  private Project chosenProject;
+  
   @FXML private Label viewTitle;
   @FXML private Label name;
   @FXML private Label category;
   @FXML private Label dueDate;
   @FXML private Label status;
   @FXML private Label description;
-
-  @FXML private Button accounting;
-  @FXML private Button budgeting;
-  private boolean isAccounting = true;
   
+  //Accounting and Budgeting toggle button
+  @FXML private ToggleButton toggleButton;
+  @FXML private Label toggleLabel;
+  
+  //Income Table
   @FXML private TableView<Income> incomeTable;
   @FXML private TableColumn<Income, LocalDate> incomeDate;
   @FXML private TableColumn<Income, String> incomeDescription;
@@ -74,9 +69,7 @@ public class ViewProjectController {
   @FXML private Button imageRight;
   @FXML private ImageView imagePreview;
   
-  private int imageIndex;
-  private List<File> images;
-  
+  //Total income, expense and amount overview
   @FXML private Label totalIncome;
   @FXML private Label totalExpense;
   @FXML private Label totalAmount;
@@ -84,8 +77,9 @@ public class ViewProjectController {
   @FXML private PieChart pieIncome;
   @FXML private PieChart pieExpense;
   
-  @FXML private Label warningLabel;
-
+  //Error message
+  @FXML private Label warningLabel = new Label();
+  
   /**
    * Initialize the view project controller. Sets all text objects to match with the project data
    * and sets up the tables.
@@ -94,38 +88,16 @@ public class ViewProjectController {
     if (selectedProject == null) {
       throw new NullPointerException("Please select a project to view");
     }
-
-    User tempUser = null;
-    try {
-      tempUser = FileHandling.readUserFromFile();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ClassNotFoundException e) {
-      throw new RuntimeException(e);
-    }
+    chosenProject = selectedProject;
     
-    project = selectedProject;
-    images = project.getImages();
-    imageIndex = 0;
+    viewTitle.setText("View " + chosenProject.getName());
     
-    viewTitle.setText("View " + project.getName());
-    name.setText(project.getName());
-    category.setText(project.getCategory());
-    status.setText(project.getStatus());
-
-    String dueDateString =
-            project.getDueDate() == null ? "No due date" : project.getDueDate().toString();
-    dueDate.setText(dueDateString);
-
-    description.setText(project.getDescription());
-
-    accountingIncome = project.getAccounting().getIncomeList();
-    accountingExpense = project.getAccounting().getExpenseList();
-    budgetingIncome = project.getBudgeting().getIncomeList();
-    budgetingExpense = project.getBudgeting().getExpenseList();
-
-    accounting.setStyle("-fx-border-color: #000000");
-
+    name.setText(chosenProject.getName());
+    category.setText(chosenProject.getCategory());
+    status.setText(chosenProject.getStatus());
+    dueDate.setText(chosenProject.getDueDate() == null ? "No due date" : chosenProject.getDueDate().toString());
+    description.setText(chosenProject.getDescription());
+    
     // Accounting table
     incomeDate.setCellValueFactory(new PropertyValueFactory<>("date"));
     incomeDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -137,83 +109,51 @@ public class ViewProjectController {
     expenseDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
     expenseCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
     expenseAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-
-    refreshLocalOverview();
-
-    if (selectedProject.equals(tempUser.getProjectRegistry().getProjects().get(0))) {
-      iconLeft.setOpacity(0);
-      previousProjectBox.setDisable(true);
-    } else {
-      iconLeft.setOpacity(1);
-      previousProjectBox.setDisable(false);
-    }
-
-    Project lastProject = tempUser.getProjectRegistry().getProjects()
-        .get(tempUser.getProjectRegistry().getProjects().size() - 1);
     
-    if (selectedProject.equals(lastProject)) {
-      iconRight.setOpacity(0);
-      nextProjectBox.setDisable(true);
-    } else {
-      iconRight.setOpacity(1);
-      nextProjectBox.setDisable(false);
-     }
-  }
-
-  /**
-   * Toggle to accounting view, makes the accounting button style look active. Updates the
-   * isAccounting boolean so that when the tables are updated, the correct table is referenced.
-   */
-  @FXML
-  public void toggleAccounting() {
-    accounting.setStyle("-fx-border-color: #000000");
-    budgeting.setStyle("-fx-border-color: none");
-    isAccounting = true;
-
+    // Set up the image preview
+    List<File> images = getProject().getImages();
+    imagePreview.setImage(images.isEmpty() ? null : new Image(images.get(0).toURI().toString()));
+    
+    // Set up the tables to display the transactions of the project that is being edited
     refreshLocalOverview();
-  }
+    refreshImages();
 
-  /**
-   * Toggle to budgeting view, makes the budgeting button style look active. Updates the
-   * isAccounting boolean so that when a table is updated, the correct table is referenced.
-   */
-  public void toggleBudgeting() {
-    budgeting.setStyle("-fx-border-color: #000000");
-    accounting.setStyle("-fx-border-color: none");
-    isAccounting = false;
-
-    refreshLocalOverview();
+    int indexOfProject = User.getInstance().getProjectRegistry().getProjects().indexOf(getProject());
+    iconLeft.setOpacity(indexOfProject == 0 ? 0 : 1);
+    iconRight.setOpacity(indexOfProject == User.getInstance().getProjectRegistry().getProjects().size() - 1 ? 0 : 1);
+    
+    previousProjectBox.setDisable(indexOfProject == 0);
+    nextProjectBox.setDisable(indexOfProject == User.getInstance().getProjectRegistry().getProjects().size() - 1);
   }
+  
 
   /**
    * Refreshes the local overview tables and totals. Updates the tables with the correct data
    * depending on the isAccounting boolean.
    */
-  private void refreshLocalOverview() {
+  public void refreshLocalOverview() {
     // Update tables
     incomeTable.getItems().clear();
     expenseTable.getItems().clear();
-
-    incomeTable.getItems().addAll(isAccounting ? accountingIncome : budgetingIncome);
-    expenseTable.getItems().addAll(isAccounting ? accountingExpense : budgetingExpense);
-
+    
+    boolean isAccounting = toggleButton.isSelected();
+    toggleLabel.setText(isAccounting ? "Accounting - " : "Budgeting - ");
+    
+    Bookkeeping currentBookkeeping = isAccounting ? getProject().getAccounting() :
+        getProject().getBudgeting();
+    
+    incomeTable.getItems().addAll(currentBookkeeping.getIncomeList());
+    expenseTable.getItems().addAll(currentBookkeeping.getExpenseList());
+    
     incomeTable.refresh();
     expenseTable.refresh();
-
-    // Update totals
-    double incomeAmount = isAccounting ? accountingIncome.stream().mapToDouble(Income::getAmount)
-            .sum() : budgetingIncome.stream().mapToDouble(Income::getAmount).sum();
-    double expenseAmount = isAccounting ? accountingExpense.stream().mapToDouble(Expense::getAmount)
-            .sum() : budgetingExpense.stream().mapToDouble(Expense::getAmount).sum();
-
-    totalIncome.setText(String.format("%.2f kr", incomeAmount));
-    totalExpense.setText(String.format("- %.2f kr", expenseAmount));
-    totalAmount.setText(String.format("%.2f kr", incomeAmount - expenseAmount));
+  
+    totalIncome.setText(String.format("%.2f kr", currentBookkeeping.getTotalIncome()));
+    totalExpense.setText(String.format("- %.2f kr", currentBookkeeping.getTotalExpense()));
+    totalAmount.setText(String.format("%.2f kr",
+        currentBookkeeping.getTotalIncome() - currentBookkeeping.getTotalExpense()));
     
-    refreshImages();
-    
-    warningLabel.setVisible(false);
-
+    clearWarning();
     updatePieCharts();
   }
 
@@ -278,7 +218,7 @@ public class ViewProjectController {
       Parent root = loader.load();
 
       EditProjectController controller = loader.getController();
-      controller.initializeWithData(project);
+      controller.initializeWithData(chosenProject);
 
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException | NullPointerException e) {
@@ -289,7 +229,7 @@ public class ViewProjectController {
   /**
    * Opens the all projects view.
    */
-  public void goToAllProjects() {
+  public void allProjects() {
     try {
       Parent root = FXMLLoader.load(
               Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
@@ -300,75 +240,80 @@ public class ViewProjectController {
   }
 
   public void nextProject() {
-    User tempUser = null;
-    try {
-      tempUser = FileHandling.readUserFromFile();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ClassNotFoundException e) {
-      throw new RuntimeException(e);
-    }
-
-    int index = tempUser.getProjectRegistry().getProjects().indexOf(project);
-    Project nextProject = tempUser.getProjectRegistry().getProjects().get(index + 1);
+    int index = User.getInstance().getProjectRegistry().getProjects().indexOf(chosenProject);
+    Project nextProject = User.getInstance().getProjectRegistry().getProjects().get(index + 1);
 
     initializeWithData(nextProject);
   }
   
-  /**
-   * Refreshes the image preview and the buttons to navigate between images. Will disable the
-   */
-  private void refreshImages() {
-    if (images == null || images.isEmpty()) {
-      imageLeft.setDisable(true);
-      imageRight.setDisable(true);
-      imagePreview.setImage(null);
-      return;
-    }
+  public void previousProject() {
+    int index = User.getInstance().getProjectRegistry().getProjects().indexOf(chosenProject);
+    Project previousProject = User.getInstance().getProjectRegistry().getProjects().get(index - 1);
     
-    Image image = new Image(images.get(imageIndex).toURI().toString());
-    imagePreview.setImage(image);
-    
-    imageLeft.setDisable(imageIndex == 0);
-    imageRight.setDisable(imageIndex == images.size() - 1);
+    initializeWithData(previousProject);
   }
   
   /**
    * Lets a user look backwards through added images.
    */
   public void imageIndexLeft() {
-    if (imageIndex > 0) {
-      imageIndex--;
-      refreshImages();
+    int imageIndex = getProject().getImageIndex(imagePreview.getImage());
+    List<File> images = getProject().getImages();
+    
+    if (imageIndex == 0) {
+      imagePreview.setImage(new Image(images.get(images.size() - 1).toURI().toString()));
+    } else {
+      imagePreview.setImage(new Image(images.get(imageIndex - 1).toURI().toString()));
     }
+    
+    refreshImages();
   }
   
   /**
    * Lets a user look forwards through added images.
    */
   public void imageIndexRight() {
-    if (imageIndex < images.size() - 1) {
-      imageIndex++;
-      refreshImages();
+    int imageIndex = getProject().getImageIndex(imagePreview.getImage());
+    List<File> images = getProject().getImages();
+    
+    if (imageIndex == images.size() - 1) {
+      imagePreview.setImage(new Image(images.get(0).toURI().toString()));
+    } else {
+      imagePreview.setImage(new Image(images.get(imageIndex + 1).toURI().toString()));
     }
+    
+    refreshImages();
   }
-
-  public void previousProject() {
-    User tempUser = null;
-    try {
-      tempUser = FileHandling.readUserFromFile();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ClassNotFoundException e) {
-      throw new RuntimeException(e);
-    }
-
-    int index = tempUser.getProjectRegistry().getProjects().indexOf(project);
-    Project previousProject = tempUser.getProjectRegistry().getProjects().get(index - 1);
-
-    initializeWithData(previousProject);
+  
+  /**
+   * Refreshes the image preview and the buttons to navigate between images. Will disable the
+   */
+  private void refreshImages() {
+    List<File> images = getProject().getImages();
+    
+    imageLeft.setDisable(images.size() < 2);
+    imageRight.setDisable(images.size() < 2);
   }
-
+  
+  /**
+   * Get the last project in the singleton user's project registry, which is the current project.
+   *
+   * @return The last project in the singleton user's project registry.
+   */
+  private Project getProject() {
+    return new Project(chosenProject);
+  }
+  
+  /**
+   * Clears the warning label.
+   */
+  private void clearWarning() {
+    warningLabel.setVisible(false);
+  }
+  
+  /**
+   * Switches the theme of the application.
+   */
   public void switchTheme() {
     BudgetAndAccountingApp.setTheme();
   }

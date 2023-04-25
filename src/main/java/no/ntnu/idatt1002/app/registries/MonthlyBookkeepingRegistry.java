@@ -21,6 +21,10 @@ public class MonthlyBookkeepingRegistry implements Serializable {
     monthMonthlyBookkeepingMap.put(bookkeeping.getYearMonth(), bookkeeping);
   }
   
+  public void updateMonthlyBookkeeping(MonthlyBookkeeping bookkeeping) {
+    monthMonthlyBookkeepingMap.put(bookkeeping.getYearMonth(), bookkeeping);
+  }
+  
   public void removeMonthlyBookkeeping(YearMonth yearMonth) {
     monthMonthlyBookkeepingMap.remove(yearMonth);
   }

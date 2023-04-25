@@ -42,9 +42,6 @@ import no.ntnu.idatt1002.app.transactions.Income;
  * FXML Controller class for the New Project page. Only mandatory field is the name of the project.
  */
 public class NewProjectController {
-  
-  private User singelton;
-  
   // Fundamental project information
   @FXML private TextField name;
   @FXML private MenuButton category;
@@ -105,12 +102,11 @@ public class NewProjectController {
    * categories and statuses to the menu buttons.
    */
   public void initialize() {
-    singelton = User.getInstance();
-    singelton.getProjectRegistry().addProject(new Project("New Project", null,
-        singelton.getProjectRegistry().getCategories().get(0), null, "Not started"));
+    User.getInstance().getProjectRegistry().addProject(new Project("New Project", null,
+        User.getInstance().getProjectRegistry().getCategories().get(0), null, "Not started"));
     
     // Add categories to category menu
-    for (String category : singelton.getProjectRegistry().getCategories()) {
+    for (String category : User.getInstance().getProjectRegistry().getCategories()) {
       MenuItem menuItem = new MenuItem(category);
       menuItem.setOnAction(event -> this.category.setText(menuItem.getText()));
       this.category.getItems().add(menuItem);
@@ -134,7 +130,7 @@ public class NewProjectController {
     category.getItems().add(newCategoryItem);
     
     //Add statuses to status menu
-    for (String status : singelton.getProjectRegistry().getStatuses()) {
+    for (String status : User.getInstance().getProjectRegistry().getStatuses()) {
       MenuItem menuItem = new MenuItem(status);
       menuItem.setOnAction(event -> this.status.setText(menuItem.getText()));
       this.status.getItems().add(menuItem);
@@ -154,7 +150,7 @@ public class NewProjectController {
     
     //Set default values
     name.setPromptText("New project");
-    category.setText(singelton.getProjectRegistry().getCategories().get(0));
+    category.setText(User.getInstance().getProjectRegistry().getCategories().get(0));
     status.setText("Not started");
     
     refreshLocalOverview();
@@ -175,7 +171,7 @@ public class NewProjectController {
         .filter(item -> item.getText().equals(category.getText())).findFirst().orElse(null);
     
     try {
-      singelton.getProjectRegistry().removeCategory(category.getText());
+      User.getInstance().getProjectRegistry().removeCategory(category.getText());
       category.getItems().remove(chosenCategory);
       category.setText("");
       
@@ -294,7 +290,7 @@ public class NewProjectController {
       updateProject(newProject);
       
       refreshLocalOverview();
-      resetIncomeFields();
+      resetExpenseFields();
     } catch (NumberFormatException e) {
       setWarning("Please enter a valid amount that is greater than 0");
     } catch (IllegalArgumentException e) {
@@ -511,7 +507,6 @@ public class NewProjectController {
     refreshImages();
   }
   
-  
   /**
    * Refreshes the image preview and the buttons to navigate between images. Will disable the
    */
@@ -539,10 +534,11 @@ public class NewProjectController {
       newProject.setCategory(category.getText());
       newProject.setDueDate(dueDate.getValue());
       newProject.setDescription(description.getText());
+      newProject.setStatus(status.getText());
       
       updateProject(newProject);
       
-      FileHandling.writeUserToFile(singelton);
+      FileHandling.writeUserToFile(User.getInstance());
       
       Parent root = FXMLLoader.load(
           Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
@@ -566,7 +562,7 @@ public class NewProjectController {
     
     if (result.isPresent() && result.get() == ButtonType.OK) {
       try {
-        singelton = FileHandling.readUserFromFile();
+        User.getInstance().loadUser(FileHandling.readUserFromFile());
         Parent root = FXMLLoader.load(
             Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
@@ -583,8 +579,8 @@ public class NewProjectController {
    * @return The last project in the singleton user's project registry.
    */
   private Project getProject() {
-    return singelton.getProjectRegistry().getProjects().get(
-        singelton.getProjectRegistry().getProjects().size() - 1);
+    return new Project(User.getInstance().getProjectRegistry().getProjects().get(
+        User.getInstance().getProjectRegistry().getProjects().size() - 1));
   }
   
   /**
@@ -593,7 +589,7 @@ public class NewProjectController {
    * @param newProject The edited project to update the singleton with.
    */
   private void updateProject(Project newProject) {
-    singelton.getProjectRegistry().updateProject(getProject(), newProject);
+    User.getInstance().getProjectRegistry().updateProject(getProject(), newProject);
   }
   
   

@@ -29,16 +29,16 @@ public class MonthlyBookkeeping implements Serializable {
    * @param yearMonth the year and month of the bookkeeping
    * @throws IllegalArgumentException if yearMonth is null
    */
-  public MonthlyBookkeeping(YearMonth yearMonth) {
+  public MonthlyBookkeeping(YearMonth yearMonth) throws IllegalArgumentException {
+    if (yearMonth == null) {
+      throw new IllegalArgumentException("YearMonth cannot be null");
+    }
+    
+    this.yearMonth = yearMonth;
     budgetingPersonal = new Budgeting();
     budgetingWork = new Budgeting();
     accountingPersonal = new Accounting();
     accountingWork = new Accounting();
-    
-    if (yearMonth == null) {
-      throw new IllegalArgumentException("YearMonth cannot be null");
-    }
-    this.yearMonth = yearMonth;
   }
   
   /**
@@ -47,7 +47,7 @@ public class MonthlyBookkeeping implements Serializable {
    * @param monthlyBookkeeping the MonthlyBookkeeping object to copy
    * @throws IllegalArgumentException if monthlyBookkeeping is null
    */
-  public MonthlyBookkeeping(MonthlyBookkeeping monthlyBookkeeping) {
+  public MonthlyBookkeeping(MonthlyBookkeeping monthlyBookkeeping) throws IllegalArgumentException {
     if (monthlyBookkeeping == null) {
       throw new IllegalArgumentException("MonthlyBookkeeping cannot be null");
     }

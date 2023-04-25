@@ -33,7 +33,8 @@ public class Project implements Serializable {
    * @param dueDate The due date of the project.
    * @throws IllegalArgumentException If the name or category is null or blank.
    */
-  public Project(String name, String description, String category, LocalDate dueDate, String status) {
+  public Project(String name, String description, String category, LocalDate dueDate, String status)
+      throws IllegalArgumentException{
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Name cannot be null or blank");
     }
@@ -56,7 +57,10 @@ public class Project implements Serializable {
    *
    * @param project The project to be copied.
    */
-  public Project(Project project) {
+  public Project(Project project) throws IllegalArgumentException {
+    if (project == null) {
+      throw new IllegalArgumentException("Project cannot be null");
+    }
     this.name = project.getName();
     this.description = project.getDescription();
     this.category = project.getCategory();
@@ -157,7 +161,7 @@ public class Project implements Serializable {
    * @param name The new name of the project.
    * @throws IllegalArgumentException If the name is null or blank.
    */
-  public void setName(String name) {
+  public void setName(String name) throws IllegalArgumentException {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("name cannot be null or blank");
     }
@@ -179,7 +183,7 @@ public class Project implements Serializable {
    *
    * @param category The new category of the project.
    */
-  public void setCategory(String category) {
+  public void setCategory(String category) throws IllegalArgumentException {
     if (category == null || category.isBlank()) {
       throw new IllegalArgumentException("Category cannot be null or blank");
     }
@@ -204,7 +208,10 @@ public class Project implements Serializable {
    *
    * @param image The image to add
    */
-  public void addImage(File image) {
+  public void addImage(File image) throws IllegalArgumentException {
+    if (image == null) {
+      throw new IllegalArgumentException("image cannot be null");
+    }
     images.add(image);
   }
   
@@ -213,7 +220,10 @@ public class Project implements Serializable {
    *
    * @param image The image to remove
    */
-  public void removeImage(File image) {
+  public void removeImage(File image) throws IllegalArgumentException {
+    if (image == null) {
+      throw new IllegalArgumentException("image cannot be null");
+    }
     images.remove(image);
   }
 
@@ -222,7 +232,10 @@ public class Project implements Serializable {
    *
    * @param image The image to get the index of.
    */
-  public int getImageIndex(Image image) {
+  public int getImageIndex(Image image) throws IllegalArgumentException {
+    if (image == null) {
+      throw new IllegalArgumentException("image cannot be null");
+    }
     for (int i = 0; i < images.size(); i++) {
       Image img = new Image(images.get(i).toURI().toString());
       if (img.getUrl().equals(image.getUrl())) {

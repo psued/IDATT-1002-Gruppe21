@@ -66,7 +66,7 @@ pages:
   script:
     - mvn clean package
     - mvn javadoc:javadoc
-    - mvn jacoco:prepare-agent install jacoco:report
+    #- mvn jacoco:prepare-agent install jacoco:report
     - mkdir .public
     - cd .public
     - mkdir apidocs

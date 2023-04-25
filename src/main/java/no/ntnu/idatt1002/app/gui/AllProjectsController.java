@@ -11,10 +11,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.User;
-import no.ntnu.idatt1002.app.filehandling.FileHandling;
 import no.ntnu.idatt1002.app.registers.Project;
 
 /**
@@ -24,7 +22,7 @@ import no.ntnu.idatt1002.app.registers.Project;
  */
 public class AllProjectsController {
   
-  private User tempUser;
+  
   
   @FXML private TableView<Project> table;
   @FXML private TableColumn<Project, String> name;
@@ -38,13 +36,7 @@ public class AllProjectsController {
    * Sets up the table containing all relevant projects by loading from the serialized user.
    */
   public void initialize() {
-    try {
-      tempUser = FileHandling.readUserFromFile();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ClassNotFoundException e) {
-      throw new RuntimeException(e);
-    }
+    
   
     errorMessage.setVisible(false);
     
@@ -55,29 +47,23 @@ public class AllProjectsController {
   
     
     table.getItems().clear();
-    if (tempUser.getProjectRegistry().getProjects() != null) {
-      table.getItems().addAll(tempUser.getProjectRegistry().getProjects());
+    if (User.getInstance().getProjectRegistry().getProjects() != null) {
+      table.getItems().addAll(User.getInstance().getProjectRegistry().getProjects());
     }
     table.refresh();
 
-    table.setRowFactory(tv -> new TableRow<Project>() {
+    table.setRowFactory(tv -> new TableRow<>() {
       @Override
       public void updateItem(Project item, boolean empty) {
         super.updateItem(item, empty);
         if (item == null || empty) {
           setStyle("");
         } else {
-          if (item.getStatus().equals("Not started")) {
-            setStyle("-fx-background-color: red;");
-          }
-          else if (item.getStatus().equals("Doing")) {
-            setStyle("-fx-background-color: orange;");
-          }
-          else if (item.getStatus().equals("Finished")) {
-            setStyle("-fx-background-color: green");
-          }
-          else {
-            setStyle("");
+          switch (item.getStatus()) {
+            case "Not started" -> setStyle("-fx-background-color: red;");
+            case "Doing" -> setStyle("-fx-background-color: orange;");
+            case "Finished" -> setStyle("-fx-background-color: green");
+            default -> setStyle("");
           }
         }
       }

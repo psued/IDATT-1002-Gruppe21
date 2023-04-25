@@ -44,7 +44,6 @@ import no.ntnu.idatt1002.app.transactions.Income;
  */
 public class EditProjectController {
   
-  private User singleton;
   private Project originalProject;
   
   /**
@@ -116,7 +115,7 @@ public class EditProjectController {
    * data of the project that is being edited.
    */
   private void initialize() {
-    singleton = User.getInstance();
+    
     
     // Set up the text fields to display the project information
     name.setText(originalProject.getName());
@@ -126,7 +125,7 @@ public class EditProjectController {
     status.setText(originalProject.getStatus());
     
     // Add categories to the category menu button
-    for (String category : singleton.getProjectRegistry().getCategories()) {
+    for (String category : User.getInstance().getProjectRegistry().getCategories()) {
       MenuItem menuItem = new MenuItem(category);
       menuItem.setOnAction(event -> this.category.setText(menuItem.getText()));
       this.category.getItems().add(menuItem);
@@ -150,7 +149,7 @@ public class EditProjectController {
     category.getItems().add(newCategoryItem);
     
     //Add statuses to status menu
-    for (String status : singleton.getProjectRegistry().getStatuses()) {
+    for (String status : User.getInstance().getProjectRegistry().getStatuses()) {
       MenuItem menuItem = new MenuItem(status);
       menuItem.setOnAction(event -> this.status.setText(menuItem.getText()));
       this.status.getItems().add(menuItem);
@@ -192,7 +191,7 @@ public class EditProjectController {
         .filter(item -> item.getText().equals(category.getText())).findFirst().orElse(null);
     
     try {
-      singleton.getProjectRegistry().removeCategory(category.getText());
+      User.getInstance().getProjectRegistry().removeCategory(category.getText());
       category.getItems().remove(chosenCategory);
       category.setText("");
       
@@ -554,10 +553,11 @@ public class EditProjectController {
       editedProject.setCategory(category.getText());
       editedProject.setDueDate(dueDate.getValue());
       editedProject.setDescription(description.getText());
+      editedProject.setStatus(status.getText());
       
       updateProject(editedProject);
       
-      FileHandling.writeUserToFile(singleton);
+      FileHandling.writeUserToFile(User.getInstance());
       
       Parent root = FXMLLoader.load(
           Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
@@ -581,10 +581,10 @@ public class EditProjectController {
     Optional<ButtonType> result = alert.showAndWait();
     
     if (result.isPresent() && result.get() == ButtonType.OK) {
-      singleton.getProjectRegistry().removeProject(originalProject);
+      User.getInstance().getProjectRegistry().removeProject(originalProject);
       try {
         
-        FileHandling.writeUserToFile(singleton);
+        FileHandling.writeUserToFile(User.getInstance());
         Parent root = FXMLLoader.load(
             Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
@@ -597,21 +597,21 @@ public class EditProjectController {
   }
   
   /**
-   * Get the last project in the singleton user's project registry, which is the current project.
+   * Get the last project in the User.getInstance() user's project registry, which is the current project.
    * 
-   * @return The last project in the singleton user's project registry.
+   * @return The last project in the User.getInstance() user's project registry.
    */
   private Project getProject() {
     return new Project(originalProject);
   }
   
   /**
-   * Update the last project in the singleton user's project registry, which is the current project.
+   * Update the last project in the User.getInstance() user's project registry, which is the current project.
    * 
-   * @param newProject The edited project to update the singleton with.
+   * @param newProject The edited project to update the User.getInstance() with.
    */
   private void updateProject(Project newProject) {
-    singleton.getProjectRegistry().updateProject(getProject(), newProject);
+    User.getInstance().getProjectRegistry().updateProject(getProject(), newProject);
     originalProject = newProject;
   }
   

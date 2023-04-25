@@ -88,7 +88,7 @@ public class BudgetAndAccountingApp extends Application {
     }
     
     Parent root = FXMLLoader
-        .load(Objects.requireNonNull(getClass().getResource("/MonthlyOverview.fxml")));
+        .load(Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
     
     scene = new Scene(root);
 

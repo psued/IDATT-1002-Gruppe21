@@ -25,7 +25,6 @@ import javafx.scene.layout.VBox;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.User;
 import no.ntnu.idatt1002.app.bookkeeping.Bookkeeping;
-import no.ntnu.idatt1002.app.filehandling.FileHandling;
 import no.ntnu.idatt1002.app.registers.Project;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
@@ -36,10 +35,7 @@ import no.ntnu.idatt1002.app.transactions.Income;
  */
 public class ViewProjectController {
   
-  private User singleton;
   private Project chosenProject;
-  
-  
   
   @FXML private Label viewTitle;
   @FXML private Label name;
@@ -94,8 +90,6 @@ public class ViewProjectController {
     }
     chosenProject = selectedProject;
     
-    singleton = User.getInstance();
-    
     viewTitle.setText("View " + chosenProject.getName());
     
     name.setText(chosenProject.getName());
@@ -124,12 +118,12 @@ public class ViewProjectController {
     refreshLocalOverview();
     refreshImages();
 
-    int indexOfProject = singleton.getProjectRegistry().getProjects().indexOf(getProject());
+    int indexOfProject = User.getInstance().getProjectRegistry().getProjects().indexOf(getProject());
     iconLeft.setOpacity(indexOfProject == 0 ? 0 : 1);
-    iconRight.setOpacity(indexOfProject == singleton.getProjectRegistry().getProjects().size() - 1 ? 0 : 1);
+    iconRight.setOpacity(indexOfProject == User.getInstance().getProjectRegistry().getProjects().size() - 1 ? 0 : 1);
     
     previousProjectBox.setDisable(indexOfProject == 0);
-    nextProjectBox.setDisable(indexOfProject == singleton.getProjectRegistry().getProjects().size() - 1);
+    nextProjectBox.setDisable(indexOfProject == User.getInstance().getProjectRegistry().getProjects().size() - 1);
   }
   
 
@@ -246,15 +240,15 @@ public class ViewProjectController {
   }
 
   public void nextProject() {
-    int index = singleton.getProjectRegistry().getProjects().indexOf(chosenProject);
-    Project nextProject = singleton.getProjectRegistry().getProjects().get(index + 1);
+    int index = User.getInstance().getProjectRegistry().getProjects().indexOf(chosenProject);
+    Project nextProject = User.getInstance().getProjectRegistry().getProjects().get(index + 1);
 
     initializeWithData(nextProject);
   }
   
   public void previousProject() {
-    int index = singleton.getProjectRegistry().getProjects().indexOf(chosenProject);
-    Project previousProject = singleton.getProjectRegistry().getProjects().get(index - 1);
+    int index = User.getInstance().getProjectRegistry().getProjects().indexOf(chosenProject);
+    Project previousProject = User.getInstance().getProjectRegistry().getProjects().get(index - 1);
     
     initializeWithData(previousProject);
   }

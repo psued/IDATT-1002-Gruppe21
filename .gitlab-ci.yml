@@ -1,10 +1,10 @@
-# You can override the included template(s) by including variable overrides
 image: maven:eclipse-temurin
 
 stages:
   - build
   - test
   - package
+  - deploy
 
 build:
   stage: build
@@ -19,11 +19,10 @@ test:
     paths:
       - target/surefire-reports/
     reports:
-      junit: 
-        - target/surefire-reports/TEST-*.xml
+      junit: target/surefire-reports/TEST-no.ntnu.idatt1002.demo.repo.MyEntityRepoTest.xml
       coverage_report:
         coverage_format: cobertura
-        path: target/site/jacoco/jacoco.xml
+        path: target/jacoco/coverage-reports/jacoco.xml
 
 package:
   stage: package
@@ -31,16 +30,14 @@ package:
     - mvn clean package
   artifacts:
     paths:
-      - target/IDATT1002Project-1.0-SNAPSHOT.jar
+      - target/idatt2002demo-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 generatepdf:
-  image: ubuntu:20.04  # vi kjører dette i en docker container, som kjører Ubuntu Linux
-  stage: package # vi kjører den parallelt med å publisere javadoc til Pages
+  image: ubuntu:20.04 #20.04  # vi kjører dette i en docker container, som kjører Ubuntu Linux
+  stage: deploy # vi kjører den parallelt med å publisere javadoc til Pages
+  when: manual
   script:
-    - apt-get clean
-    - apt-get update --allow-insecure-repositories
-
-  # apt-get er en pakkehåndterer som kan laste ned og installere pakker på linux-system
+    - apt-get update --allow-insecure-repositories  # apt-get er en pakkehåndterer som kan laste ned og installere pakker på linux-system
     - apt-get install -y wget  # installerer et tool som heter "wget", som kan fyre av HTML-requester på kommandolinja
     - apt-get install -y fontconfig libfreetype6 libjpeg-turbo8 libpng16-16 libx11-6 libxcb1 libxext6 libxrender1 xfonts-75dpi xfonts-base  # installerer en bunsj med libs vi trenger for konverteringen til PDF
     - wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.focal_amd64.deb  # Henter HTML-til-PDF-konverterer fra git. Vi bruker denne spesifikke pakken fordi vi vet at den fungerer i miljøet vi kjører i
@@ -64,11 +61,13 @@ generatepdf:
 # NB! Javadoc genereres IKKE under bygging av prosjektet. Man må kjøre javadoc lokalt og legge til katalogen (med navnet "javadoc")
 # til roten av prosjektet. Ellers vil denne delen feile.
 pages:
-  stage: package
+  stage: deploy
+  when: manual
   script:
     - mvn clean package
     - mvn javadoc:javadoc
-    #- mvn jacoco:prepare-agent install jacoco:report
+    - ls target/site/
+    - ls target/site/apidocs/
     - mkdir .public
     - cd .public
     - mkdir apidocs
@@ -79,5 +78,3 @@ pages:
   artifacts:
     paths:
       - public
-  only:
-    - web

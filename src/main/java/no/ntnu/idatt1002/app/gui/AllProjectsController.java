@@ -21,32 +21,42 @@ import no.ntnu.idatt1002.app.registers.Project;
  * edit an existing project
  */
 public class AllProjectsController {
-  
+  //Sets up the table and its columns
   @FXML private TableView<Project> table;
   @FXML private TableColumn<Project, String> name;
   @FXML private TableColumn<Project, Date> dueDate;
   @FXML private TableColumn<Project, String> category;
   @FXML private TableColumn<Project, Double> totalAccounting;
 
+  //Sets up the warning label
   @FXML private Label warningLabel = new Label();
   
   /**
-   * Sets up the table containing all relevant projects by loading from the serialized user.
+   * Sets up the table containing all the projects in the project registry.
+   *
+   * <p>Makes each row in the table have a different color depending on the status of the project.
    */
+  @FXML
   public void initialize() {
+    //Hide warning
     warningLabel.setVisible(false);
     
+    //Set up table and the column values
+    //The property value factory is the name of the getter method in the project class and allows
+    // for the table to independently fetch the values for each column
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
     dueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
     category.setCellValueFactory(new PropertyValueFactory<>("category"));
     totalAccounting.setCellValueFactory(new PropertyValueFactory<>("accountingTotal"));
     
+    //Clears the table and adds all the projects in the project registry to the table
     table.getItems().clear();
     if (User.getInstance().getProjectRegistry().getProjects() != null) {
       table.getItems().addAll(User.getInstance().getProjectRegistry().getProjects());
     }
     table.refresh();
 
+    //Sets the color of each row depending on the status of the project
     table.setRowFactory(tv -> new TableRow<>() {
       @Override
       public void updateItem(Project project, boolean empty) {
@@ -67,7 +77,11 @@ public class AllProjectsController {
   
   /**
    * Opens the new project page.
+   *
+   * <p>In case of an error opening the page, an error message is displayed prompting the user to
+   * restart the application as no other potential solution is available.
    */
+  @FXML
   public void newProject() {
     try {
       Parent root = FXMLLoader.load(
@@ -80,11 +94,19 @@ public class AllProjectsController {
   
   /**
    * Takes the chosen project and loads the edit project page by initializing it with the chosen
-   * project. If no project is chosen, an error message is displayed.
+   * project.
+   *
+   * <p>If no project is chosen, an error message is displayed prompting the user to choose a
+   * project.
+   *
+   * <p>In case of an error opening the page, an error message is displayed prompting the user
+   * to restart the application as no other potential solution is available.
    */
+  @FXML
   public void editProject() {
-    Project selectedProject = table.getSelectionModel().getSelectedItem();
     try {
+      Project selectedProject = table.getSelectionModel().getSelectedItem();
+      
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditProject.fxml"));
       Parent root = loader.load();
       
@@ -101,11 +123,19 @@ public class AllProjectsController {
   
   /**
    * Takes the chosen project and loads the view project page by initializing it with the chosen
-   * project. If no project is chosen, an error message is displayed.
+   * project.
+   *
+   * <p>If no project is chosen, an error message is displayed prompting the user to choose a
+   * project.
+   *
+   * <p>In case of an error opening the page, an error message is displayed prompting the user
+   * to restart the application as no other potential solution is available.
    */
+  @FXML
   public void viewProject() {
-    Project selectedProject = table.getSelectionModel().getSelectedItem();
     try {
+      Project selectedProject = table.getSelectionModel().getSelectedItem();
+      
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewProject.fxml"));
       Parent root = loader.load();
     
@@ -119,7 +149,14 @@ public class AllProjectsController {
       setWarning("Could not load view project page, please restart the application.");
     }
   }
-
+  
+  /**
+   * Loads the monthly overview page.
+   *
+   * <p>In case of an error opening the page, an error message is displayed prompting the user to
+   * restart the application as no other potential solution is available.
+   */
+  @FXML
   public void monthly() {
     try {
       Parent root = FXMLLoader.load(
@@ -130,6 +167,13 @@ public class AllProjectsController {
     }
   }
 
+  /**
+   * Loads the start page.
+   *
+   * <p>In case of an error opening the page, an error message is displayed prompting the user to
+   * restart the application as no other potential solution is available.
+   */
+  @FXML
   public void start() {
     try {
       Parent root = FXMLLoader.load(
@@ -141,20 +185,21 @@ public class AllProjectsController {
   }
   
   /**
-   * Sets the warning label to display the given warning.
+   * Switches the theme of the application.
+   */
+  @FXML
+  public void switchTheme() {
+    BudgetAndAccountingApp.setTheme();
+  }
+  
+  /**
+   * Displays a warning message with the given text.
    *
    * @param warning The warning to display.
    */
   private void setWarning(String warning) {
     warningLabel.setVisible(true);
     warningLabel.setText(warning);
-  }
-  
-  /**
-   * Switches the theme of the application.
-   */
-  public void switchTheme() {
-    BudgetAndAccountingApp.setTheme();
   }
 }
 

@@ -8,11 +8,20 @@ import no.ntnu.idatt1002.app.bookkeeping.Bookkeeping;
 import no.ntnu.idatt1002.app.bookkeeping.Budgeting;
 
 /**
- * The MonthlyBookkeeping is a register for all the bookkeeping in a month.
+ * The MonthlyBookkeeping class represents a bookkeeping system for tracking transactions related
+ * to an entire month.
  *
- * <p>It separates the bookkeeping into two main categories and two subcategories. A transaction
- * is either meant for the accounting or the budgeting for a month. A transaction then either put
- * in the personal or work bookkeeping depending on what category it belongs to.
+ * <p>A monthly bookkeeping object uses the {@link YearMonth YearMonth} class aa an identifier.
+ *
+ * <p>It separates the bookkeeping into two main categories and two subcategories resulting in
+ * four bookkeeping objects. The main categories are accounting and budgeting. Then the
+ * subcategories are personal and work.
+ *
+ * <p>It implements the Serializable interface for serialization and deserialization of object.
+ *
+ * @see YearMonth
+ * @see Bookkeeping
+ * @see Serializable
  */
 public class MonthlyBookkeeping implements Serializable {
   
@@ -23,8 +32,7 @@ public class MonthlyBookkeeping implements Serializable {
   private final YearMonth yearMonth;
   
   /**
-   * Creates a MonthlyBookkeeping object with empty bookkeeping objects. The yearMonth must have
-   * a valid value as it is used to identify the bookkeeping.
+   * Creates a MonthlyBookkeeping object with empty bookkeeping objects.
    *
    * @param yearMonth the year and month of the bookkeeping
    * @throws IllegalArgumentException if yearMonth is null
@@ -42,25 +50,7 @@ public class MonthlyBookkeeping implements Serializable {
   }
   
   /**
-   * Creates a deep copy of a MonthlyBookkeeping object.
-   *
-   * @param monthlyBookkeeping the MonthlyBookkeeping object to copy
-   * @throws IllegalArgumentException if monthlyBookkeeping is null
-   */
-  public MonthlyBookkeeping(MonthlyBookkeeping monthlyBookkeeping) throws IllegalArgumentException {
-    if (monthlyBookkeeping == null) {
-      throw new IllegalArgumentException("MonthlyBookkeeping cannot be null");
-    }
-    budgetingPersonal = new Budgeting((Budgeting) monthlyBookkeeping.getBookkeeping(false, true));
-    budgetingWork = new Budgeting((Budgeting) monthlyBookkeeping.getBookkeeping(false, false));
-    accountingPersonal = new Accounting((Accounting) monthlyBookkeeping.getBookkeeping(true, true));
-    accountingWork = new Accounting((Accounting) monthlyBookkeeping.getBookkeeping(true, false));
-    
-    yearMonth = monthlyBookkeeping.getYearMonth();
-  }
-  
-  /**
-   * Get the chosen bookkeeping object based on the parameters.
+   * Get the chosen bookkeeping object based on the main and subcategory.
    *
    * @param isAccounting true if accounting, false if budgeting
    * @param isPersonal true if personal, false if work
@@ -73,11 +63,11 @@ public class MonthlyBookkeeping implements Serializable {
   }
   
   /**
-   * Get a deep copy bookkeeping object with all the transactions of both work and personal from
-   * either accounting or budgeting.
+   * Get a new bookkeeping object with all the transactions from the two chosen bookkeeping
+   * objects combined into a single bookkeeping object. Also, deep copies the data to prevent
+   * unwanted changes to the original data.
    *
    * @param isAccounting true if accounting, false if budgeting
-   * @return a deep copy bookkeeping object with all the transactions of both work and personal
    */
   public Bookkeeping getTotalBookkeeping(boolean isAccounting) {
     if (isAccounting) {
@@ -124,20 +114,18 @@ public class MonthlyBookkeeping implements Serializable {
   }
   
   /**
-   * Equals method for MonthlyBookkeeping. If the parameter is a MonthlyBookkeeping object but
-   * does not have the same reference, it will check if the yearMonth of the two objects are the
-   * same
+   * Determines if two MonthlyBookkeeping objects are the same by comparing the yearMonth of the
+   * objects, as the yearMonth is utilized as an identifier for the object.
    *
-   * @param o the object to compare to
-   * @return  true if the objects are the same or if the yearMonth of the two objects are the same,
-   *          false otherwise
+   * @param obj the object to compare to
+   * @return true if the objects have the same yearMonth, false otherwise
    */
   @Override
-  public boolean equals(Object o) {
-    if (o == this) {
+  public boolean equals(Object obj) {
+    if (obj == this) {
       return true;
     }
-    if (!(o instanceof MonthlyBookkeeping monthlyBookkeeping)) {
+    if (!(obj instanceof MonthlyBookkeeping monthlyBookkeeping)) {
       return false;
     }
     return yearMonth.equals(monthlyBookkeeping.getYearMonth());

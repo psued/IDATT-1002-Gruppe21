@@ -30,13 +30,15 @@ import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
 
 /**
- * Controller for the view project view. Just displays the project data and allows the user to
- * either edit the project or go back to the all projects view.
+ * Controller for the ViewProject.fxml file. Takes a project as input and displays the data. Has
+ * options for the user to edit the project or go back to all projects.
  */
 public class ViewProjectController {
   
+  // The project that is being viewed
   private Project chosenProject;
   
+  // The project information
   @FXML private Label viewTitle;
   @FXML private Label name;
   @FXML private Label category;
@@ -55,16 +57,20 @@ public class ViewProjectController {
   @FXML private TableColumn<Income, String> incomeCategory;
   @FXML private TableColumn<Income, Double> incomeAmount;
 
+  //Expense Table
   @FXML private TableView<Expense> expenseTable;
   @FXML private TableColumn<Expense, LocalDate> expenseDate;
   @FXML private TableColumn<Expense, String> expenseDescription;
   @FXML private TableColumn<Expense, String> expenseCategory;
   @FXML private TableColumn<Expense, Double> expenseAmount;
 
+  //Navigation icons and boxes
   @FXML private ImageView iconLeft;
   @FXML private ImageView iconRight;
   @FXML private VBox previousProjectBox;
   @FXML private VBox nextProjectBox;
+  
+  //Image preview
   @FXML private Button imageLeft;
   @FXML private Button imageRight;
   @FXML private ImageView imagePreview;
@@ -74,24 +80,29 @@ public class ViewProjectController {
   @FXML private Label totalExpense;
   @FXML private Label totalAmount;
 
+  //Pie charts
   @FXML private PieChart pieIncome;
   @FXML private PieChart pieExpense;
   
-  //Error message
+  //Warning message
   @FXML private Label warningLabel = new Label();
   
   /**
-   * Initialize the view project controller. Sets all text objects to match with the project data
-   * and sets up the tables.
+   * Initialize the view project controller. Sets all information to the project that is being
+   * viewed.
+   *
+   * @param selectedProject The project that is being viewed
+   * @throws IllegalArgumentException If the project is null
    */
   public void initializeWithData(Project selectedProject) throws IllegalArgumentException {
+    // Check if the project is null
     if (selectedProject == null) {
       throw new IllegalArgumentException("Please select a project to view");
     }
     chosenProject = selectedProject;
     
+    // Set up the view
     viewTitle.setText("View " + chosenProject.getName());
-    
     name.setText(chosenProject.getName());
     category.setText(chosenProject.getCategory());
     status.setText(chosenProject.getStatus());
@@ -114,16 +125,18 @@ public class ViewProjectController {
     List<File> images = getProject().getImages();
     imagePreview.setImage(images.isEmpty() ? null : new Image(images.get(0).toURI().toString()));
     
-    // Set up the tables to display the transactions of the project that is being edited
-    refreshOverview();
-    refreshImages();
-
+    // Set up navigation icons
     int indexOfProject = User.getInstance().getProjectRegistry().getProjects().indexOf(getProject());
     iconLeft.setOpacity(indexOfProject == 0 ? 0 : 1);
     iconRight.setOpacity(indexOfProject == User.getInstance().getProjectRegistry().getProjects().size() - 1 ? 0 : 1);
     
     previousProjectBox.setDisable(indexOfProject == 0);
     nextProjectBox.setDisable(indexOfProject == User.getInstance().getProjectRegistry().getProjects().size() - 1);
+    
+    // Set up the tables to display the transactions of the project that is being edited
+    refreshOverview();
+    refreshImages();
+
   }
   
 
@@ -131,14 +144,17 @@ public class ViewProjectController {
    * Refreshes the local overview tables and totals. Updates the tables with the correct data
    * depending on the isAccounting boolean.
    */
+  @FXML
   public void refreshOverview() {
-    // Update tables
+    // Clear the tables
     incomeTable.getItems().clear();
     expenseTable.getItems().clear();
     
+    // Get the correct bookkeeping
     boolean isAccounting = toggleButton.isSelected();
     toggleLabel.setText(isAccounting ? "Accounting - " : "Budgeting - ");
     
+    // Update the tables
     Bookkeeping currentBookkeeping = isAccounting ? getProject().getAccounting() :
         getProject().getBudgeting();
     
@@ -148,6 +164,7 @@ public class ViewProjectController {
     incomeTable.refresh();
     expenseTable.refresh();
   
+    // Set total amounts
     totalIncome.setText(String.format("%.2f kr", currentBookkeeping.getTotalIncome()));
     totalExpense.setText(String.format("- %.2f kr", currentBookkeeping.getTotalExpense()));
     totalAmount.setText(String.format("%.2f kr",
@@ -157,6 +174,11 @@ public class ViewProjectController {
     updatePieCharts();
   }
 
+  /**
+   * Update the pie charts with the correct data.
+   *
+   * <p> The pie charts will display the total income and expense amounts for each category.
+   */
   private void updatePieCharts() {
     // Update pieChart income
     ObservableList<PieChart.Data> pieChartDataIncome = FXCollections.observableArrayList();
@@ -211,7 +233,11 @@ public class ViewProjectController {
 
   /**
    * Opens the edit project view of the current project.
+   *
+   * <p> In the unlikely event that an exception is thrown, a warning will be displayed with
+   * the given warning message.
    */
+  @FXML
   public void editProject() {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditProject.fxml"));
@@ -227,8 +253,12 @@ public class ViewProjectController {
   }
 
   /**
-   * Opens the all projects view.
+   * Opens the all projects page.
+   *
+   * <p> In the unlikely event that an exception is thrown, a warning will be displayed prompting
+   * the user to restart the application as no other solution is available.
    */
+  @FXML
   public void allProjects() {
     try {
       Parent root = FXMLLoader.load(
@@ -238,7 +268,11 @@ public class ViewProjectController {
       setWarning("Could not load projects, please restart the application");
     }
   }
-
+  
+  /**
+   * Reloads the page to display the next project in the project registry.
+   */
+  @FXML
   public void nextProject() {
     int index = User.getInstance().getProjectRegistry().getProjects().indexOf(chosenProject);
     Project nextProject = User.getInstance().getProjectRegistry().getProjects().get(index + 1);
@@ -250,6 +284,10 @@ public class ViewProjectController {
     }
   }
   
+  /**
+   * Reloads the page to display the previous project in the project registry.
+   */
+  @FXML
   public void previousProject() {
     int index = User.getInstance().getProjectRegistry().getProjects().indexOf(chosenProject);
     Project previousProject = User.getInstance().getProjectRegistry().getProjects().get(index - 1);
@@ -264,6 +302,7 @@ public class ViewProjectController {
   /**
    * Lets a user look backwards through added images.
    */
+  @FXML
   public void imageIndexLeft() {
     int imageIndex = getProject().getImageIndex(imagePreview.getImage());
     List<File> images = getProject().getImages();
@@ -280,6 +319,7 @@ public class ViewProjectController {
   /**
    * Lets a user look forwards through added images.
    */
+  @FXML
   public void imageIndexRight() {
     int imageIndex = getProject().getImageIndex(imagePreview.getImage());
     List<File> images = getProject().getImages();
@@ -295,6 +335,7 @@ public class ViewProjectController {
   
   /**
    * Refreshes the image preview and the buttons to navigate between images. Will disable the
+   * buttons if there are no images to navigate between.
    */
   private void refreshImages() {
     List<File> images = getProject().getImages();
@@ -332,6 +373,7 @@ public class ViewProjectController {
   /**
    * Switches the theme of the application.
    */
+  @FXML
   public void switchTheme() {
     BudgetAndAccountingApp.setTheme();
   }

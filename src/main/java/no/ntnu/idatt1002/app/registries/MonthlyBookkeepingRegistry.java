@@ -3,12 +3,14 @@ package no.ntnu.idatt1002.app.registries;
 import java.io.Serializable;
 import java.time.Month;
 import java.time.YearMonth;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
 
+/**
+ *
+ */
 public class MonthlyBookkeepingRegistry implements Serializable {
   
   private final Map<YearMonth, MonthlyBookkeeping> monthMonthlyBookkeepingMap;

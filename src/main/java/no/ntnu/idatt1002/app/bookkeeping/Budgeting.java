@@ -6,13 +6,18 @@ import java.util.List;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
 import no.ntnu.idatt1002.app.transactions.Transaction;
+import no.ntnu.idatt1002.app.registers.Project;
 
 /**
- * The Budgeting class represents a bookkeeping system for tracking transactions related to the
- * budget of a project or other uses.
+ * The Budgeting class represents a {@link Bookkeeping bookeeping} system for tracking transactions
+ * related to the budget of a {@link Project project} or other uses. Has separate lists for
+ * income and expenses.
  *
- * <p>It implements the Bookkeeping interface and is Serializable for serialization
- * and deserialization.
+ * <p>It implements the Bookkeeping interface and uses the Serializable interface for
+ * serialization and deserialization of object.
+ *
+ * @see Bookkeeping
+ * @see Serializable
  */
 public class Budgeting implements Bookkeeping, Serializable {
   
@@ -20,7 +25,7 @@ public class Budgeting implements Bookkeeping, Serializable {
   private final ArrayList<Expense> expenseList;
 
   /**
-   * The constructor for this class.
+   * Creates an empty Budgeting and initializes the income and expense lists.
    */
   public Budgeting() {
     incomeList = new ArrayList<>();
@@ -28,9 +33,15 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
   
   /**
-   * Deep copy constructor for this class.
+   * Deep copy constructor for this class. Copies the income and expense lists by recursively
+   * deep copying all {@link Transaction transactions} and putting them in new lists.
    *
    * @param budgeting the Budgeting object to be copied
+   *
+   * @see #getIncomeList()
+   * @see #getExpenseList()
+   * @see Income#Income(Income)
+   * @see Expense#Expense(Expense)
    */
   public Budgeting(Budgeting budgeting) throws IllegalArgumentException {
     if (budgeting == null) {
@@ -41,7 +52,9 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
   
   /**
-   * Method for adding a transaction to the income or expense list.
+   * Adds a {@link Transaction transaction} object to the income or expense list depending on
+   * whether the {@link Transaction transaction} object is an instance of {@link Income Income}
+   * or {@link Expense Expense}
    *
    * @param transaction the transaction to be added
    */
@@ -58,11 +71,13 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
   
   /**
-   * Updates a Transaction object. Handles weather all possible combinations of different types
-   * the old and new Transaction objects are.
+   * Updates a {@link Transaction transaction} object in the income or expense list depending on
+   * whether the {@link Transaction transaction} object is an instance of {@link Income Income}
+   * or {@link Expense Expense}.
    *
    * @param oldTransaction the old Transaction object to update from.
    * @param newTransaction the new Transaction object to update to.
+   * @throws IllegalArgumentException if any of the arguments are null
    */
   @Override
   public void updateTransaction(Transaction oldTransaction, Transaction newTransaction) throws
@@ -89,9 +104,12 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
   
   /**
-   * Removes a transaction from the income or expense list.
+   * Removes a {@link Transaction transaction} object from the income or expense list depending
+   * on whether the {@link Transaction transaction} object is an instance of {@link Income Income
+   * } or {@link Expense Expense}.
    *
    * @param transaction the transaction to be removed
+   * @throws IllegalArgumentException if the transaction is null
    */
   @Override
   public void removeTransaction(Transaction transaction) throws IllegalArgumentException {
@@ -106,9 +124,12 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
 
   /**
-   * Get a deep copy of the income list.
+   * Get a deep copy of the {@link Income income} list. This is done by recursively deep copying
+   * every income object and putting them in a new list.
    *
    * @return a deep copy of the income list
+   *
+   * @see Income#Income(Income)
    */
   public ArrayList<Income> getIncomeList() {
     ArrayList<Income> copy = new ArrayList<>();
@@ -119,9 +140,12 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
 
   /**
-   * Get a deep copy of the expense list.
+   * Get a deep copy of the {@link Expense expense} list. This is done by recursively deep copying
+   * every expense object and putting them in a new list.
    *
    * @return a deep copy of the expense list
+   *
+   * @see Expense#Expense(Expense)
    */
   public ArrayList<Expense> getExpenseList() {
     ArrayList<Expense> copy = new ArrayList<>();
@@ -132,9 +156,9 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
   
   /**
-   * Get a deep copy of the transaction list.
+   * Get a combined list of all {@link Transaction transactions} in the income and expense lists.
    *
-   * @return a deep copy of the transaction list
+   * @return a combined list of all transactions
    */
   @Override
   public List<Transaction> getTransactions() {
@@ -145,7 +169,7 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
   
   /**
-   * Get the sum of all income amounts.
+   * Get the sum of all {@link Income income} amounts.
    *
    * @return the total amount of income
    */
@@ -154,16 +178,18 @@ public class Budgeting implements Bookkeeping, Serializable {
   }
 
   /**
-   * Get the sum of all expense amounts.
+   * Get the sum of all {@link Expense expense} amounts.
    *
-   * @return the total expense
+   * @return the total amount of expenses
    */
   public double getTotalExpense() {
     return expenseList.stream().mapToDouble(Expense::getAmount).sum();
   }
-  
+
   /**
-   * Determines if the Budgeting object is equal to the specified object.
+   * Determines if the Budgeting object is equal to the specified object. Checks first if the
+   * parameter object has the same reference as this object. If not, checks if the parameter
+   * object is an instance of Budgeting. If so, checks if the income and expense lists are equal.
    *
    * @param obj the object to compare to
    * @return true if the objects are equal, false otherwise

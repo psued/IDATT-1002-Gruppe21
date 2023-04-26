@@ -371,7 +371,7 @@ public class MonthlyOverviewController {
       setWarning("Please enter a valid amount");
     } catch (IllegalArgumentException e) {
       setWarning(e.getMessage());
-      }
+    }
   }
 
   /**

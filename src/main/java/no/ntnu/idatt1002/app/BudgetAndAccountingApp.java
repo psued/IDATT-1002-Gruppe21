@@ -32,8 +32,7 @@ public class BudgetAndAccountingApp extends Application {
     if (scene.getStylesheets().contains("styles/dark-theme.css")) {
       scene.getStylesheets().clear();
       scene.getStylesheets().add("styles/light-theme.css");
-    }
-    else {
+    } else {
       scene.getStylesheets().clear();
       scene.getStylesheets().add("styles/dark-theme.css");
     }

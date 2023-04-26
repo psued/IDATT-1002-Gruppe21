@@ -13,19 +13,19 @@ import java.time.LocalDate;
  * @see Serializable
  */
 public class Income implements Transaction, Serializable {
-
+  
   private LocalDate date;
   private String description;
   private String category;
   private double amount;
-
+  
   /**
    * Creates an income that is an instance of Transaction.
    *
-   * @param date                      The date of the Income.
-   * @param description               The description of the Income.
-   * @param category                  The category of the Income.
-   * @param amount                    The amount of the Income.
+   * @param date        The date of the Income.
+   * @param description The description of the Income.
+   * @param category    The category of the Income.
+   * @param amount      The amount of the Income.
    * @throws IllegalArgumentException If description or category is null or blank
    *                                  or if amount is less than zero.
    */
@@ -46,7 +46,7 @@ public class Income implements Transaction, Serializable {
     if (amount <= 0) {
       throw new IllegalArgumentException("amount cannot be less than or equal to zero");
     }
-
+    
     this.description = description;
     this.category = category;
     this.amount = amount;
@@ -79,7 +79,17 @@ public class Income implements Transaction, Serializable {
   public LocalDate getDate() {
     return date;
   }
-
+  
+  /**
+   * Sets a new date for the Income.
+   *
+   * @param date The new date of the Income.
+   */
+  @Override
+  public void setDate(LocalDate date) {
+    this.date = date;
+  }
+  
   /**
    * Gets the description of the Income.
    *
@@ -89,36 +99,7 @@ public class Income implements Transaction, Serializable {
   public String getDescription() {
     return description;
   }
-
-  /**
-   * Gets the category of the Income.
-   *
-   * @return category as String.
-   */
-  @Override
-  public String getCategory() {
-    return category;
-  }
-
-  /**
-   * Gets the amount of the Income.
-   *
-   * @return amount as int.
-   */
-  @Override
-  public double getAmount() {
-    return amount;
-  }
   
-  /**
-   * Sets a new date for the Income.
-   *
-   * @param date The new date of the Income.
-   */
-  @Override public void setDate(LocalDate date) {
-    this.date = date;
-  }
-
   /**
    * Sets a new description for the Income.
    *
@@ -135,7 +116,17 @@ public class Income implements Transaction, Serializable {
     }
     this.description = description;
   }
-
+  
+  /**
+   * Gets the category of the Income.
+   *
+   * @return category as String.
+   */
+  @Override
+  public String getCategory() {
+    return category;
+  }
+  
   /**
    * Sets a new category for the Income.
    *
@@ -152,7 +143,17 @@ public class Income implements Transaction, Serializable {
     }
     this.category = category;
   }
-
+  
+  /**
+   * Gets the amount of the Income.
+   *
+   * @return amount as int.
+   */
+  @Override
+  public double getAmount() {
+    return amount;
+  }
+  
   /**
    * Sets a new amount for the Income.
    *
@@ -184,11 +185,9 @@ public class Income implements Transaction, Serializable {
       return false;
     }
     
-    boolean isEqual = income.getDate() == null ? date == null
-        : income.getDate().equals(date);
+    boolean isEqual = income.getDate() == null ? date == null : income.getDate().equals(date);
     
-    return income.getDescription().equals(description)
-        && income.getCategory().equals(category)
+    return income.getDescription().equals(description) && income.getCategory().equals(category)
         && income.getAmount() == amount && isEqual;
   }
 }

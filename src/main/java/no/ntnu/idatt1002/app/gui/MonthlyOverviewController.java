@@ -52,54 +52,88 @@ public class MonthlyOverviewController {
   private MonthlyBookkeeping chosenMonthlyBookkeeping;
   
   // Toggle buttons for the table columns
-  @FXML private ToggleButton toggleBookkeeping;
-  @FXML private ToggleButton toggleType;
-  @FXML private ToggleButton toggleTotal;
+  @FXML
+  private ToggleButton toggleBookkeeping;
+  @FXML
+  private ToggleButton toggleType;
+  @FXML
+  private ToggleButton toggleTotal;
   
   // The month and year combo boxes
-  @FXML private ComboBox<Month> monthComboBox;
-  @FXML private ComboBox<String> yearComboBox;
-  @FXML private Button addYearButton;
+  @FXML
+  private ComboBox<Month> monthComboBox;
+  @FXML
+  private ComboBox<String> yearComboBox;
+  @FXML
+  private Button addYearButton;
   
   // The table and its columns
-  @FXML private Label tableLabel;
-  @FXML private TableView<Transaction> transactionTable;
-  @FXML private TableColumn<Transaction, LocalDate> dateColumn;
-  @FXML private TableColumn<Transaction, String> descriptionColumn;
-  @FXML private TableColumn<Transaction, String> categoryColumn;
-  @FXML private TableColumn<Transaction, Double> amountColumn;
+  @FXML
+  private Label tableLabel;
+  @FXML
+  private TableView<Transaction> transactionTable;
+  @FXML
+  private TableColumn<Transaction, LocalDate> dateColumn;
+  @FXML
+  private TableColumn<Transaction, String> descriptionColumn;
+  @FXML
+  private TableColumn<Transaction, String> categoryColumn;
+  @FXML
+  private TableColumn<Transaction, Double> amountColumn;
   
   // The income fields
-  @FXML private DatePicker dateFieldIncome;
-  @FXML private Button dateResetIncome;
-  @FXML private TextField descriptionFieldIncome;
-  @FXML private TextField categoryFieldIncome;
-  @FXML private TextField amountFieldIncome;
-  @FXML private Button addIncomeButton;
-  @FXML private Button deleteIncomeButton;
-
+  @FXML
+  private DatePicker dateFieldIncome;
+  @FXML
+  private Button dateResetIncome;
+  @FXML
+  private TextField descriptionFieldIncome;
+  @FXML
+  private TextField categoryFieldIncome;
+  @FXML
+  private TextField amountFieldIncome;
+  @FXML
+  private Button addIncomeButton;
+  @FXML
+  private Button deleteIncomeButton;
+  
   // The expense fields
-  @FXML private DatePicker dateFieldExpense;
-  @FXML private Button dateResetExpense;
-  @FXML private TextField descriptionFieldExpense;
-  @FXML private TextField categoryFieldExpense;
-  @FXML private TextField amountFieldExpense;
-  @FXML private Button addExpenseButton;
-  @FXML private Button deleteExpenseButton;
+  @FXML
+  private DatePicker dateFieldExpense;
+  @FXML
+  private Button dateResetExpense;
+  @FXML
+  private TextField descriptionFieldExpense;
+  @FXML
+  private TextField categoryFieldExpense;
+  @FXML
+  private TextField amountFieldExpense;
+  @FXML
+  private Button addExpenseButton;
+  @FXML
+  private Button deleteExpenseButton;
   
   // The total labels
-  @FXML private Label incomeLabel;
-  @FXML private Label incomeAmountLabel;
-  @FXML private Label expenseLabel;
-  @FXML private Label expenseAmountLabel;
-  @FXML private Label totalAmountLabel;
+  @FXML
+  private Label incomeLabel;
+  @FXML
+  private Label incomeAmountLabel;
+  @FXML
+  private Label expenseLabel;
+  @FXML
+  private Label expenseAmountLabel;
+  @FXML
+  private Label totalAmountLabel;
   
   // The warning label
-  @FXML private Label warningLabel;
-
+  @FXML
+  private Label warningLabel;
+  
   // The pie charts
-  @FXML private PieChart pieIncome;
-  @FXML private PieChart pieExpense;
+  @FXML
+  private PieChart pieIncome;
+  @FXML
+  private PieChart pieExpense;
   
   /**
    * Initializes the controller class by displaying the transactions for the current month.
@@ -119,53 +153,62 @@ public class MonthlyOverviewController {
     if (User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().isEmpty()) {
       chosenYearMonth = YearMonth.now();
       chosenMonthlyBookkeeping = new MonthlyBookkeeping(chosenYearMonth);
-      User.getInstance().getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(chosenMonthlyBookkeeping);
+      User.getInstance().getMonthlyBookkeepingRegistry()
+          .putMonthlyBookkeeping(chosenMonthlyBookkeeping);
       saveUser();
     } else {
       // Automatically choose the earliest year with the current month
-      chosenYearMonth =
-          YearMonth.of(User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap()
-              .keySet().stream().distinct().min(Comparator.naturalOrder()).get().getYear(),
-              YearMonth.now().getMonth());
+      chosenYearMonth = YearMonth.of(
+          User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().keySet()
+              .stream().distinct().min(Comparator.naturalOrder()).get().getYear(),
+          YearMonth.now().getMonth());
       
-      chosenMonthlyBookkeeping = User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().get(
-        chosenYearMonth);
+      chosenMonthlyBookkeeping =
+          User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap()
+              .get(chosenYearMonth);
     }
-
+    
     // Set up the month combo box
     monthComboBox.setValue(chosenYearMonth.getMonth());
     monthComboBox.getItems().addAll(Month.values());
     // Add a listener that updates the chosen month when a new month is chosen
-    monthComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-      chosenYearMonth = chosenYearMonth.withMonth(newValue.getValue());
-      MonthlyBookkeeping monthlyBookkeeping = User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeeping(chosenYearMonth);
-      chosenMonthlyBookkeeping = monthlyBookkeeping == null
-        ? new MonthlyBookkeeping(chosenYearMonth)
-        : User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeeping(chosenYearMonth);
-
-      refreshOverview();
-    });
-
-
+    monthComboBox.getSelectionModel().selectedItemProperty()
+        .addListener((observable, oldValue, newValue) -> {
+          chosenYearMonth = chosenYearMonth.withMonth(newValue.getValue());
+          MonthlyBookkeeping monthlyBookkeeping = User.getInstance().getMonthlyBookkeepingRegistry()
+              .getMonthlyBookkeeping(chosenYearMonth);
+          chosenMonthlyBookkeeping =
+              monthlyBookkeeping == null ? new MonthlyBookkeeping(chosenYearMonth) :
+                  User.getInstance().getMonthlyBookkeepingRegistry()
+                      .getMonthlyBookkeeping(chosenYearMonth);
+          
+          refreshOverview();
+        });
+    
+    
     // Set up the year combo box
     yearComboBox.setValue(Integer.toString(chosenYearMonth.getYear()));
-    yearComboBox.getItems().addAll(User.getInstance().getMonthlyBookkeepingRegistry()
-        .getMonthlyBookkeepingMap().keySet().stream().map(YearMonth::getYear)
-        .distinct().sorted().map(String::valueOf).toArray(String[]::new));
+    yearComboBox.getItems().addAll(
+        User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().keySet()
+            .stream().map(YearMonth::getYear).distinct().sorted().map(String::valueOf)
+            .toArray(String[]::new));
     
     // Add a listener that updates the chosen year when a new year is chosen
-    yearComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-      //Refresh the month combo box to show the months that have transactions
-      chosenYearMonth = chosenYearMonth.withYear(Integer.parseInt(newValue));
-      MonthlyBookkeeping monthlyBookkeeping = User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeeping(chosenYearMonth);
-
-      chosenMonthlyBookkeeping = monthlyBookkeeping == null
-        ? new MonthlyBookkeeping(chosenYearMonth)
-        : User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeeping(chosenYearMonth);
-
-      refreshOverview();
-    });
-
+    yearComboBox.getSelectionModel().selectedItemProperty()
+        .addListener((observable, oldValue, newValue) -> {
+          //Refresh the month combo box to show the months that have transactions
+          chosenYearMonth = chosenYearMonth.withYear(Integer.parseInt(newValue));
+          MonthlyBookkeeping monthlyBookkeeping = User.getInstance().getMonthlyBookkeepingRegistry()
+              .getMonthlyBookkeeping(chosenYearMonth);
+          
+          chosenMonthlyBookkeeping =
+              monthlyBookkeeping == null ? new MonthlyBookkeeping(chosenYearMonth) :
+                  User.getInstance().getMonthlyBookkeepingRegistry()
+                      .getMonthlyBookkeeping(chosenYearMonth);
+          
+          refreshOverview();
+        });
+    
     // Add a listener to this button
     //Will prompt the user to add a new year to the year combo box and give a warning if the year
     // is invalid or already exists
@@ -173,8 +216,8 @@ public class MonthlyOverviewController {
       //Set up the dialog
       TextInputDialog dialog = new TextInputDialog();
       dialog.setTitle("Add year");
-      dialog.setHeaderText("Enter a new year between 2000 and "
-          + YearMonth.now().plusYears(100).getYear());
+      dialog.setHeaderText(
+          "Enter a new year between 2000 and " + YearMonth.now().plusYears(100).getYear());
       Optional<String> result = dialog.showAndWait();
       
       //If the user entered a year
@@ -209,7 +252,7 @@ public class MonthlyOverviewController {
         }
       });
     });
-
+    
     // Set up the transaction table
     dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
     descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -226,8 +269,7 @@ public class MonthlyOverviewController {
         } else {
           if (item instanceof Income) {
             setStyle("-fx-background-color: rgba(0,128,0,0.5)");
-          }
-          else {
+          } else {
             setStyle("-fx-background-color: rgba(255,0,0,0.5)");
           }
         }
@@ -266,7 +308,9 @@ public class MonthlyOverviewController {
             } else {
               setText(month.toString());
               YearMonth yearMonth = YearMonth.of(chosenYearMonth.getYear(), month);
-              MonthlyBookkeeping monthlyBookkeeping = User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeeping(yearMonth);
+              MonthlyBookkeeping monthlyBookkeeping =
+                  User.getInstance().getMonthlyBookkeepingRegistry()
+                      .getMonthlyBookkeeping(yearMonth);
               if (monthlyBookkeeping != null && !monthlyBookkeeping.isEmpty()) {
                 setStyle("-fx-background-color: #90EE90");
               } else {
@@ -327,7 +371,7 @@ public class MonthlyOverviewController {
       setWarning("Please enter a valid amount");
     } catch (IllegalArgumentException e) {
       setWarning(e.getMessage());
-      }
+    }
   }
 
   /**
@@ -392,7 +436,8 @@ public class MonthlyOverviewController {
       boolean isAccounting = toggleBookkeeping.isSelected();
       boolean isPersonal = toggleType.isSelected();
 
-      chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).removeTransaction(transaction);
+      chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal)
+          .removeTransaction(transaction);
 
       dateFieldIncome.setValue(null);
       descriptionFieldIncome.setText("");
@@ -419,7 +464,8 @@ public class MonthlyOverviewController {
       boolean isAccounting = toggleBookkeeping.isSelected();
       boolean isPersonal = toggleType.isSelected();
 
-      chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).removeTransaction(transaction);
+      chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal)
+          .removeTransaction(transaction);
 
       dateFieldExpense.setValue(null);
       descriptionFieldExpense.setText("");
@@ -447,8 +493,7 @@ public class MonthlyOverviewController {
       descriptionFieldIncome.setText(selectedTransaction.getDescription());
       categoryFieldIncome.setText(selectedTransaction.getCategory());
       amountFieldIncome.setText(String.valueOf(selectedTransaction.getAmount()));
-    }
-    else if (selectedTransaction instanceof Expense) {
+    } else if (selectedTransaction instanceof Expense) {
       dateFieldExpense.setValue(selectedTransaction.getDate());
       descriptionFieldExpense.setText(selectedTransaction.getDescription());
       categoryFieldExpense.setText(selectedTransaction.getCategory());
@@ -477,23 +522,24 @@ public class MonthlyOverviewController {
     toggleType.setDisable(isTotal);
     
     // Set the table title
-    tableLabel.setText(isTotal ? "Total " : (isPersonal ? "Personal " : "Work ")
-            + (isAccounting ? "accounting " : "budgeting ") + "transactions");
-
+    tableLabel.setText(isTotal ? "Total " :
+        (isPersonal ? "Personal " : "Work ") + (isAccounting ? "accounting " : "budgeting ")
+            + "transactions");
+    
     // Get the chosen bookkeeping
-    Bookkeeping chosenBookkeeping = isTotal
-        ? chosenMonthlyBookkeeping.getTotalBookkeeping(isAccounting)
-        : chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal);
+    Bookkeeping chosenBookkeeping =
+        isTotal ? chosenMonthlyBookkeeping.getTotalBookkeeping(isAccounting) :
+            chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal);
     
     // Add the transactions to the table
     transactionTable.getItems().addAll(chosenBookkeeping.getTransactions());
     
     // Set the labels of the total income and expenses
-    String incomeLabelBuilder = (isTotal ? "Total " : (isPersonal ? "Personal " : "Work ")) +
-        (isAccounting ? "accounting " : "budgeting ") + "income";
+    String incomeLabelBuilder = (isTotal ? "Total " : (isPersonal ? "Personal " : "Work "))
+        + (isAccounting ? "accounting " : "budgeting ") + "income";
     incomeLabel.setText(incomeLabelBuilder);
-    String expenseLabelBuilder = (isTotal ? "Total " : (isPersonal ? "Personal " : "Work ")) +
-        (isAccounting ? "accounting " : "budgeting ") + "expenses";
+    String expenseLabelBuilder = (isTotal ? "Total " : (isPersonal ? "Personal " : "Work "))
+        + (isAccounting ? "accounting " : "budgeting ") + "expenses";
     expenseLabel.setText(expenseLabelBuilder);
     
     // Set the labels of the total income and expenses
@@ -558,8 +604,7 @@ public class MonthlyOverviewController {
         } else {
           categoriesIncome.put(category, amount);
         }
-      }
-      else {
+      } else {
         if (categoriesExpense.containsKey(category)) {
           Double currentAmount = categoriesExpense.get(category);
           categoriesExpense.put(category, currentAmount + amount);
@@ -612,18 +657,15 @@ public class MonthlyOverviewController {
    */
   private void saveUser() {
     try {
-      if (User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeeping(chosenYearMonth) == null) {
-        User.getInstance().getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(chosenMonthlyBookkeeping);
-      } else {
-        User.getInstance().getMonthlyBookkeepingRegistry().updateMonthlyBookkeeping(chosenMonthlyBookkeeping);
-      }
-
+      User.getInstance().getMonthlyBookkeepingRegistry()
+          .putMonthlyBookkeeping(chosenMonthlyBookkeeping);
+      
       FileHandling.writeUserToFile(User.getInstance());
     } catch (Exception e) {
       setWarning("Could not save user data" + e.getMessage());
     }
   }
-
+  
   /**
    * Toggles between the light and dark theme.
    */
@@ -638,22 +680,21 @@ public class MonthlyOverviewController {
   @FXML
   public void projects() {
     try {
-      Parent root = FXMLLoader.load(
-        Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
+      Parent root =
+          FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
       setWarning("Could not load projects, please restart the application");
     }
   }
-
+  
   /**
    * Goes to the start page.
    */
   @FXML
   public void start() {
     try {
-      Parent root = FXMLLoader.load(
-        Objects.requireNonNull(getClass().getResource("/Start.fxml")));
+      Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Start.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
       setWarning("Could not load start, please restart the application");

@@ -53,18 +53,5 @@ public class FileHandlingTest {
     }
 
     //TODO: Fix this test, it fails because of the singleton pattern, user cannot be instantiated twice
-
-    //@Test
-    //void testReadAndWrite() {
-        //assertDoesNotThrow(() -> FileHandling.writeUserToFile(user));
-
-        //AtomicReference<User> newUser = new AtomicReference<>(new User());
-        //assertDoesNotThrow(() -> newUser.set(FileHandling.readUserFromFile()));
-
-        //ProjectRegistry oldUserRegistry = user.getProjectRegistry();
-        //ProjectRegistry newUserRegistry = newUser.get().getProjectRegistry();
-        
-        //assertEquals(oldUserRegistry.getCategories(), newUserRegistry.getCategories());
-        //assertEquals(oldUserRegistry.getProjects(), newUserRegistry.getProjects());
-    //}
+    
 }

@@ -53,59 +53,97 @@ public class EditProjectController {
   private Project originalProject;
   
   // Fundamental project information
-  @FXML private TextField name;
-  @FXML private MenuButton category;
-  @FXML private TextArea description;
-  @FXML private DatePicker dueDate;
-  @FXML private MenuButton status;
+  @FXML
+  private TextField name;
+  @FXML
+  private MenuButton category;
+  @FXML
+  private TextArea description;
+  @FXML
+  private DatePicker dueDate;
+  @FXML
+  private MenuButton status;
   
   //Accounting and Budgeting toggle button
-  @FXML private ToggleButton toggleButton;
-  @FXML private Label toggleLabel;
+  @FXML
+  private ToggleButton toggleButton;
+  @FXML
+  private Label toggleLabel;
   
   //Income Table
-  @FXML private TableView<Income> incomeTable;
-  @FXML private TableColumn<Income, LocalDate> incomeDate;
-  @FXML private TableColumn<Income, String> incomeDescription;
-  @FXML private TableColumn<Income, String> incomeCategory;
-  @FXML private TableColumn<Income, Double> incomeAmount;
+  @FXML
+  private TableView<Income> incomeTable;
+  @FXML
+  private TableColumn<Income, LocalDate> incomeDate;
+  @FXML
+  private TableColumn<Income, String> incomeDescription;
+  @FXML
+  private TableColumn<Income, String> incomeCategory;
+  @FXML
+  private TableColumn<Income, Double> incomeAmount;
   //Income fields
-  @FXML private DatePicker incomeDatePicker;
-  @FXML private TextField incomeDescriptionField;
-  @FXML private TextField incomeCategoryField;
-  @FXML private TextField incomeAmountField;
-  @FXML private Button deleteIncomeButton;
+  @FXML
+  private DatePicker incomeDatePicker;
+  @FXML
+  private TextField incomeDescriptionField;
+  @FXML
+  private TextField incomeCategoryField;
+  @FXML
+  private TextField incomeAmountField;
+  @FXML
+  private Button deleteIncomeButton;
   
   //Expense Table
-  @FXML private TableView<Expense> expenseTable;
-  @FXML private TableColumn<Expense, LocalDate> expenseDate;
-  @FXML private TableColumn<Expense, String> expenseDescription;
-  @FXML private TableColumn<Expense, String> expenseCategory;
-  @FXML private TableColumn<Expense, Double> expenseAmount;
+  @FXML
+  private TableView<Expense> expenseTable;
+  @FXML
+  private TableColumn<Expense, LocalDate> expenseDate;
+  @FXML
+  private TableColumn<Expense, String> expenseDescription;
+  @FXML
+  private TableColumn<Expense, String> expenseCategory;
+  @FXML
+  private TableColumn<Expense, Double> expenseAmount;
   //Expense fields
-  @FXML private DatePicker expenseDatePicker;
-  @FXML private TextField expenseDescriptionField;
-  @FXML private TextField expenseCategoryField;
-  @FXML private TextField expenseAmountField;
-  @FXML private Button deleteExpenseButton;
+  @FXML
+  private DatePicker expenseDatePicker;
+  @FXML
+  private TextField expenseDescriptionField;
+  @FXML
+  private TextField expenseCategoryField;
+  @FXML
+  private TextField expenseAmountField;
+  @FXML
+  private Button deleteExpenseButton;
   
   //Image view
-  @FXML private ImageView imagePreview;
-  @FXML private Button imageLeft;
-  @FXML private Button imageRight;
-  @FXML private Button deleteImageButton;
+  @FXML
+  private ImageView imagePreview;
+  @FXML
+  private Button imageLeft;
+  @FXML
+  private Button imageRight;
+  @FXML
+  private Button deleteImageButton;
   
   //Total income, expense and amount overview
-  @FXML private Label totalIncome;
-  @FXML private Label totalExpense;
-  @FXML private Label totalAmount;
-
+  @FXML
+  private Label totalIncome;
+  @FXML
+  private Label totalExpense;
+  @FXML
+  private Label totalAmount;
+  
   // Pie charts
-  @FXML private PieChart pieIncome;
-  @FXML private PieChart pieExpense;
+  @FXML
+  private PieChart pieIncome;
+  @FXML
+  private PieChart pieExpense;
   
   //Error message
-  @FXML private Label warningLabel = new Label();
+  @SuppressWarnings("CanBeFinal")
+  @FXML
+  private Label warningLabel = new Label();
   
   /**
    * Initializes the controller class.
@@ -194,8 +232,9 @@ public class EditProjectController {
   @FXML
   public void deleteCategory() {
     //Get the category that is selected
-    MenuItem chosenCategory = category.getItems().stream()
-        .filter(item -> item.getText().equals(category.getText())).findFirst().orElse(null);
+    MenuItem chosenCategory =
+        category.getItems().stream().filter(item -> item.getText().equals(category.getText()))
+            .findFirst().orElse(null);
     
     try {
       User.getInstance().getProjectRegistry().removeCategory(category.getText());
@@ -217,8 +256,7 @@ public class EditProjectController {
     Income selectedIncome = incomeTable.getSelectionModel().getSelectedItem();
     
     if (selectedIncome != null) {
-      incomeDatePicker.setValue(selectedIncome.getDate() == null
-          ? null : selectedIncome.getDate());
+      incomeDatePicker.setValue(selectedIncome.getDate() == null ? null : selectedIncome.getDate());
       incomeDescriptionField.setText(selectedIncome.getDescription());
       incomeCategoryField.setText(selectedIncome.getCategory());
       incomeAmountField.setText(String.valueOf(selectedIncome.getAmount()));
@@ -241,8 +279,8 @@ public class EditProjectController {
   public void selectedExpense() {
     Expense selectedExpense = expenseTable.getSelectionModel().getSelectedItem();
     if (selectedExpense != null) {
-      expenseDatePicker.setValue(selectedExpense.getDate() == null
-          ? null : selectedExpense.getDate());
+      expenseDatePicker.setValue(
+          selectedExpense.getDate() == null ? null : selectedExpense.getDate());
       expenseDescriptionField.setText(selectedExpense.getDescription());
       expenseCategoryField.setText(selectedExpense.getCategory());
       expenseAmountField.setText(String.valueOf(selectedExpense.getAmount()));
@@ -263,18 +301,17 @@ public class EditProjectController {
       boolean isAccounting = toggleButton.isSelected();
       
       Income selectedIncome = incomeTable.getSelectionModel().getSelectedItem();
-      Income newIncome = new Income(incomeDescriptionField.getText(),
-          incomeCategoryField.getText(), Double.parseDouble(incomeAmountField.getText()),
-          incomeDatePicker.getValue());
+      Income newIncome = new Income(incomeDescriptionField.getText(), incomeCategoryField.getText(),
+          Double.parseDouble(incomeAmountField.getText()), incomeDatePicker.getValue());
       
       Project newProject = getProject();
       
       if (selectedIncome != null) {
-        (isAccounting ? newProject.getAccounting() : newProject.getBudgeting())
-            .updateTransaction(selectedIncome, newIncome);
+        (isAccounting ? newProject.getAccounting() : newProject.getBudgeting()).updateTransaction(
+            selectedIncome, newIncome);
       } else {
-        (isAccounting ? newProject.getAccounting() : newProject.getBudgeting())
-            .addTransaction(newIncome);
+        (isAccounting ? newProject.getAccounting() : newProject.getBudgeting()).addTransaction(
+            newIncome);
       }
       
       updateProject(newProject);
@@ -298,18 +335,18 @@ public class EditProjectController {
       boolean isAccounting = toggleButton.isSelected();
       
       Expense selectedExpense = expenseTable.getSelectionModel().getSelectedItem();
-      Expense newExpense = new Expense(expenseDescriptionField.getText(),
-          expenseCategoryField.getText(), Double.parseDouble(expenseAmountField.getText()),
-          expenseDatePicker.getValue());
+      Expense newExpense =
+          new Expense(expenseDescriptionField.getText(), expenseCategoryField.getText(),
+              Double.parseDouble(expenseAmountField.getText()), expenseDatePicker.getValue());
       
       Project newProject = getProject();
       
       if (selectedExpense != null) {
-        (isAccounting ? newProject.getAccounting() : newProject.getBudgeting())
-            .updateTransaction(selectedExpense, newExpense);
+        (isAccounting ? newProject.getAccounting() : newProject.getBudgeting()).updateTransaction(
+            selectedExpense, newExpense);
       } else {
-        (isAccounting ? newProject.getAccounting() : newProject.getBudgeting())
-            .addTransaction(newExpense);
+        (isAccounting ? newProject.getAccounting() : newProject.getBudgeting()).addTransaction(
+            newExpense);
       }
       
       updateProject(newProject);
@@ -372,8 +409,8 @@ public class EditProjectController {
     toggleLabel.setText(isAccounting ? "Accounting - " : "Budgeting - ");
     
     // Get the current bookkeeping and add all transactions to the tables
-    Bookkeeping currentBookkeeping = isAccounting ? getProject().getAccounting() :
-        getProject().getBudgeting();
+    Bookkeeping currentBookkeeping =
+        isAccounting ? getProject().getAccounting() : getProject().getBudgeting();
     
     incomeTable.getItems().addAll(currentBookkeeping.getIncomeList());
     expenseTable.getItems().addAll(currentBookkeeping.getExpenseList());
@@ -406,56 +443,56 @@ public class EditProjectController {
     // Update pieChart income
     ObservableList<PieChart.Data> pieChartDataIncome = FXCollections.observableArrayList();
     HashMap<String, Double> categoriesIncome = new HashMap<>();
-
+    
     for (int i = 0; i < incomeTable.getItems().size(); i++) {
       String categoryIncome = incomeTable.getItems().get(i).getCategory();
       Double amountIncome = incomeTable.getItems().get(i).getAmount();
-
-      if(categoriesIncome.containsKey(categoryIncome)){
+      
+      if (categoriesIncome.containsKey(categoryIncome)) {
         Double currentAmount = categoriesIncome.get(categoryIncome);
         categoriesIncome.put(categoryIncome, currentAmount + amountIncome);
-      }else{
+      } else {
         categoriesIncome.put(categoryIncome, amountIncome);
       }
     }
-
+    
     for (Map.Entry<String, Double> entry : categoriesIncome.entrySet()) {
       String categoryIncome = entry.getKey();
       Double amountIncome = entry.getValue();
-
+      
       pieChartDataIncome.add(new PieChart.Data(categoryIncome, amountIncome));
     }
-
-
+    
+    
     // Update pieChart Expense
     ObservableList<PieChart.Data> pieChartDataExpense = FXCollections.observableArrayList();
     HashMap<String, Double> categoriesExpense = new HashMap<>();
-
+    
     for (int i = 0; i < expenseTable.getItems().size(); i++) {
       String categoryExpense = expenseTable.getItems().get(i).getCategory();
       Double amountExpense = expenseTable.getItems().get(i).getAmount();
-
-      if(categoriesExpense.containsKey(categoryExpense)){
+      
+      if (categoriesExpense.containsKey(categoryExpense)) {
         Double currentAmount = categoriesExpense.get(categoryExpense);
         categoriesExpense.put(categoryExpense, currentAmount + amountExpense);
-      }else{
+      } else {
         categoriesExpense.put(categoryExpense, amountExpense);
       }
     }
-
+    
     for (Map.Entry<String, Double> entry : categoriesExpense.entrySet()) {
       String categoryExpense = entry.getKey();
       Double amountExpense = entry.getValue();
-
+      
       pieChartDataExpense.add(new PieChart.Data(categoryExpense, amountExpense));
     }
-
+    
     pieIncome.setData(pieChartDataIncome);
     pieExpense.setData(pieChartDataExpense);
   }
   
   /**
-   * Resets the income fields
+   * Resets the income fields.
    */
   @FXML
   public void resetIncomeFields() {
@@ -468,7 +505,7 @@ public class EditProjectController {
   }
   
   /**
-   * Resets the expense fields
+   * Resets the expense fields.
    */
   @FXML
   public void resetExpenseFields() {
@@ -511,7 +548,7 @@ public class EditProjectController {
     newProject.removeImage(newProject.getImages().get(imageIndex));
     
     updateProject(newProject);
-
+    
     if (newProject.getImages().size() == 0) {
       imagePreview.setImage(null);
     } else {
@@ -551,7 +588,7 @@ public class EditProjectController {
     } else {
       imagePreview.setImage(new Image(images.get(imageIndex + 1).toURI().toString()));
     }
-
+    
     refreshImages();
   }
   
@@ -595,8 +632,8 @@ public class EditProjectController {
       //Write user to file
       FileHandling.writeUserToFile(User.getInstance());
       
-      Parent root = FXMLLoader.load(
-          Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
+      Parent root =
+          FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (Exception e) {
       setWarning("Could not save project, error: " + e.getMessage());
@@ -622,8 +659,8 @@ public class EditProjectController {
       try {
         
         FileHandling.writeUserToFile(User.getInstance());
-        Parent root = FXMLLoader.load(
-            Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
+        Parent root =
+            FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
         
       } catch (Exception e) {
@@ -635,7 +672,7 @@ public class EditProjectController {
   /**
    * Gets the project being edited.
    *
-   @return the project being edited
+   * @return the project being edited
    */
   private Project getProject() {
     return new Project(originalProject);
@@ -643,7 +680,7 @@ public class EditProjectController {
   
   /**
    * Update the current project that is being edited.
-   * 
+   *
    * @param newProject The edited project to update the User.getInstance() with.
    */
   private void updateProject(Project newProject) {

@@ -16,11 +16,11 @@ import no.ntnu.idatt1002.app.registers.Project;
  * @see Project
  */
 public class ProjectRegistry implements Serializable {
-
+  
   private final ArrayList<Project> projects;
   private final List<String> categories = new ArrayList<>();
   private final List<String> statuses = new ArrayList<>();
-
+  
   /**
    * Constructor for the ProjectRegistry. Initializes the registry with preset categories
    * and statuses and sets the projects to an empty ArrayList.
@@ -29,14 +29,14 @@ public class ProjectRegistry implements Serializable {
     categories.add("Freelance");
     categories.add("Personal");
     categories.add("Miscellaneous");
-
+    
     statuses.add("Not started");
     statuses.add("Doing");
     statuses.add("Finished");
     
     projects = new ArrayList<>();
   }
-
+  
   /**
    * Add a project to the registry.
    *
@@ -72,10 +72,10 @@ public class ProjectRegistry implements Serializable {
    * @param oldProject the old project that is still in the registry
    * @param newProject the project to be updated to
    * @throws IllegalArgumentException if either of the projects are null or if the old project
-   * does not exist in the registry
+   *                                  does not exist in the registry
    */
-  public void updateProject(Project oldProject, Project newProject) throws
-      IllegalArgumentException {
+  public void updateProject(Project oldProject, Project newProject)
+      throws IllegalArgumentException {
     if (oldProject == null || newProject == null) {
       throw new IllegalArgumentException("project cannot be null");
     }
@@ -121,7 +121,7 @@ public class ProjectRegistry implements Serializable {
   public List<String> getCategories() {
     return new ArrayList<>(categories);
   }
-
+  
   /**
    * Removes a category from the registry.
    *
@@ -137,7 +137,7 @@ public class ProjectRegistry implements Serializable {
     }
     categories.remove(category);
   }
-
+  
   /**
    * Gets all the statuses that are in the registry.
    *

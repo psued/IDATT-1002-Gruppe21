@@ -20,7 +20,9 @@ import no.ntnu.idatt1002.app.filehandling.FileHandling;
  */
 public class StartController {
   
-  @FXML private Label warningLabel = new Label();
+  @SuppressWarnings("CanBeFinal")
+  @FXML
+  private Label warningLabel = new Label();
   
   /**
    * Initializes the start page. If its the first time the application is run, and there is no
@@ -37,7 +39,7 @@ public class StartController {
       warningLabel.setText("Could not load user data, user has been reset");
     }
   }
-
+  
   /**
    * Switches to the projects page. If there is an error loading the page, an error message is
    * displayed prompting the user to restart the application.
@@ -45,14 +47,14 @@ public class StartController {
   @FXML
   public void projects() {
     try {
-      Parent root = FXMLLoader.load(
-        Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
+      Parent root =
+          FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
       warningLabel.setText("Could not load projects, please restart the application");
     }
   }
-
+  
   /**
    * Switches to the monthly overview page. If there is an error loading the page, an error message
    * is displayed prompting the user to restart the application.
@@ -60,8 +62,8 @@ public class StartController {
   @FXML
   public void monthly() {
     try {
-      Parent root = FXMLLoader.load(
-        Objects.requireNonNull(getClass().getResource("/MonthlyOverview.fxml")));
+      Parent root =
+          FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/MonthlyOverview.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
       warningLabel.setText("Could not load monthly overview, please restart the application");

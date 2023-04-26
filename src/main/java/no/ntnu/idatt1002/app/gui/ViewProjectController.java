@@ -115,7 +115,7 @@ public class ViewProjectController {
     imagePreview.setImage(images.isEmpty() ? null : new Image(images.get(0).toURI().toString()));
     
     // Set up the tables to display the transactions of the project that is being edited
-    refreshLocalOverview();
+    refreshOverview();
     refreshImages();
 
     int indexOfProject = User.getInstance().getProjectRegistry().getProjects().indexOf(getProject());
@@ -131,7 +131,7 @@ public class ViewProjectController {
    * Refreshes the local overview tables and totals. Updates the tables with the correct data
    * depending on the isAccounting boolean.
    */
-  public void refreshLocalOverview() {
+  public void refreshOverview() {
     // Update tables
     incomeTable.getItems().clear();
     expenseTable.getItems().clear();

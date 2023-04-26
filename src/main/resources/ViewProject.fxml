@@ -136,7 +136,7 @@
                                                       <Font size="15.0" />
                                                    </font>
                                                 </Label>
-                                                <ToggleButton fx:id="toggleButton" mnemonicParsing="false" onAction="#refreshLocalOverview" text="Accounting / Budgeting" />
+                                                <ToggleButton fx:id="toggleButton" mnemonicParsing="false" onAction="#refreshOverview" text="Accounting / Budgeting" />
                                              </children>
                                           </HBox>
                                        </children>

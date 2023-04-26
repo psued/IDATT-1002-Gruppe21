@@ -22,8 +22,6 @@ import no.ntnu.idatt1002.app.registers.Project;
  */
 public class AllProjectsController {
   
-  
-  
   @FXML private TableView<Project> table;
   @FXML private TableColumn<Project, String> name;
   @FXML private TableColumn<Project, Date> dueDate;

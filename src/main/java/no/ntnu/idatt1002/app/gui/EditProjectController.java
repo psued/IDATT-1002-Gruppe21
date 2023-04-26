@@ -54,7 +54,6 @@ public class EditProjectController {
     initialize();
   }
   
-  
   // Fundamental project information
   @FXML private TextField name;
   @FXML private MenuButton category;
@@ -115,8 +114,6 @@ public class EditProjectController {
    * data of the project that is being edited.
    */
   private void initialize() {
-    
-    
     // Set up the text fields to display the project information
     name.setText(originalProject.getName());
     category.setText(originalProject.getCategory());
@@ -172,7 +169,7 @@ public class EditProjectController {
     imagePreview.setImage(images.isEmpty() ? null : new Image(images.get(0).toURI().toString()));
     
     // Set up the tables to display the transactions of the project that is being edited
-    refreshLocalOverview();
+    refreshOverview();
     refreshImages();
     
     resetIncomeFields();
@@ -275,7 +272,7 @@ public class EditProjectController {
       
       updateProject(newProject);
       
-      refreshLocalOverview();
+      refreshOverview();
       resetIncomeFields();
     } catch (NumberFormatException e) {
       setWarning("Please enter a valid amount that is greater than 0");
@@ -309,7 +306,7 @@ public class EditProjectController {
       
       updateProject(newProject);
       
-      refreshLocalOverview();
+      refreshOverview();
       resetExpenseFields();
     } catch (NumberFormatException e) {
       setWarning("Please enter a valid amount that is greater than 0");
@@ -330,7 +327,7 @@ public class EditProjectController {
     
     updateProject(newProject);
     
-    refreshLocalOverview();
+    refreshOverview();
     resetIncomeFields();
   }
   
@@ -346,7 +343,7 @@ public class EditProjectController {
     
     updateProject(newProject);
     
-    refreshLocalOverview();
+    refreshOverview();
     resetExpenseFields();
   }
   
@@ -354,7 +351,7 @@ public class EditProjectController {
    * Refreshes the local overview by updating the tables and totals, resetting the selected row
    * and resets the error message.
    */
-  public void refreshLocalOverview() {
+  public void refreshOverview() {
     // Update tables
     incomeTable.getItems().clear();
     expenseTable.getItems().clear();

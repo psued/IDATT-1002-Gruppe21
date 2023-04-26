@@ -153,7 +153,7 @@ public class NewProjectController {
     category.setText(User.getInstance().getProjectRegistry().getCategories().get(0));
     status.setText("Not started");
     
-    refreshLocalOverview();
+    refreshOverview();
     refreshImages();
     
     resetIncomeFields();
@@ -255,7 +255,7 @@ public class NewProjectController {
       
       updateProject(newProject);
       
-      refreshLocalOverview();
+      refreshOverview();
       resetIncomeFields();
     } catch (NumberFormatException e) {
       setWarning("Please enter a valid amount that is greater than 0");
@@ -289,7 +289,7 @@ public class NewProjectController {
       
       updateProject(newProject);
       
-      refreshLocalOverview();
+      refreshOverview();
       resetExpenseFields();
     } catch (NumberFormatException e) {
       setWarning("Please enter a valid amount that is greater than 0");
@@ -310,7 +310,7 @@ public class NewProjectController {
     
     updateProject(newProject);
     
-    refreshLocalOverview();
+    refreshOverview();
     resetIncomeFields();
   }
   
@@ -326,7 +326,7 @@ public class NewProjectController {
     
     updateProject(newProject);
     
-    refreshLocalOverview();
+    refreshOverview();
     resetExpenseFields();
   }
   
@@ -334,7 +334,7 @@ public class NewProjectController {
    * Refreshes the local overview by updating the tables and totals, resetting the selected row
    * and resets the error message.
    */
-  public void refreshLocalOverview() {
+  public void refreshOverview() {
     // Update tables
     incomeTable.getItems().clear();
     expenseTable.getItems().clear();

@@ -39,11 +39,17 @@ import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
 
 /**
- * FXML Controller class for the EditProject.fxml file. Takes an existing project and allows the
- * user to edit the project information, accounting and budgeting.
+ * Controller class for the EditProject.fxml file. This class is responsible for editing a chosen
+ * project and either saving the changes or deleting the project.
+ *
+ * <p>The edited project will temporarily be saved in RAM by updating it in the project registry
+ * from the user singleton instance. If the project is saved, the project is updated with the
+ * current information and the user singleton instance is saved to file. If the project is
+ * deleted, the project is removed from the project registry and the user singleton instance is
+ * written to file.
  */
 public class EditProjectController {
-  
+  // The project that is being edited
   private Project originalProject;
   
   // Fundamental project information
@@ -103,6 +109,8 @@ public class EditProjectController {
   
   /**
    * Initializes the controller class.
+   *
+   * @throws IllegalArgumentException if the project that is being edited is null
    */
   public void initializeWithData(Project project) throws IllegalArgumentException {
     if (project == null) {
@@ -139,6 +147,7 @@ public class EditProjectController {
       dialog.setHeaderText("Enter name for new category:");
       Optional<String> result = dialog.showAndWait();
       
+      //If new category is entered, add it to the category menu
       result.ifPresent(name -> {
         MenuItem menuItem = new MenuItem(name);
         menuItem.setOnAction(e -> category.setText(name));
@@ -172,18 +181,17 @@ public class EditProjectController {
     imagePreview.setImage(images.isEmpty() ? null : new Image(images.get(0).toURI().toString()));
     
     // Set up the tables to display the transactions of the project that is being edited
+    // Refresh the image buttons
     refreshOverview();
     refreshImages();
-    
-    resetIncomeFields();
-    resetExpenseFields();
-    
-    clearWarning();
   }
   
   /**
    * Deletes a category from the user's project registry if it is not used by any projects.
+   *
+   * <p>If the category is used by a project, a warning is displayed to the user.
    */
+  @FXML
   public void deleteCategory() {
     //Get the category that is selected
     MenuItem chosenCategory = category.getItems().stream()
@@ -201,13 +209,10 @@ public class EditProjectController {
   }
   
   /**
-   * Checks if the user has selected an income and if so, it will input the income values into
-   * the income fields. If the user has clicked an empty row or the same row twice, the income
-   * fields will be reset.
-   *
-   * <p>Clicking an income row will also update the selectedTransaction variable which has the
-   * effect of updating the chosen income rather than creating a new one.
+   * Checks if the user has selected an expense and if so, all expense fields will be filled with
+   * its values.
    */
+  @FXML
   public void selectedIncome() {
     Income selectedIncome = incomeTable.getSelectionModel().getSelectedItem();
     
@@ -226,13 +231,13 @@ public class EditProjectController {
   }
   
   /**
-   * Checks if the user has selected an expense and if so, it will input the expense values into
-   * the expense fields. If the user has clicked an empty row or the same row twice, the expense
-   * fields will be reset.
+   * When pressing the add button, the addIncomeToLocal method will be called and depending on
+   * whether a row is selected or not, the income will be added or updated.
    *
-   * <p>Clicking an expense row will also update the selectedTransaction variable which has the
-   * effect of updating the chosen expense rather than creating a new one.
+   * <p>If any of the fields have invalid values, the user will be informed through the warning
+   * message.
    */
+  @FXML
   public void selectedExpense() {
     Expense selectedExpense = expenseTable.getSelectionModel().getSelectedItem();
     if (selectedExpense != null) {
@@ -250,9 +255,9 @@ public class EditProjectController {
   }
   
   /**
-   * When pressing the add button, the addIncomeToLocal method will be called and depending on
-   * whether a row is selected or not, the income will be added or updated.
+   * Deletes the selected income from the local overview.
    */
+  @FXML
   public void addIncomeToLocal() {
     try {
       boolean isAccounting = toggleButton.isSelected();
@@ -287,6 +292,7 @@ public class EditProjectController {
    * When pressing the add button, the addExpenseToLocal method will be called and depending on
    * whether a row is selected or not, the expense will be added or updated.
    */
+  @FXML
   public void addExpenseToLocal() {
     try {
       boolean isAccounting = toggleButton.isSelected();
@@ -320,6 +326,7 @@ public class EditProjectController {
   /**
    * Deletes the selected income from the local overview.
    */
+  @FXML
   public void deleteIncome() {
     boolean isAccounting = toggleButton.isSelected();
     Project newProject = getProject();
@@ -336,6 +343,7 @@ public class EditProjectController {
   /**
    * Deletes the selected expense from the local overview.
    */
+  @FXML
   public void deleteExpense() {
     boolean isAccounting = toggleButton.isSelected();
     Project newProject = getProject();
@@ -353,35 +361,47 @@ public class EditProjectController {
    * Refreshes the local overview by updating the tables and totals, resetting the selected row
    * and resets the error message.
    */
+  @FXML
   public void refreshOverview() {
     // Update tables
     incomeTable.getItems().clear();
     expenseTable.getItems().clear();
     
+    // Check if accounting or budgeting is selected and set the label accordingly
     boolean isAccounting = toggleButton.isSelected();
     toggleLabel.setText(isAccounting ? "Accounting - " : "Budgeting - ");
     
+    // Get the current bookkeeping and add all transactions to the tables
     Bookkeeping currentBookkeeping = isAccounting ? getProject().getAccounting() :
         getProject().getBudgeting();
     
     incomeTable.getItems().addAll(currentBookkeeping.getIncomeList());
     expenseTable.getItems().addAll(currentBookkeeping.getExpenseList());
     
+    // Refresh tables and totals
+    
     incomeTable.refresh();
     expenseTable.refresh();
-  
+    
+    //Set the total amounts
     totalIncome.setText(String.format("%.2f kr", currentBookkeeping.getTotalIncome()));
     totalExpense.setText(String.format("- %.2f kr", currentBookkeeping.getTotalExpense()));
     totalAmount.setText(String.format("%.2f kr",
         currentBookkeeping.getTotalIncome() - currentBookkeeping.getTotalExpense()));
-
+    
+    // Disable delete buttons if no row is selected
     deleteIncomeButton.setDisable(incomeTable.getSelectionModel().getSelectedItem() == null);
     deleteExpenseButton.setDisable(expenseTable.getSelectionModel().getSelectedItem() == null);
     
+    // Reset warning message and update pie charts
     clearWarning();
     updatePieCharts();
   }
-
+  
+  /**
+   * Updates the pie charts with the current data from the tables. Displays the different amount
+   * of each transaction category
+   */
   private void updatePieCharts() {
     // Update pieChart income
     ObservableList<PieChart.Data> pieChartDataIncome = FXCollections.observableArrayList();
@@ -434,7 +454,10 @@ public class EditProjectController {
     pieExpense.setData(pieChartDataExpense);
   }
   
-  // Resets the income fields
+  /**
+   * Resets the income fields
+   */
+  @FXML
   public void resetIncomeFields() {
     incomeDatePicker.setValue(null);
     incomeDescriptionField.setText("");
@@ -444,7 +467,10 @@ public class EditProjectController {
     incomeTable.getSelectionModel().clearSelection();
   }
   
-  // Resets the expense fields
+  /**
+   * Resets the expense fields
+   */
+  @FXML
   public void resetExpenseFields() {
     expenseDatePicker.setValue(null);
     expenseDescriptionField.setText("");
@@ -456,8 +482,9 @@ public class EditProjectController {
   
   /**
    * Lets a user add an image/images from their computer to the project. The images will be
-   * previewed in the imageView object
+   * previewed in the imageView object.
    */
+  @FXML
   public void addImage() {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Select Image");
@@ -476,6 +503,7 @@ public class EditProjectController {
   /**
    * Deletes the currently selected image.
    */
+  @FXML
   public void deleteImage() {
     Project newProject = getProject();
     
@@ -496,6 +524,7 @@ public class EditProjectController {
   /**
    * Lets a user look backwards through added images.
    */
+  @FXML
   public void imageIndexBackwards() {
     int imageIndex = getProject().getImageIndex(imagePreview.getImage());
     List<File> images = getProject().getImages();
@@ -512,6 +541,7 @@ public class EditProjectController {
   /**
    * Lets a user look forwards through added images.
    */
+  @FXML
   public void imageIndexForwards() {
     int imageIndex = getProject().getImageIndex(imagePreview.getImage());
     List<File> images = getProject().getImages();
@@ -537,11 +567,16 @@ public class EditProjectController {
   }
   
   /**
-   * Updates the project with the new values and saves it to the user registry. It does this by
-   * deleting the old project and adding the new one.
+   * Updates this project with the user singleton and writes the user to file. Checks if the
+   * project name is empty and throws an exception if it is.
+   *
+   * <p>In the case of any exception, a warning will be displayed to the user and the user won't
+   * be written to file.
    */
+  @FXML
   public void saveProject() {
     try {
+      //Update project
       Project editedProject = getProject();
       
       if (name.getText().isEmpty()) {
@@ -554,8 +589,10 @@ public class EditProjectController {
       editedProject.setDescription(description.getText());
       editedProject.setStatus(status.getText());
       
+      //Update user singleton
       updateProject(editedProject);
       
+      //Write user to file
       FileHandling.writeUserToFile(User.getInstance());
       
       Parent root = FXMLLoader.load(
@@ -567,10 +604,11 @@ public class EditProjectController {
   }
   
   /**
-   * Deletes the current project. A popup will appear prompting the user if the really wants to
-   * delete the project. If no, the deletion is aborted. If yes, the project is deleted from the
-   * registry and the user is returned to the all projects page.
+   * Deletes the current project from the user singleton and writes the user to file.
+   *
+   * <p>Gives the user a popup to confirm the deletion.
    */
+  @FXML
   public void deleteProject() {
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle("Delete project");
@@ -595,16 +633,16 @@ public class EditProjectController {
   }
   
   /**
-   * Get the last project in the User.getInstance() user's project registry, which is the current project.
-   * 
-   * @return The last project in the User.getInstance() user's project registry.
+   * Gets the project being edited.
+   *
+   @return the project being edited
    */
   private Project getProject() {
     return new Project(originalProject);
   }
   
   /**
-   * Update the last project in the User.getInstance() user's project registry, which is the current project.
+   * Update the current project that is being edited.
    * 
    * @param newProject The edited project to update the User.getInstance() with.
    */
@@ -634,6 +672,7 @@ public class EditProjectController {
   /**
    * Switches the theme of the application.
    */
+  @FXML
   public void switchTheme() {
     BudgetAndAccountingApp.setTheme();
   }

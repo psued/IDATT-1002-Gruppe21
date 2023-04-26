@@ -411,7 +411,7 @@ public class NewProjectController {
 
       pieChartDataIncome.add(new PieChart.Data(categoryIncome, amountIncome));
     }
-    
+
     // Update pieChart Expense
     ObservableList<PieChart.Data> pieChartDataExpense = FXCollections.observableArrayList();
     HashMap<String, Double> categoriesExpense = new HashMap<>();
@@ -589,14 +589,14 @@ public class NewProjectController {
   
   /**
    * Goes to the all projects page without saving the current project. A confirmation popup
-   * appears when the delete button is pressed.
+   * appears when the cancel button is pressed.
    */
   @FXML
-  public void deleteProject() {
+  public void cancelNewProject() {
     //Confirmation popup
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    alert.setTitle("Delete project");
-    alert.setHeaderText("Are you sure you want to delete this project?");
+    alert.setTitle("Cancel project");
+    alert.setHeaderText("Are you sure you want to cancel this project?");
     alert.setContentText("This action cannot be undone.");
     
     Optional<ButtonType> result = alert.showAndWait();
@@ -656,6 +656,6 @@ public class NewProjectController {
    */
   @FXML
   public void switchTheme() {
-    BudgetAndAccountingApp.setTheme();
+    BudgetAndAccountingApp.switchTheme();
   }
 }

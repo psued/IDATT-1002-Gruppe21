@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import no.ntnu.idatt1002.app.filehandling.FileHandling;
 import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
 import no.ntnu.idatt1002.app.registers.Project;
@@ -30,26 +31,33 @@ public class BudgetAndAccountingApp extends Application {
     scene.setRoot(root);
   }
 
-  public static void setTheme() {
-    if (scene.getStylesheets().size() == 1) {
-      scene.getStylesheets().remove(0);
+  public static void switchTheme() {
+    if (scene.getStylesheets().contains("styles/dark-theme.css")) {
+      scene.getStylesheets().clear();
+      scene.getStylesheets().add("styles/light-theme.css");
     }
     else {
+      scene.getStylesheets().clear();
       scene.getStylesheets().add("styles/dark-theme.css");
     }
   }
+
   
   @Override
   public void start(Stage primaryStage) throws IOException {
     Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Start.fxml")));
     scene = new Scene(root);
 
+    scene.getStylesheets().add("styles/dark-theme.css");
+
     primaryStage.setScene(scene);
     primaryStage.setTitle("Budget and Accounting application");
     primaryStage.setIconified(false);
 
-    primaryStage.setWidth(1250);
-    primaryStage.setHeight(750);
+    primaryStage.setMaximized(true);
+
+    primaryStage.setMinHeight(720);
+    primaryStage.setMinWidth(1280);
 
     primaryStage.show();
     

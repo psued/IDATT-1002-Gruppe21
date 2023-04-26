@@ -5,7 +5,6 @@
 
 /* Styles for buttons */
 .button {
-    -fx-background-color: #555555; /* Background color for buttons */
     -fx-text-fill: #f2f2f2; /* Text color for buttons */
 }
 
@@ -15,3 +14,8 @@
     -fx-text-fill: #f2f2f2; /* Text color for text fields */
     -fx-border-color: #555555; /* Border color for text fields */
 }
+
+.table-cell {
+    -fx-font-size: 13pt;
+}
+

@@ -375,6 +375,6 @@ public class ViewProjectController {
    */
   @FXML
   public void switchTheme() {
-    BudgetAndAccountingApp.setTheme();
+    BudgetAndAccountingApp.switchTheme();
   }
 }

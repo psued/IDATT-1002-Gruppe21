@@ -39,44 +39,6 @@ public class BudgetAndAccountingApp extends Application {
     }
   }
   
-  private void testData() {
-    Project project1 = new Project("Project 1", "Description 1", "Personal", LocalDate.now(),
-        "Doing");
-    Income income1 = new Income("Income 1", "Category 1", 100, LocalDate.now());
-    Income income2 = new Income("Income 2", "Category 2", 200, LocalDate.now());
-    project1.getAccounting().addTransaction(income1);
-    project1.getBudgeting().addTransaction(income2);
-    Expense expense1 = new Expense("Expense 1", "Category 1", 100, LocalDate.now());
-    Expense expense2 = new Expense("Expense 2", "Category 2", 200, LocalDate.now());
-    project1.getAccounting().addTransaction(expense1);
-    project1.getBudgeting().addTransaction(expense2);
-    
-    User user = User.getInstance();
-    user.getProjectRegistry().addProject(project1);
-
-    Project project2 = new Project("Project 2", "Description 2", "Freelance", LocalDate.now(),
-        "Finished");
-    Income income3 = new Income("Income 3", "Category 1", 100, LocalDate.now());
-    Income income4 = new Income("Income 4", "Category 2", 200, LocalDate.now());
-    project2.getAccounting().addTransaction(income3);
-    project2.getBudgeting().addTransaction(income4);
-    Expense expense3 = new Expense("Expense 3", "Category 1", 100, LocalDate.now());
-    Expense expense4 = new Expense("Expense 4", "Category 2", 200, LocalDate.now());
-    project2.getAccounting().addTransaction(expense3);
-    project2.getBudgeting().addTransaction(expense4);
-    user.getProjectRegistry().addProject(project2);
-    
-    user.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now()));
-    user.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now().plusYears(3)));
-    user.getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now().plusYears(6)));
-    
-    try {
-      FileHandling.writeUserToFile(user);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-  
   @Override
   public void start(Stage primaryStage) throws IOException {
     Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Start.fxml")));

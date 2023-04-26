@@ -41,11 +41,13 @@ public class ProjectRegistry implements Serializable {
    * Add a project to the registry.
    *
    * @param project the project to be added
-   * @throws IllegalArgumentException if the project is null
+   * @throws IllegalArgumentException if the project is null or if the project already exists in
    */
   public void addProject(Project project) throws IllegalArgumentException {
     if (project == null) {
       throw new IllegalArgumentException("project cannot be null");
+    } else if (projects.contains(project)) {
+      throw new IllegalArgumentException("project already exists in the registry");
     }
     projects.add(project);
   }

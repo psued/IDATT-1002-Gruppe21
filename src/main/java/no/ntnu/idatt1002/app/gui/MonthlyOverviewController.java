@@ -514,8 +514,7 @@ public class MonthlyOverviewController {
     // Warn the user if there are no transactions for the chosen year as the year will be deleted
     // if the user quits now.
     if (User.getInstance().getMonthlyBookkeepingRegistry().isYearEmpty(chosenYearMonth)) {
-      setWarning("There are no transactions for this whole year. If you quit now, the year will " +
-          "be deleted.");
+      setWarning("This year is empty. It will be deleted if you quit now.");
     }
     
     //Update month cells

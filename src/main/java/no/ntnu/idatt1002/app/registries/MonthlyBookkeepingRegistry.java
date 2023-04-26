@@ -75,7 +75,15 @@ public class MonthlyBookkeepingRegistry implements Serializable {
     return monthMonthlyBookkeepingMap.get(yearMonth);
   }
   
-  //Checks all months in the bookkeepingMap and returns a list of years that only have empty months
+  /**
+   * Check if the registry contains a monthly bookkeeping object with the given {@link YearMonth}
+   * that has any transactions.
+   *
+   * @param yearMonth the year and month of the monthly bookkeeping object to check for
+   * @return true if the registry contains a monthly bookkeeping object with the given year and
+   *         month, false otherwise
+   * @throws IllegalArgumentException if yearMonth is null
+   */
   public boolean isYearEmpty(YearMonth yearMonth) throws IllegalArgumentException {
     if (yearMonth == null) {
       throw new IllegalArgumentException("yearMonth cannot be null");

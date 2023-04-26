@@ -114,6 +114,7 @@ public class ViewProjectController {
   private PieChart pieExpense;
   
   //Warning message
+  @SuppressWarnings("CanBeFinal")
   @FXML
   private Label warningLabel = new Label();
   
@@ -211,7 +212,7 @@ public class ViewProjectController {
   /**
    * Update the pie charts with the correct data.
    *
-   * <p> The pie charts will display the total income and expense amounts for each category.
+   * <p>The pie charts will display the total income and expense amounts for each category.
    */
   private void updatePieCharts() {
     // Update pieChart income
@@ -268,7 +269,7 @@ public class ViewProjectController {
   /**
    * Opens the edit project view of the current project.
    *
-   * <p> In the unlikely event that an exception is thrown, a warning will be displayed with
+   * <p>In the unlikely event that an exception is thrown, a warning will be displayed with
    * the given warning message.
    */
   @FXML
@@ -289,7 +290,7 @@ public class ViewProjectController {
   /**
    * Opens the all projects page.
    *
-   * <p> In the unlikely event that an exception is thrown, a warning will be displayed prompting
+   * <p>In the unlikely event that an exception is thrown, a warning will be displayed prompting
    * the user to restart the application as no other solution is available.
    */
   @FXML

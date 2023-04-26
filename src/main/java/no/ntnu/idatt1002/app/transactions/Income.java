@@ -187,7 +187,7 @@ public class Income implements Transaction, Serializable {
     
     boolean isEqual = income.getDate() == null ? date == null : income.getDate().equals(date);
     
-    return income.getDescription().equals(description) && income.getCategory().equals(category) &&
-        income.getAmount() == amount && isEqual;
+    return income.getDescription().equals(description) && income.getCategory().equals(category)
+        && income.getAmount() == amount && isEqual;
   }
 }

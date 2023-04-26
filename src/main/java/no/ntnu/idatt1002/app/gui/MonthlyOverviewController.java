@@ -523,8 +523,8 @@ public class MonthlyOverviewController {
     
     // Set the table title
     tableLabel.setText(isTotal ? "Total " :
-        (isPersonal ? "Personal " : "Work ") + (isAccounting ? "accounting " : "budgeting ") +
-            "transactions");
+        (isPersonal ? "Personal " : "Work ") + (isAccounting ? "accounting " : "budgeting ")
+            + "transactions");
     
     // Get the chosen bookkeeping
     Bookkeeping chosenBookkeeping =
@@ -535,11 +535,11 @@ public class MonthlyOverviewController {
     transactionTable.getItems().addAll(chosenBookkeeping.getTransactions());
     
     // Set the labels of the total income and expenses
-    String incomeLabelBuilder = (isTotal ? "Total " : (isPersonal ? "Personal " : "Work ")) +
-        (isAccounting ? "accounting " : "budgeting ") + "income";
+    String incomeLabelBuilder = (isTotal ? "Total " : (isPersonal ? "Personal " : "Work "))
+        + (isAccounting ? "accounting " : "budgeting ") + "income";
     incomeLabel.setText(incomeLabelBuilder);
-    String expenseLabelBuilder = (isTotal ? "Total " : (isPersonal ? "Personal " : "Work ")) +
-        (isAccounting ? "accounting " : "budgeting ") + "expenses";
+    String expenseLabelBuilder = (isTotal ? "Total " : (isPersonal ? "Personal " : "Work "))
+        + (isAccounting ? "accounting " : "budgeting ") + "expenses";
     expenseLabel.setText(expenseLabelBuilder);
     
     // Set the labels of the total income and expenses
@@ -657,7 +657,8 @@ public class MonthlyOverviewController {
    */
   private void saveUser() {
     try {
-      User.getInstance().getMonthlyBookkeepingRegistry().putMonthlyBookkeeping(chosenMonthlyBookkeeping);
+      User.getInstance().getMonthlyBookkeepingRegistry()
+          .putMonthlyBookkeeping(chosenMonthlyBookkeeping);
       
       FileHandling.writeUserToFile(User.getInstance());
     } catch (Exception e) {

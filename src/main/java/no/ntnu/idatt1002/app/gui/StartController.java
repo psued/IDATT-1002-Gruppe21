@@ -20,6 +20,7 @@ import no.ntnu.idatt1002.app.filehandling.FileHandling;
  */
 public class StartController {
   
+  @SuppressWarnings("CanBeFinal")
   @FXML
   private Label warningLabel = new Label();
   

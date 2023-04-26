@@ -141,6 +141,7 @@ public class EditProjectController {
   private PieChart pieExpense;
   
   //Error message
+  @SuppressWarnings("CanBeFinal")
   @FXML
   private Label warningLabel = new Label();
   
@@ -491,7 +492,7 @@ public class EditProjectController {
   }
   
   /**
-   * Resets the income fields
+   * Resets the income fields.
    */
   @FXML
   public void resetIncomeFields() {
@@ -504,7 +505,7 @@ public class EditProjectController {
   }
   
   /**
-   * Resets the expense fields
+   * Resets the expense fields.
    */
   @FXML
   public void resetExpenseFields() {

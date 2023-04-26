@@ -192,7 +192,7 @@ public class Expense implements Transaction, Serializable {
     boolean equalsDate =
         expense.getDate() == null ? getDate() == null : expense.getDate().equals(getDate());
     
-    return expense.getDescription().equals(description) && expense.getCategory().equals(category) &&
-        expense.getAmount() == amount && equalsDate;
+    return expense.getDescription().equals(description) && expense.getCategory().equals(category)
+        && expense.getAmount() == amount && equalsDate;
   }
 }

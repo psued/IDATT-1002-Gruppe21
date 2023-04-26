@@ -24,7 +24,10 @@ public class BudgetAndAccountingApp extends Application {
   public static void setRoot(Parent root) {
     scene.setRoot(root);
   }
-
+  
+  /**
+   * Toggles the theme between dark mode and light mode.
+   */
   public static void switchTheme() {
     if (scene.getStylesheets().contains("styles/dark-theme.css")) {
       scene.getStylesheets().clear();

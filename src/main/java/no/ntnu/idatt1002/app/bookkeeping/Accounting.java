@@ -53,7 +53,7 @@ public class Accounting implements Bookkeeping, Serializable {
   /**
    * Adds a {@link Transaction transaction} object to the income or expense list depending on
    * whether the {@link Transaction transaction} object is an instance of {@link Income Income}
-   * or {@link Expense Expense}
+   * or {@link Expense Expense}.
    *
    * @param transaction the transaction to be added
    */
@@ -72,7 +72,7 @@ public class Accounting implements Bookkeeping, Serializable {
   /**
    * Updates a {@link Transaction transaction} object in the income or expense list depending on
    * whether the {@link Transaction transaction} object is an instance of {@link Income Income}
-   * or {@link Expense Expense}
+   * or {@link Expense Expense}.
    *
    * @param oldTransaction the old Transaction object to update from.
    * @param newTransaction the new Transaction object to update to.
@@ -105,7 +105,7 @@ public class Accounting implements Bookkeeping, Serializable {
   /**
    * Removes a {@link Transaction transaction} object from the income or expense list depending on
    * whether the {@link Transaction transaction} object is an instance of {@link Income Income}
-   * or {@link Expense Expense}
+   * or {@link Expense Expense}.
    *
    * @param transaction the transaction to be removed
    * @throws IllegalArgumentException if the argument is null.
@@ -200,7 +200,7 @@ public class Accounting implements Bookkeeping, Serializable {
       return false;
     }
     
-    return incomeList.equals(accounting.getIncomeList()) &&
-        expenseList.equals(accounting.getExpenseList());
+    return incomeList.equals(accounting.getIncomeList())
+        && expenseList.equals(accounting.getExpenseList());
   }
 }

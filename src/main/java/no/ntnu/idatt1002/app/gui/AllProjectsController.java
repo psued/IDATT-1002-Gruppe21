@@ -34,6 +34,7 @@ public class AllProjectsController {
   private TableColumn<Project, Double> totalAccounting;
   
   //Sets up the warning label
+  @SuppressWarnings("CanBeFinal")
   @FXML
   private Label warningLabel = new Label();
   

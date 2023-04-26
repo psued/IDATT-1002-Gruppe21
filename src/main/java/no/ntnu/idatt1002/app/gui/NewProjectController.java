@@ -138,6 +138,7 @@ public class NewProjectController {
   private PieChart pieExpense;
   
   //Error message
+  @SuppressWarnings("CanBeFinal")
   @FXML
   private Label warningLabel = new Label();
   
@@ -231,7 +232,7 @@ public class NewProjectController {
   
   /**
    * Checks if the user has selected an income and if so, all income fields will be filled with its
-   * values
+   * values.
    */
   @FXML
   public void selectedIncome() {
@@ -476,7 +477,7 @@ public class NewProjectController {
   }
   
   /**
-   * Resets the income fields
+   * Resets the income fields.
    */
   @FXML
   public void resetIncomeFields() {
@@ -489,7 +490,7 @@ public class NewProjectController {
   }
   
   /**
-   * Resets the expense fields
+   * Resets the expense fields.
    */
   @FXML
   public void resetExpenseFields() {

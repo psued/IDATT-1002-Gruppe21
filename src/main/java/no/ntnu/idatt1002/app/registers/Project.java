@@ -311,8 +311,8 @@ public class Project implements Serializable {
     boolean equalsDescription = project.getDescription() == null ? description == null :
         project.getDescription().equals(description);
     
-    return project.getName().equals(name) && equalsDescription &&
-        project.getCategory().equals(category) && project.getAccounting().equals(accounting) &&
-        project.getBudgeting().equals(budgeting) && equalsDate;
+    return project.getName().equals(name) && equalsDescription
+        && project.getCategory().equals(category) && project.getAccounting().equals(accounting)
+        && project.getBudgeting().equals(budgeting) && equalsDate;
   }
 }

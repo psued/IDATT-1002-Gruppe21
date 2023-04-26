@@ -106,10 +106,10 @@ public class MonthlyBookkeeping implements Serializable {
    * @return true if there are no transactions in any bookkeeping object, false otherwise
    */
   public boolean isEmpty() {
-    return budgetingPersonal.getTransactions().isEmpty() &&
-        budgetingWork.getTransactions().isEmpty() &&
-        accountingPersonal.getTransactions().isEmpty() &&
-        accountingWork.getTransactions().isEmpty();
+    return budgetingPersonal.getTransactions().isEmpty()
+        && budgetingWork.getTransactions().isEmpty()
+        && accountingPersonal.getTransactions().isEmpty()
+        && accountingWork.getTransactions().isEmpty();
   }
   
   /**

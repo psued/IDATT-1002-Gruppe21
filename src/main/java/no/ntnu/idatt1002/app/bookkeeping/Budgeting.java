@@ -53,7 +53,7 @@ public class Budgeting implements Bookkeeping, Serializable {
   /**
    * Adds a {@link Transaction transaction} object to the income or expense list depending on
    * whether the {@link Transaction transaction} object is an instance of {@link Income Income}
-   * or {@link Expense Expense}
+   * or {@link Expense Expense}.
    *
    * @param transaction the transaction to be added
    */
@@ -200,7 +200,7 @@ public class Budgeting implements Bookkeeping, Serializable {
       return false;
     }
     
-    return incomeList.equals(budgeting.getIncomeList()) &&
-        expenseList.equals(budgeting.getExpenseList());
+    return incomeList.equals(budgeting.getIncomeList())
+        && expenseList.equals(budgeting.getExpenseList());
   }
 }

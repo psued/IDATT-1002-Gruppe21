@@ -393,7 +393,12 @@ public class MonthlyOverviewController {
       boolean isPersonal = toggleType.isSelected();
 
       chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).removeTransaction(transaction);
-      
+
+      dateFieldIncome.setValue(null);
+      descriptionFieldIncome.setText("");
+      categoryFieldIncome.setText("");
+      amountFieldIncome.setText("");
+
       saveUser();
       refreshOverview();
     } else {
@@ -415,6 +420,11 @@ public class MonthlyOverviewController {
       boolean isPersonal = toggleType.isSelected();
 
       chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).removeTransaction(transaction);
+
+      dateFieldExpense.setValue(null);
+      descriptionFieldExpense.setText("");
+      categoryFieldExpense.setText("");
+      amountFieldExpense.setText("");
 
       saveUser();
       refreshOverview();

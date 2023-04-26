@@ -154,7 +154,7 @@ public class MonthlyOverviewController {
       chosenYearMonth = YearMonth.now();
       chosenMonthlyBookkeeping = new MonthlyBookkeeping(chosenYearMonth);
       User.getInstance().getMonthlyBookkeepingRegistry()
-          .addMonthlyBookkeeping(chosenMonthlyBookkeeping);
+          .putMonthlyBookkeeping(chosenMonthlyBookkeeping);
       saveUser();
     } else {
       // Automatically choose the earliest year with the current month
@@ -657,14 +657,7 @@ public class MonthlyOverviewController {
    */
   private void saveUser() {
     try {
-      if (User.getInstance().getMonthlyBookkeepingRegistry()
-          .getMonthlyBookkeeping(chosenYearMonth) == null) {
-        User.getInstance().getMonthlyBookkeepingRegistry()
-            .addMonthlyBookkeeping(chosenMonthlyBookkeeping);
-      } else {
-        User.getInstance().getMonthlyBookkeepingRegistry()
-            .updateMonthlyBookkeeping(chosenMonthlyBookkeeping);
-      }
+      User.getInstance().getMonthlyBookkeepingRegistry().putMonthlyBookkeeping(chosenMonthlyBookkeeping);
       
       FileHandling.writeUserToFile(User.getInstance());
     } catch (Exception e) {

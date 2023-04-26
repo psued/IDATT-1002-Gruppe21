@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.YearMonth;
 import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
 import no.ntnu.idatt1002.app.transactions.Expense;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ public class MonthlyBookkeepingRegistryTest {
   @BeforeEach
   void init() {
     monthlyBookkeepingRegistry = new MonthlyBookkeepingRegistry();
-    monthlyBookkeepingRegistry.addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now()));
+    monthlyBookkeepingRegistry.putMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now()));
     yearMonth = YearMonth.now();
   }
   
@@ -39,7 +38,7 @@ public class MonthlyBookkeepingRegistryTest {
   @Test
   @DisplayName("Test the addMonthlyBookkeeping method")
   void testAddMonthlyBookkeeping() {
-    monthlyBookkeepingRegistry.addMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now().plusMonths(1)));
+    monthlyBookkeepingRegistry.putMonthlyBookkeeping(new MonthlyBookkeeping(YearMonth.now().plusMonths(1)));
     assertEquals(2, monthlyBookkeepingRegistry.getMonthlyBookkeepingMap().size());
   }
   

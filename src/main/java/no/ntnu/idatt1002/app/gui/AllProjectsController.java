@@ -1,5 +1,6 @@
 package no.ntnu.idatt1002.app.gui;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Objects;
 import javafx.fxml.FXML;
@@ -27,13 +28,13 @@ public class AllProjectsController {
   @FXML private TableColumn<Project, String> category;
   @FXML private TableColumn<Project, Double> totalAccounting;
 
-  @FXML private Label warningLabel;
+  @FXML private Label warningLabel = new Label();
   
   /**
    * Sets up the table containing all relevant projects by loading from the serialized user.
    */
   public void initialize() {
-    warningLabel.setVisible(false);
+    clearWarning();
     
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
     dueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
@@ -144,7 +145,17 @@ public class AllProjectsController {
     warningLabel.setText(warning);
     warningLabel.setVisible(true);
   }
-
+  
+  /**
+   * Clears the warning label.
+   */
+  public void clearWarning() {
+    warningLabel.setVisible(false);
+  }
+  
+  /**
+   * Switches the theme of the application.
+   */
   public void switchTheme() {
     BudgetAndAccountingApp.setTheme();
   }

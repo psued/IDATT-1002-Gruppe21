@@ -6,7 +6,14 @@ import java.util.List;
 import no.ntnu.idatt1002.app.registers.Project;
 
 /**
- * Registry class for all projects. Provides methods to add and remove projects.
+ * The ProjectRegistry class represents a registry of {@link Project projects}. It contains
+ * methods for adding, removing and updating projects, as well as getting a deep copy of all
+ * projects.
+ *
+ * <p>The class also stores the possible categories and statuses that a project can have, where
+ * the different categories can be updated, but the statuses are fixed.
+ *
+ * @see Project
  */
 public class ProjectRegistry implements Serializable {
 
@@ -15,10 +22,10 @@ public class ProjectRegistry implements Serializable {
   private final List<String> statuses = new ArrayList<>();
 
   /**
-   * Constructor for ProjectRegistry. Initializes the registry with preset categories and statuses.
+   * Constructor for the ProjectRegistry. Initializes the registry with preset categories
+   * and statuses and sets the projects to an empty ArrayList.
    */
   public ProjectRegistry() {
-    this.projects = new ArrayList<>();
     categories.add("Freelance");
     categories.add("Personal");
     categories.add("Miscellaneous");
@@ -26,12 +33,15 @@ public class ProjectRegistry implements Serializable {
     statuses.add("Not started");
     statuses.add("Doing");
     statuses.add("Finished");
+    
+    projects = new ArrayList<>();
   }
 
   /**
-   * Adds a project to the registry.
+   * Add a project to the registry.
    *
    * @param project the project to be added
+   * @throws IllegalArgumentException if the project is null
    */
   public void addProject(Project project) throws IllegalArgumentException {
     if (project == null) {
@@ -41,9 +51,10 @@ public class ProjectRegistry implements Serializable {
   }
   
   /**
-   * Removes a project from the registry.
+   * Remove a project from the registry.
    *
    * @param project the project to be removed
+   * @throws IllegalArgumentException if the project is null
    */
   public void removeProject(Project project) throws IllegalArgumentException {
     if (project == null) {
@@ -53,23 +64,31 @@ public class ProjectRegistry implements Serializable {
   }
   
   /**
-   * Updates a project in the registry.
+   * Updates a project in the registry. Does this by getting the index of the old project and
+   * updating the project at that index to the new project.
    *
    * @param oldProject the old project that is still in the registry
    * @param newProject the project to be updated to
+   * @throws IllegalArgumentException if either of the projects are null or if the old project
+   * does not exist in the registry
    */
   public void updateProject(Project oldProject, Project newProject) throws
       IllegalArgumentException {
     if (oldProject == null || newProject == null) {
       throw new IllegalArgumentException("project cannot be null");
     }
-    projects.set(projects.indexOf(oldProject), newProject);
+    try {
+      projects.set(projects.indexOf(oldProject), newProject);
+    } catch (IndexOutOfBoundsException e) {
+      throw new IllegalArgumentException("oldProject is not in the registry");
+    }
   }
   
   /**
-   * Gets a deep copy of all projects from the registry.
+   * Get a deep copy of all projects in the registry. Achieves this by creating a new ArrayList
+   * and running each project through the project deep copy constructor.
    *
-   * @return the projects
+   * @return a deep copy list of all projects in the registry
    */
   public List<Project> getProjects() {
     List<Project> copy = new ArrayList<>();
@@ -83,6 +102,7 @@ public class ProjectRegistry implements Serializable {
    * Adds a category to the registry.
    *
    * @param category the category to be added
+   * @throws IllegalArgumentException if the category is null
    */
   public void addCategory(String category) throws IllegalArgumentException {
     if (category == null) {
@@ -92,9 +112,9 @@ public class ProjectRegistry implements Serializable {
   }
   
   /**
-   * Gets all categories from the registry.
+   * Gets all the categories that are in the registry.
    *
-   * @return the categories
+   * @return all the categories in the registry
    */
   public List<String> getCategories() {
     return new ArrayList<>(categories);
@@ -104,6 +124,8 @@ public class ProjectRegistry implements Serializable {
    * Removes a category from the registry.
    *
    * @param category the category to be removed
+   * @throws IllegalArgumentException if the category is null or if the category is in use by a
+   *                                  project
    */
   public void removeCategory(String category) throws IllegalArgumentException {
     if (category == null) {
@@ -115,9 +137,9 @@ public class ProjectRegistry implements Serializable {
   }
 
   /**
-   * Gets all statuses from the registry
+   * Gets all the statuses that are in the registry.
    *
-   * @return the statuses
+   * @return all the statuses in the registry
    */
   public List<String> getStatuses() {
     return new ArrayList<>(statuses);

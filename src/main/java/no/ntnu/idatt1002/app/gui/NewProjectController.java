@@ -515,7 +515,7 @@ public class NewProjectController {
     
     imageLeft.setDisable(images.size() < 2);
     imageRight.setDisable(images.size() < 2);
-    deleteImageButton.setDisable(images.size() < 1);
+    deleteImageButton.setDisable(images.isEmpty());
   }
   
   /**

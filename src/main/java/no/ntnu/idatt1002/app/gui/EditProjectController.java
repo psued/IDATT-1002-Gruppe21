@@ -46,17 +46,6 @@ public class EditProjectController {
   
   private Project originalProject;
   
-  /**
-   * Initializes the controller class.
-   */
-  public void initializeWithData(Project project) throws NullPointerException {
-    if (project == null) {
-      throw new NullPointerException("Please pick a project to edit");
-    }
-    originalProject = project;
-    initialize();
-  }
-  
   // Fundamental project information
   @FXML private TextField name;
   @FXML private MenuButton category;
@@ -111,6 +100,17 @@ public class EditProjectController {
   
   //Error message
   @FXML private Label warningLabel = new Label();
+  
+  /**
+   * Initializes the controller class.
+   */
+  public void initializeWithData(Project project) throws IllegalArgumentException {
+    if (project == null) {
+      throw new IllegalArgumentException("Please pick a project to edit");
+    }
+    originalProject = project;
+    initialize();
+  }
   
   /**
    * Initializes the controller class. Also sets up the text fields and tables to display the
@@ -177,7 +177,6 @@ public class EditProjectController {
     
     resetIncomeFields();
     resetExpenseFields();
-    
     
     clearWarning();
   }

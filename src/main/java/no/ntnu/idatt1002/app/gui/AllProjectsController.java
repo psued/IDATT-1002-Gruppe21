@@ -34,7 +34,7 @@ public class AllProjectsController {
    * Sets up the table containing all relevant projects by loading from the serialized user.
    */
   public void initialize() {
-    clearWarning();
+    warningLabel.setVisible(false);
     
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
     dueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
@@ -66,6 +66,19 @@ public class AllProjectsController {
   }
   
   /**
+   * Opens the new project page.
+   */
+  public void newProject() {
+    try {
+      Parent root = FXMLLoader.load(
+          Objects.requireNonNull(getClass().getResource("/NewProject.fxml")));
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (Exception e) {
+      setWarning("Could not create new project, please restart the application.");
+    }
+  }
+  
+  /**
    * Takes the chosen project and loads the edit project page by initializing it with the chosen
    * project. If no project is chosen, an error message is displayed.
    */
@@ -79,8 +92,10 @@ public class AllProjectsController {
       controller.initializeWithData(selectedProject);
       
       BudgetAndAccountingApp.setRoot(root);
-    } catch (Exception e) {
+    } catch (IllegalArgumentException e) {
       setWarning(e.getMessage());
+    } catch (IOException e) {
+      setWarning("Could not load edit project page, please restart the application.");
     }
   }
   
@@ -98,8 +113,10 @@ public class AllProjectsController {
       controller.initializeWithData(selectedProject);
     
       BudgetAndAccountingApp.setRoot(root);
-    } catch (Exception e){
+    } catch (IllegalArgumentException e) {
       setWarning(e.getMessage());
+    } catch (IOException e) {
+      setWarning("Could not load view project page, please restart the application.");
     }
   }
 
@@ -109,7 +126,7 @@ public class AllProjectsController {
         Objects.requireNonNull(getClass().getResource("/MonthlyOverview.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
-      e.printStackTrace();
+      setWarning("Could not load monthly overview, please restart the application.");
     }
   }
 
@@ -119,20 +136,7 @@ public class AllProjectsController {
         Objects.requireNonNull(getClass().getResource("/Start.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-  
-  /**
-   * Opens the new project page.
-   */
-  public void newProject() {
-    try {
-      Parent root = FXMLLoader.load(
-          Objects.requireNonNull(getClass().getResource("/NewProject.fxml")));
-      BudgetAndAccountingApp.setRoot(root);
-    } catch (Exception e) {
-      setWarning(e.getMessage());
+      setWarning("Could not load start page, please restart the application.");
     }
   }
   
@@ -142,15 +146,8 @@ public class AllProjectsController {
    * @param warning The warning to display.
    */
   private void setWarning(String warning) {
-    warningLabel.setText(warning);
     warningLabel.setVisible(true);
-  }
-  
-  /**
-   * Clears the warning label.
-   */
-  public void clearWarning() {
-    warningLabel.setVisible(false);
+    warningLabel.setText(warning);
   }
   
   /**

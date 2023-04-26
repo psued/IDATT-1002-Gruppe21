@@ -629,7 +629,7 @@ public class MonthlyOverviewController {
    */
   @FXML
   public void switchTheme() {
-    BudgetAndAccountingApp.setTheme();
+    BudgetAndAccountingApp.switchTheme();
   }
   
   /**

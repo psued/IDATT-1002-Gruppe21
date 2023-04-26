@@ -411,7 +411,7 @@ public class NewProjectController {
 
       pieChartDataIncome.add(new PieChart.Data(categoryIncome, amountIncome));
     }
-    
+
     // Update pieChart Expense
     ObservableList<PieChart.Data> pieChartDataExpense = FXCollections.observableArrayList();
     HashMap<String, Double> categoriesExpense = new HashMap<>();
@@ -592,7 +592,7 @@ public class NewProjectController {
    * appears when the delete button is pressed.
    */
   @FXML
-  public void deleteProject() {
+  public void cancelNewProject() {
     //Confirmation popup
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle("Delete project");
@@ -656,6 +656,6 @@ public class NewProjectController {
    */
   @FXML
   public void switchTheme() {
-    BudgetAndAccountingApp.setTheme();
+    BudgetAndAccountingApp.switchTheme();
   }
 }

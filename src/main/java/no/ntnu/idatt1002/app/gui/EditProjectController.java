@@ -114,7 +114,7 @@ public class EditProjectController {
    */
   public void initializeWithData(Project project) throws IllegalArgumentException {
     if (project == null) {
-      throw new IllegalArgumentException("Please pick a project to edit");
+      throw new IllegalArgumentException("Please select a project to edit");
     }
     originalProject = project;
     initialize();
@@ -674,6 +674,6 @@ public class EditProjectController {
    */
   @FXML
   public void switchTheme() {
-    BudgetAndAccountingApp.setTheme();
+    BudgetAndAccountingApp.switchTheme();
   }
 }

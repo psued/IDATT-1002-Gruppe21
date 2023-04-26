@@ -185,21 +185,20 @@ public class AllProjectsController {
   }
   
   /**
-   * Switches the theme of the application.
-   */
-  @FXML
-  public void switchTheme() {
-    BudgetAndAccountingApp.setTheme();
-  }
-  
-  /**
-   * Displays a warning message with the given text.
+   * Sets the warning label to display the given warning.
    *
    * @param warning The warning to display.
    */
   private void setWarning(String warning) {
     warningLabel.setVisible(true);
     warningLabel.setText(warning);
+  }
+  
+  /**
+   * Switches the theme of the application.
+   */
+  public void switchTheme() {
+    BudgetAndAccountingApp.switchTheme();
   }
 }
 

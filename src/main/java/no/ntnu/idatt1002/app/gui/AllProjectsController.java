@@ -28,21 +28,18 @@ public class AllProjectsController {
   @FXML private TableColumn<Project, String> category;
   @FXML private TableColumn<Project, Double> totalAccounting;
 
-  @FXML private Label errorMessage;
+  @FXML private Label warningLabel = new Label();
   
   /**
    * Sets up the table containing all relevant projects by loading from the serialized user.
    */
   public void initialize() {
-    
-  
-    errorMessage.setVisible(false);
+    warningLabel.setVisible(false);
     
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
     dueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
     category.setCellValueFactory(new PropertyValueFactory<>("category"));
     totalAccounting.setCellValueFactory(new PropertyValueFactory<>("accountingTotal"));
-  
     
     table.getItems().clear();
     if (User.getInstance().getProjectRegistry().getProjects() != null) {
@@ -52,20 +49,33 @@ public class AllProjectsController {
 
     table.setRowFactory(tv -> new TableRow<>() {
       @Override
-      public void updateItem(Project item, boolean empty) {
-        super.updateItem(item, empty);
-        if (item == null || empty) {
+      public void updateItem(Project project, boolean empty) {
+        super.updateItem(project, empty);
+        if (project == null || empty) {
           setStyle("");
         } else {
-          switch (item.getStatus()) {
-            case "Not started" -> setStyle("-fx-background-color: red;");
+          switch (project.getStatus()) {
+            case "Not started" -> setStyle("-fx-background-color: #ff5e5e;");
             case "Doing" -> setStyle("-fx-background-color: orange;");
-            case "Finished" -> setStyle("-fx-background-color: green");
+            case "Finished" -> setStyle("-fx-background-color: #77dd77");
             default -> setStyle("");
           }
         }
       }
     });
+  }
+  
+  /**
+   * Opens the new project page.
+   */
+  public void newProject() {
+    try {
+      Parent root = FXMLLoader.load(
+          Objects.requireNonNull(getClass().getResource("/NewProject.fxml")));
+      BudgetAndAccountingApp.setRoot(root);
+    } catch (Exception e) {
+      setWarning("Could not create new project, please restart the application.");
+    }
   }
   
   /**
@@ -82,11 +92,10 @@ public class AllProjectsController {
       controller.initializeWithData(selectedProject);
       
       BudgetAndAccountingApp.setRoot(root);
+    } catch (IllegalArgumentException e) {
+      setWarning(e.getMessage());
     } catch (IOException e) {
-      e.printStackTrace();
-    } catch (NullPointerException e) {
-      errorMessage.setText("Please select a project to edit");
-      errorMessage.setVisible(true);
+      setWarning("Could not load edit project page, please restart the application.");
     }
   }
   
@@ -104,13 +113,11 @@ public class AllProjectsController {
       controller.initializeWithData(selectedProject);
     
       BudgetAndAccountingApp.setRoot(root);
+    } catch (IllegalArgumentException e) {
+      setWarning(e.getMessage());
     } catch (IOException e) {
-      e.printStackTrace();
-    } catch (NullPointerException e) {
-      errorMessage.setText(e.getMessage());
-      errorMessage.setVisible(true);
+      setWarning("Could not load view project page, please restart the application.");
     }
-    
   }
 
   public void monthly() {
@@ -119,7 +126,7 @@ public class AllProjectsController {
         Objects.requireNonNull(getClass().getResource("/MonthlyOverview.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
-      e.printStackTrace();
+      setWarning("Could not load monthly overview, please restart the application.");
     }
   }
 
@@ -129,23 +136,23 @@ public class AllProjectsController {
         Objects.requireNonNull(getClass().getResource("/Start.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
-      e.printStackTrace();
+      setWarning("Could not load start page, please restart the application.");
     }
   }
   
   /**
-   * Opens the new project page.
+   * Sets the warning label to display the given warning.
+   *
+   * @param warning The warning to display.
    */
-  public void newProject() {
-    try {
-      Parent root = FXMLLoader.load(
-          Objects.requireNonNull(getClass().getResource("/NewProject.fxml")));
-      BudgetAndAccountingApp.setRoot(root);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  private void setWarning(String warning) {
+    warningLabel.setVisible(true);
+    warningLabel.setText(warning);
   }
-
+  
+  /**
+   * Switches the theme of the application.
+   */
   public void switchTheme() {
     BudgetAndAccountingApp.setTheme();
   }

@@ -60,9 +60,6 @@ public class Income implements Transaction, Serializable {
     if (income == null) {
       throw new IllegalArgumentException("income cannot be null");
     }
-    if (!(income instanceof Income)) {
-      throw new IllegalArgumentException("income must be an instance of Income");
-    }
     this.date = income.getDate();
     this.description = income.getDescription();
     this.category = income.getCategory();
@@ -112,58 +109,58 @@ public class Income implements Transaction, Serializable {
   /**
    * Sets a new date for the Income.
    *
-   * @param newDate The new date of the Income.
+   * @param date The new date of the Income.
    */
-  @Override public void setDate(LocalDate newDate) {
-    date = newDate;
+  @Override public void setDate(LocalDate date) {
+    this.date = date;
   }
 
   /**
    * Gets the type of the Income.
    *
-   * @param newDescription The new description of the Income.
-   * @throws IllegalArgumentException if newDescription is null or blank.
+   * @param description The new description of the Income.
+   * @throws IllegalArgumentException if description is null or blank.
    */
   @Override
-  public void setDescription(String newDescription) throws IllegalArgumentException {
-    if (newDescription == null) {
-      throw new IllegalArgumentException("newDescription cannot be null");
+  public void setDescription(String description) throws IllegalArgumentException {
+    if (description == null) {
+      throw new IllegalArgumentException("description cannot be null");
     }
-    if (newDescription.isBlank()) {
-      throw new IllegalArgumentException("newDescription cannot be blank");
+    if (description.isBlank()) {
+      throw new IllegalArgumentException("description cannot be blank");
     }
-    description = newDescription;
+    this.description = description;
   }
 
   /**
    * Sets a new category for the Income.
    *
-   * @param newCategory The new category of the Income.
-   * @throws IllegalArgumentException if newCategory is null or blank.
+   * @param category The new category of the Income.
+   * @throws IllegalArgumentException if category is null or blank.
    */
   @Override
-  public void setCategory(String newCategory) throws IllegalArgumentException {
-    if (newCategory == null) {
-      throw new IllegalArgumentException("newCategory cannot be null");
+  public void setCategory(String category) throws IllegalArgumentException {
+    if (category == null) {
+      throw new IllegalArgumentException("category cannot be null");
     }
-    if (newCategory.isBlank()) {
-      throw new IllegalArgumentException("newCategory cannot be blank");
+    if (category.isBlank()) {
+      throw new IllegalArgumentException("category cannot be blank");
     }
-    category = newCategory;
+    this.category = category;
   }
 
   /**
    * Sets a new amount for the Income.
    *
-   * @param newAmount The new amount of the Income.
+   * @param amount The new amount of the Income.
    * @throws IllegalArgumentException if amount is less than zero.
    */
   @Override
-  public void setAmount(double newAmount) throws IllegalArgumentException {
-    if (newAmount <= 0) {
-      throw new IllegalArgumentException("newAmount cannot be less than or equal to zero");
+  public void setAmount(double amount) throws IllegalArgumentException {
+    if (amount <= 0) {
+      throw new IllegalArgumentException("amount cannot be less than or equal to zero");
     }
-    amount = newAmount;
+    this.amount = amount;
   }
   
   /**

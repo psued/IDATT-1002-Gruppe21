@@ -46,14 +46,6 @@ public class EditProjectController {
   
   private Project originalProject;
   
-  /**
-   * Initializes the controller class.
-   */
-  public void initializeWithData(Project project) throws NullPointerException {
-    originalProject = Objects.requireNonNull(project);
-    initialize();
-  }
-  
   // Fundamental project information
   @FXML private TextField name;
   @FXML private MenuButton category;
@@ -108,6 +100,17 @@ public class EditProjectController {
   
   //Error message
   @FXML private Label warningLabel = new Label();
+  
+  /**
+   * Initializes the controller class.
+   */
+  public void initializeWithData(Project project) throws IllegalArgumentException {
+    if (project == null) {
+      throw new IllegalArgumentException("Please pick a project to edit");
+    }
+    originalProject = project;
+    initialize();
+  }
   
   /**
    * Initializes the controller class. Also sets up the text fields and tables to display the
@@ -174,7 +177,6 @@ public class EditProjectController {
     
     resetIncomeFields();
     resetExpenseFields();
-    
     
     clearWarning();
   }
@@ -560,12 +562,12 @@ public class EditProjectController {
           Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (Exception e) {
-      setWarning("Could not save project, Error: " + e.getMessage());
+      setWarning("Could not save project, error: " + e.getMessage());
     }
   }
   
   /**
-   * Deletes the current project. A popup will appear prompting the user if the really want to
+   * Deletes the current project. A popup will appear prompting the user if the really wants to
    * delete the project. If no, the deletion is aborted. If yes, the project is deleted from the
    * registry and the user is returned to the all projects page.
    */
@@ -587,8 +589,7 @@ public class EditProjectController {
         BudgetAndAccountingApp.setRoot(root);
         
       } catch (Exception e) {
-        warningLabel.setVisible(true);
-        warningLabel.setText("Could not delete project, Error: " + e.getMessage());
+        setWarning("Could not delete project, error: " + e.getMessage());
       }
     }
   }

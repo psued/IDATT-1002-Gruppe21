@@ -33,7 +33,10 @@ public class ProjectRegistry implements Serializable {
    *
    * @param project the project to be added
    */
-  public void addProject(Project project) {
+  public void addProject(Project project) throws IllegalArgumentException {
+    if (project == null) {
+      throw new IllegalArgumentException("project cannot be null");
+    }
     projects.add(project);
   }
   
@@ -42,7 +45,10 @@ public class ProjectRegistry implements Serializable {
    *
    * @param project the project to be removed
    */
-  public void removeProject(Project project) {
+  public void removeProject(Project project) throws IllegalArgumentException {
+    if (project == null) {
+      throw new IllegalArgumentException("project cannot be null");
+    }
     projects.remove(project);
   }
   
@@ -52,7 +58,11 @@ public class ProjectRegistry implements Serializable {
    * @param oldProject the old project that is still in the registry
    * @param newProject the project to be updated to
    */
-  public void updateProject(Project oldProject, Project newProject) {
+  public void updateProject(Project oldProject, Project newProject) throws
+      IllegalArgumentException {
+    if (oldProject == null || newProject == null) {
+      throw new IllegalArgumentException("project cannot be null");
+    }
     projects.set(projects.indexOf(oldProject), newProject);
   }
   
@@ -74,7 +84,7 @@ public class ProjectRegistry implements Serializable {
    *
    * @param category the category to be added
    */
-  public void addCategory(String category) {
+  public void addCategory(String category) throws IllegalArgumentException {
     if (category == null) {
       throw new IllegalArgumentException("Category cannot be null");
     }
@@ -95,8 +105,10 @@ public class ProjectRegistry implements Serializable {
    *
    * @param category the category to be removed
    */
-  public void removeCategory(String category) {
-    if (getProjects().stream().anyMatch(project -> project.getCategory().equals(category))) {
+  public void removeCategory(String category) throws IllegalArgumentException {
+    if (category == null) {
+      throw new IllegalArgumentException("Category cannot be null");
+    } else if (getProjects().stream().anyMatch(project -> project.getCategory().equals(category))) {
       throw new IllegalArgumentException("Cannot remove a category that is in use by a project");
     }
     categories.remove(category);
@@ -109,16 +121,5 @@ public class ProjectRegistry implements Serializable {
    */
   public List<String> getStatuses() {
     return new ArrayList<>(statuses);
-  }
-  
-
-  /**
-   * Returns a string representation of the project registry object.
-   *
-   * @return A string representation of the project registry object.
-   */
-  @Override
-  public String toString() {
-    return "ProjectRegistry{ projects=" + projects + ", categories=" + categories + '}';
   }
 }

@@ -40,33 +40,33 @@ public interface Transaction {
   /**
    * Set the date of a transaction.
    *
-   * @param newDate The new date of the transaction.
+   * @param date The new date of the transaction.
    */
-  void setDate(LocalDate newDate);
+  void setDate(LocalDate date);
   
   /**
    * Set the description of a transaction.
    *
-   * @param newDescription The new description of the transaction.
-   * @throws IllegalArgumentException if newDescription is null or blank.
+   * @param description The new description of the transaction.
+   * @throws IllegalArgumentException if description is null or blank.
    */
-  void setDescription(String newDescription) throws IllegalArgumentException;
+  void setDescription(String description) throws IllegalArgumentException;
 
   /**
    * Set the category of a transaction.
    *
-   * @param newCategory The new category of the transaction.
-   * @throws IllegalArgumentException if newCategory is null or blank.
+   * @param category The new category of the transaction.
+   * @throws IllegalArgumentException if category is null or blank.
    */
-  void setCategory(String newCategory) throws IllegalArgumentException;
+  void setCategory(String category) throws IllegalArgumentException;
 
   /**
    * Set the amount of a transaction.
    *
-   * @param newAmount The new amount of the transaction.
+   * @param amount The new amount of the transaction.
    * @throws IllegalArgumentException if amount is less than or equal to zero.
    */
-  void setAmount(double newAmount) throws IllegalArgumentException;
+  void setAmount(double amount) throws IllegalArgumentException;
 
 
   /**

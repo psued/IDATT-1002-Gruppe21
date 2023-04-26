@@ -16,7 +16,7 @@ public interface Bookkeeping {
    *
    * @param transaction the transaction to be added
    */
-  void addTransaction(Transaction transaction);
+  void addTransaction(Transaction transaction) throws IllegalArgumentException;
   
   /**
    * Update a transaction in either the income or expense list.
@@ -24,14 +24,15 @@ public interface Bookkeeping {
    * @param oldTransaction the old transaction to be updated
    * @param newTransaction the new transaction to update to
    */
-  void updateTransaction(Transaction oldTransaction, Transaction newTransaction);
+  void updateTransaction(Transaction oldTransaction, Transaction newTransaction) throws
+      IllegalArgumentException;
   
   /**
    * Remove a transaction from either the income or expense list.
    *
    * @param transaction the transaction to be removed
    */
-  void removeTransaction(Transaction transaction);
+  void removeTransaction(Transaction transaction) throws IllegalArgumentException;
   
   /**
    * Get the income list.
@@ -67,8 +68,6 @@ public interface Bookkeeping {
    * @return the total expense amount
    */
   double getTotalExpense();
-
-  void reset();
 
   /**
    * Determines if the Bookkeeping object is equal to the specified object.

@@ -111,60 +111,60 @@ public class Expense implements Transaction, Serializable {
   /**
    * Set a new amount for the Expense.
    *
-   * @param newDate The new date of the Expense.
+   * @param date The new date of the Expense.
    */
   @Override
-  public void setDate(LocalDate newDate) {
-    date = newDate;
+  public void setDate(LocalDate date) {
+    this.date = date;
   }
 
   /**
    * Set a new description for the Expense.
    *
-   * @param newDescription The new description of the Expense.
-   * @throws IllegalArgumentException if newDescription is null or blank.
+   * @param description The new description of the Expense.
+   * @throws IllegalArgumentException if description is null or blank.
    */
   @Override
-  public void setDescription(String newDescription) throws IllegalArgumentException {
-    if (newDescription == null) {
-      throw new IllegalArgumentException("newDescription cannot be null");
+  public void setDescription(String description) throws IllegalArgumentException {
+    if (description == null) {
+      throw new IllegalArgumentException("description cannot be null");
     }
-    if (newDescription.isBlank()) {
+    if (description.isBlank()) {
       throw new IllegalArgumentException("newDescription cannot be blank");
     }
     
-    description = newDescription;
+    this.description = description;
   }
 
   /**
    * Set a new category for the Expense.
    *
-   * @param newCategory The new category of the Expense.
-   * @throws IllegalArgumentException if newCategory is null or blank.
+   * @param category The new category of the Expense.
+   * @throws IllegalArgumentException if category is null or blank.
    */
   @Override
-  public void setCategory(String newCategory) throws IllegalArgumentException {
-    if (newCategory == null) {
-      throw new IllegalArgumentException("newCategory cannot be null");
+  public void setCategory(String category) throws IllegalArgumentException {
+    if (category == null) {
+      throw new IllegalArgumentException("category cannot be null");
     }
-    if (newCategory.isBlank()) {
-      throw new IllegalArgumentException("newCategory cannot be blank");
+    if (category.isBlank()) {
+      throw new IllegalArgumentException("category cannot be blank");
     }
-    category = newCategory;
+    this.category = category;
   }
 
   /**
    * Set a new amount for the Expense.
    *
-   * @param newAmount The new amount of the Expense.
+   * @param amount The new amount of the Expense.
    * @throws IllegalArgumentException if amount is less than zero.
    */
   @Override
-  public void setAmount(double newAmount) throws IllegalArgumentException {
-    if (newAmount <= 0) {
-      throw new IllegalArgumentException("newAmount cannot be less than or equal to zero");
+  public void setAmount(double amount) throws IllegalArgumentException {
+    if (amount <= 0) {
+      throw new IllegalArgumentException("amount cannot be less than or equal to zero");
     }
-    amount = newAmount;
+    this.amount = amount;
   }
 
 

@@ -176,7 +176,7 @@ public class NewProjectController {
       category.setText("");
       
       clearWarning();
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
       setWarning(e.getMessage());
     }
   }
@@ -515,7 +515,7 @@ public class NewProjectController {
     
     imageLeft.setDisable(images.size() < 2);
     imageRight.setDisable(images.size() < 2);
-    deleteImageButton.setDisable(images.size() < 1);
+    deleteImageButton.setDisable(images.isEmpty());
   }
   
   /**
@@ -544,7 +544,7 @@ public class NewProjectController {
           Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (Exception e) {
-      setWarning("Could not save project, Error: " + e.getMessage());
+      setWarning("Could not save project, error: " + e.getMessage());
     }
   }
   
@@ -567,8 +567,7 @@ public class NewProjectController {
             Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
         BudgetAndAccountingApp.setRoot(root);
       } catch (Exception e) {
-        warningLabel.setVisible(true);
-        warningLabel.setText("Could not delete project, Error: " + e.getMessage());
+        setWarning("Could not delete project, error: " + e.getMessage());
       }
     }
   }

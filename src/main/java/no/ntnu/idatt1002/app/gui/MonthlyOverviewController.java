@@ -4,28 +4,39 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
+import java.time.format.DateTimeParseException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
+import java.util.Optional;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 import no.ntnu.idatt1002.app.BudgetAndAccountingApp;
 import no.ntnu.idatt1002.app.User;
 import no.ntnu.idatt1002.app.bookkeeping.Bookkeeping;
 import no.ntnu.idatt1002.app.filehandling.FileHandling;
 import no.ntnu.idatt1002.app.registers.MonthlyBookkeeping;
-import no.ntnu.idatt1002.app.registers.Project;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
 import no.ntnu.idatt1002.app.transactions.Transaction;
@@ -40,7 +51,9 @@ public class MonthlyOverviewController {
   
   @FXML private ComboBox<Month> monthComboBox;
   @FXML private ComboBox<String> yearComboBox;
+  @FXML private Button addYearButton;
   
+  @FXML private Label tableLabel;
   @FXML private TableView<Transaction> transactionTable;
   @FXML private TableColumn<Transaction, LocalDate> dateColumn;
   @FXML private TableColumn<Transaction, String> descriptionColumn;
@@ -48,6 +61,7 @@ public class MonthlyOverviewController {
   @FXML private TableColumn<Transaction, Double> amountColumn;
   
   @FXML private DatePicker dateFieldIncome;
+  @FXML private Button dateResetIncome;
   @FXML private TextField descriptionFieldIncome;
   @FXML private TextField categoryFieldIncome;
   @FXML private TextField amountFieldIncome;
@@ -55,6 +69,7 @@ public class MonthlyOverviewController {
   @FXML private Button deleteIncomeButton;
 
   @FXML private DatePicker dateFieldExpense;
+  @FXML private Button dateResetExpense;
   @FXML private TextField descriptionFieldExpense;
   @FXML private TextField categoryFieldExpense;
   @FXML private TextField amountFieldExpense;
@@ -84,7 +99,12 @@ public class MonthlyOverviewController {
       User.getInstance().getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(chosenMonthlyBookkeeping);
       saveUser();
     } else {
-      chosenYearMonth = User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().keySet().iterator().next();
+      // Automatically choose the earliest year with the current month
+      chosenYearMonth =
+          YearMonth.of(User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap()
+              .keySet().stream().distinct().min(Comparator.naturalOrder()).get().getYear(),
+              YearMonth.now().getMonth());
+      
       chosenMonthlyBookkeeping = User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().get(
         chosenYearMonth);
     }
@@ -105,8 +125,10 @@ public class MonthlyOverviewController {
 
     // Set up the year combo box
     yearComboBox.setValue(Integer.toString(chosenYearMonth.getYear()));
-    yearComboBox.getItems().addAll(
-      User.getInstance().getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().keySet().stream().map(YearMonth::getYear).distinct().sorted().map(String::valueOf).toArray(String[]::new));
+    yearComboBox.getItems().addAll(User.getInstance().getMonthlyBookkeepingRegistry()
+        .getMonthlyBookkeepingMap().keySet().stream().map(YearMonth::getYear)
+        .distinct().sorted().map(String::valueOf).toArray(String[]::new));
+    
     yearComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
       //Refresh the month combo box to show the months that have transactions
       chosenYearMonth = chosenYearMonth.withYear(Integer.parseInt(newValue));
@@ -120,58 +142,50 @@ public class MonthlyOverviewController {
     });
 
 
-    yearComboBox.setEditable(true);
-    yearComboBox.focusedProperty().addListener((observable, oldValue, newValue) -> {
-      if (!newValue) {
-        yearComboBox.getEditor().addEventFilter(KeyEvent.KEY_RELEASED, event -> {
-          if (event.getCode() == KeyCode.ENTER) {
-            try {
-              int newYear = Integer.parseInt(yearComboBox.getEditor().getText());
-
-              if (newYear < 2000 || newYear > 2100) {
-                throw new NumberFormatException("Year must be between 2000 and 2100");
-              } else if (yearComboBox.getItems().contains(Integer.toString(newYear))) {
-                throw new NumberFormatException("Year already exists");
-              }
-
-              yearComboBox.getItems().add(Integer.toString(newYear));
-              chosenYearMonth = chosenYearMonth.withYear(newYear);
-            } catch (NumberFormatException e) {
-              yearComboBox.setValue(Integer.toString(chosenYearMonth.getYear()));
-              yearComboBox.getEditor().setText(Integer.toString(chosenYearMonth.getYear()));
-              setWarning(e.getMessage());
-            }
+    addYearButton.setOnAction(event -> {
+      TextInputDialog dialog = new TextInputDialog();
+      dialog.setTitle("Add year");
+      dialog.setHeaderText("Enter a new year between 2000 and "
+          + YearMonth.now().plusYears(100).getYear());
+      Optional<String> result = dialog.showAndWait();
+      
+      result.ifPresent(year -> {
+        try {
+          int newYear = Integer.parseInt(year);
+          int maxYear = YearMonth.now().plusYears(100).getYear();
+          List<Integer> years = yearComboBox.getItems().stream().map(Integer::parseInt).toList();
+          
+          //User can only add years between 2000 and 100 years from now
+          if (newYear < 2000 || newYear > maxYear) {
+            throw new IllegalArgumentException("Year must be between 2000 and " + maxYear);
+          } else if (years.contains(newYear)) {
+            throw new IllegalArgumentException("Year already exists");
           }
-        });
-      }
+          
+          yearComboBox.getItems().add(year);
+          yearComboBox.getItems().sort(Comparator.comparingInt(Integer::parseInt));
+          yearComboBox.setValue(Integer.toString(newYear));
+          
+          refreshOverview();
+        } catch (NumberFormatException e) {
+          yearComboBox.setValue(Integer.toString(chosenYearMonth.getYear()));
+          yearComboBox.getEditor().setText(Integer.toString(chosenYearMonth.getYear()));
+          setWarning("Year must be a number");
+        } catch (IllegalArgumentException e) {
+          yearComboBox.setValue(Integer.toString(chosenYearMonth.getYear()));
+          yearComboBox.getEditor().setText(Integer.toString(chosenYearMonth.getYear()));
+          setWarning(e.getMessage());
+        }
+      });
     });
-
 
     dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
     descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
     categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
     amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+    
 
-    // Every transaction that is an expense will be displayed with a negative sign
-    amountColumn.setCellFactory(column -> new TableCell<>() {
-      @Override
-      protected void updateItem(Double item, boolean empty) {
-        super.updateItem(item, empty);
-
-        if (empty || item == null) {
-          setText(null);
-        } else {
-          Transaction transaction = getTableView().getItems().get(getIndex());
-          if (transaction instanceof Expense) {
-            setText("-" + item);
-          } else {
-            setText(String.valueOf(item));
-          }
-        }
-      }
-    });
-
-    transactionTable.setRowFactory(tv -> new TableRow<Transaction>() {
+    transactionTable.setRowFactory(tv -> new TableRow<>() {
       @Override
       public void updateItem(Transaction item, boolean empty) {
         super.updateItem(item, empty);
@@ -187,6 +201,11 @@ public class MonthlyOverviewController {
         }
       }
     });
+    
+    toggleBookkeeping.setSelected(true);
+    
+    dateResetIncome.setOnAction(e -> dateFieldIncome.setValue(null));
+    dateResetExpense.setOnAction(e -> dateFieldExpense.setValue(null));
 
     refreshOverview();
   }
@@ -218,59 +237,77 @@ public class MonthlyOverviewController {
     });
   }
   
-  
   @FXML
   void addIncome() {
-    LocalDate date = dateFieldIncome.getValue();
-    String description = descriptionFieldIncome.getText();
-    String category = categoryFieldIncome.getText();
-    double amount = Double.parseDouble(amountFieldIncome.getText());
-    
-    boolean isAccounting = toggleBookkeeping.isSelected();
-    boolean isPersonal = toggleType.isSelected();
+    try {
+      LocalDate date = dateFieldIncome.getValue();
+      String description = descriptionFieldIncome.getText();
+      String category = categoryFieldIncome.getText();
+      double amount = Double.parseDouble(amountFieldIncome.getText());
+      
+      boolean isAccounting = toggleBookkeeping.isSelected();
+      boolean isPersonal = toggleType.isSelected();
+      Transaction selectedTransaction = transactionTable.getSelectionModel().getSelectedItem();
 
-    Transaction selectedTransaction = transactionTable.getSelectionModel().getSelectedItem();
-
-    if (selectedTransaction != null) {
-      selectedTransaction.setDate(date);
-      selectedTransaction.setDescription(description);
-      selectedTransaction.setCategory(category);
-      selectedTransaction.setAmount(amount > 0 ? amount : -amount);
-    }
-
-    else {
-      chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).addTransaction(new Income(description, category, amount, date));
-    }
-
-    saveUser();
-    refreshOverview();
+      if (selectedTransaction instanceof Income) {
+        Income newIncome = new Income(description, category, amount, date);
+        newIncome.setDate(date);
+        newIncome.setDescription(description);
+        newIncome.setCategory(category);
+        newIncome.setAmount(amount);
+        
+        chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal)
+            .updateTransaction(selectedTransaction, newIncome);
+      } else {
+        chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal)
+            .addTransaction(new Income(description, category, amount, date));
+      }
+      
+      saveUser();
+      refreshOverview();
+    } catch (DateTimeParseException e) {
+      setWarning("Please enter a valid date");
+    } catch (NumberFormatException e) {
+      setWarning("Please enter a valid amount");
+    } catch (IllegalArgumentException e) {
+      setWarning(e.getMessage());
+      }
   }
 
   @FXML
   void addExpense() {
-    LocalDate date = dateFieldExpense.getValue();
-    String description = descriptionFieldExpense.getText();
-    String category = categoryFieldExpense.getText();
-    double amount = Double.parseDouble(amountFieldExpense.getText());
+    try {
+      LocalDate date = dateFieldExpense.getValue();
+      String description = descriptionFieldExpense.getText();
+      String category = categoryFieldExpense.getText();
+      double amount = Double.parseDouble(amountFieldExpense.getText());
 
-    boolean isAccounting = toggleBookkeeping.isSelected();
-    boolean isPersonal = toggleType.isSelected();
+      boolean isAccounting = toggleBookkeeping.isSelected();
+      boolean isPersonal = toggleType.isSelected();
 
-    Transaction selectedTransaction = transactionTable.getSelectionModel().getSelectedItem();
+      Transaction selectedTransaction = transactionTable.getSelectionModel().getSelectedItem();
 
-    if (selectedTransaction != null) {
-      selectedTransaction.setDate(date);
-      selectedTransaction.setDescription(description);
-      selectedTransaction.setCategory(category);
-      selectedTransaction.setAmount(amount > 0 ? amount : -amount);
+      if (selectedTransaction instanceof Expense) {
+        Expense newExpense = new Expense(description, category, amount, date);
+        newExpense.setDate(date);
+        newExpense.setDescription(description);
+        newExpense.setCategory(category);
+        newExpense.setAmount(amount);
+
+        chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal)
+            .updateTransaction(selectedTransaction, newExpense);
+      } else {
+        chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal)
+            .addTransaction(new Expense(description, category, amount, date));
+      }
+
+      saveUser();
+      refreshOverview();
+    } catch (NumberFormatException e) {
+      setWarning("Please enter a valid amount");
+    } catch (IllegalArgumentException e) {
+      setWarning(e.getMessage());
     }
-
-    else {
-      chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).addTransaction(new Expense(description, category, amount, date));
-    }
-
-    saveUser();
-    refreshOverview();
   }
 
   @FXML
@@ -282,13 +319,11 @@ public class MonthlyOverviewController {
       boolean isPersonal = toggleType.isSelected();
 
       chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).removeTransaction(transaction);
-
-      User.getInstance().getMonthlyBookkeepingRegistry().removeMonthlyBookkeeping(chosenYearMonth);
-      User.getInstance().getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(chosenMonthlyBookkeeping);
-
+      
       saveUser();
-      selectTransaction();
       refreshOverview();
+    } else {
+      setWarning("Please select an income to delete");
     }
   }
 
@@ -301,12 +336,10 @@ public class MonthlyOverviewController {
 
       chosenMonthlyBookkeeping.getBookkeeping(isAccounting, isPersonal).removeTransaction(transaction);
 
-      User.getInstance().getMonthlyBookkeepingRegistry().removeMonthlyBookkeeping(chosenYearMonth);
-      User.getInstance().getMonthlyBookkeepingRegistry().addMonthlyBookkeeping(chosenMonthlyBookkeeping);
-
       saveUser();
-      selectTransaction();
       refreshOverview();
+    } else {
+      setWarning("Please select an expense to delete");
     }
   }
 
@@ -325,7 +358,7 @@ public class MonthlyOverviewController {
       categoryFieldIncome.setText(selectedTransaction.getCategory());
       amountFieldIncome.setText(String.valueOf(selectedTransaction.getAmount()));
     }
-    else {
+    else if (selectedTransaction instanceof Expense) {
       dateFieldExpense.setValue(selectedTransaction.getDate());
       descriptionFieldExpense.setText(selectedTransaction.getDescription());
       categoryFieldExpense.setText(selectedTransaction.getCategory());
@@ -346,6 +379,8 @@ public class MonthlyOverviewController {
 
     boolean isPersonal = toggleType.isSelected();
     toggleType.setDisable(isTotal);
+    tableLabel.setText(isTotal ? "Total " : (isPersonal ? "Personal " : "Work ")
+            + (isAccounting ? "accounting " : "budgeting ") + "transactions");
 
     Bookkeeping chosenBookkeeping = isTotal
         ? chosenMonthlyBookkeeping.getTotalBookkeeping(isAccounting)
@@ -472,7 +507,7 @@ public class MonthlyOverviewController {
         Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
-      e.printStackTrace();
+      setWarning("Could not load projects, please restart the application");
     }
   }
 
@@ -482,7 +517,7 @@ public class MonthlyOverviewController {
         Objects.requireNonNull(getClass().getResource("/Start.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
-      e.printStackTrace();
+      setWarning("Could not load start, please restart the application");
     }
   }
 }

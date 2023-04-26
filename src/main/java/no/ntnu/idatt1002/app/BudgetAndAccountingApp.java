@@ -79,20 +79,12 @@ public class BudgetAndAccountingApp extends Application {
   
   @Override
   public void start(Stage primaryStage) throws IOException {
-    //testData();
-    
-    try {
-      User.getInstance().loadUser(FileHandling.readUserFromFile());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    
-    Parent root = FXMLLoader
-        .load(Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
-    
+    Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Start.fxml")));
     scene = new Scene(root);
 
     primaryStage.setScene(scene);
+    primaryStage.setTitle("Budget and Accounting application");
+    primaryStage.setIconified(false);
 
     primaryStage.setWidth(1250);
     primaryStage.setHeight(750);

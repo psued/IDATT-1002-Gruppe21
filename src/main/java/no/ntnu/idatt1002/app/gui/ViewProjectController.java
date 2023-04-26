@@ -84,9 +84,9 @@ public class ViewProjectController {
    * Initialize the view project controller. Sets all text objects to match with the project data
    * and sets up the tables.
    */
-  public void initializeWithData(Project selectedProject) {
+  public void initializeWithData(Project selectedProject) throws IllegalArgumentException {
     if (selectedProject == null) {
-      throw new NullPointerException("Please select a project to view");
+      throw new IllegalArgumentException("Please select a project to view");
     }
     chosenProject = selectedProject;
     
@@ -221,8 +221,8 @@ public class ViewProjectController {
       controller.initializeWithData(chosenProject);
 
       BudgetAndAccountingApp.setRoot(root);
-    } catch (IOException | NullPointerException e) {
-      e.printStackTrace();
+    } catch (Exception e) {
+      setWarning("Could not edit project, error: " + e.getMessage());
     }
   }
 
@@ -234,8 +234,8 @@ public class ViewProjectController {
       Parent root = FXMLLoader.load(
               Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
       BudgetAndAccountingApp.setRoot(root);
-    } catch (IOException e) {
-      e.printStackTrace();
+    } catch (Exception e) {
+      setWarning("Could not load projects, please restart the application");
     }
   }
 
@@ -243,14 +243,22 @@ public class ViewProjectController {
     int index = User.getInstance().getProjectRegistry().getProjects().indexOf(chosenProject);
     Project nextProject = User.getInstance().getProjectRegistry().getProjects().get(index + 1);
 
-    initializeWithData(nextProject);
+    try {
+      initializeWithData(nextProject);
+    } catch (Exception e) {
+      setWarning("Could not load next project, error: " + e.getMessage());
+    }
   }
   
   public void previousProject() {
     int index = User.getInstance().getProjectRegistry().getProjects().indexOf(chosenProject);
     Project previousProject = User.getInstance().getProjectRegistry().getProjects().get(index - 1);
     
-    initializeWithData(previousProject);
+    try {
+      initializeWithData(previousProject);
+    } catch (Exception e) {
+      setWarning("Could not load previous project, error: " + e.getMessage());
+    }
   }
   
   /**
@@ -302,6 +310,16 @@ public class ViewProjectController {
    */
   private Project getProject() {
     return new Project(chosenProject);
+  }
+  
+  /**
+   * Sets the warning label to display the given warning.
+   *
+   * @param warning The warning to display.
+   */
+  private void setWarning(String warning) {
+    warningLabel.setText(warning);
+    warningLabel.setVisible(true);
   }
   
   /**

@@ -3,10 +3,10 @@ package no.ntnu.idatt1002.app.bookkeeping;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import no.ntnu.idatt1002.app.registers.Project;
 import no.ntnu.idatt1002.app.transactions.Expense;
 import no.ntnu.idatt1002.app.transactions.Income;
 import no.ntnu.idatt1002.app.transactions.Transaction;
-import no.ntnu.idatt1002.app.registers.Project;
 
 /**
  * The Accounting class represents a {@link Bookkeeping bookeeping} system for tracking
@@ -20,10 +20,10 @@ import no.ntnu.idatt1002.app.registers.Project;
  * @see Serializable
  */
 public class Accounting implements Bookkeeping, Serializable {
-
+  
   private final ArrayList<Income> incomeList;
   private final ArrayList<Expense> expenseList;
-
+  
   /**
    * Creates an Accounting object with empty income and expense lists.
    */
@@ -37,7 +37,6 @@ public class Accounting implements Bookkeeping, Serializable {
    * deep copying all {@link Transaction transactions} and putting them in new lists.
    *
    * @param accounting the Accounting object to be copied
-   *
    * @see #getIncomeList()
    * @see #getExpenseList()
    * @see Income#Income(Income)
@@ -59,7 +58,7 @@ public class Accounting implements Bookkeeping, Serializable {
    * @param transaction the transaction to be added
    */
   @Override
-  public void addTransaction(Transaction transaction) throws IllegalArgumentException{
+  public void addTransaction(Transaction transaction) throws IllegalArgumentException {
     if (transaction == null) {
       throw new IllegalArgumentException("transaction cannot be null");
     }
@@ -80,8 +79,8 @@ public class Accounting implements Bookkeeping, Serializable {
    * @throws IllegalArgumentException if any of the arguments are null.
    */
   @Override
-  public void updateTransaction(Transaction oldTransaction, Transaction newTransaction) throws
-      IllegalArgumentException {
+  public void updateTransaction(Transaction oldTransaction, Transaction newTransaction)
+      throws IllegalArgumentException {
     if (oldTransaction == null || newTransaction == null) {
       throw new IllegalArgumentException("neither oldTransaction nor newTransaction can be null");
     }
@@ -122,13 +121,12 @@ public class Accounting implements Bookkeeping, Serializable {
       expenseList.remove(expense);
     }
   }
-
+  
   /**
    * Get a deep copy of the {@link Income income} list. This is done by recursively deep copying
    * every income object in the list and putting them in a new list.
    *
    * @return a deep copy of the income list
-   *
    * @see Income#Income(Income)
    */
   public ArrayList<Income> getIncomeList() {
@@ -138,13 +136,12 @@ public class Accounting implements Bookkeeping, Serializable {
     }
     return copy;
   }
-
+  
   /**
    * Get a deep copy of the {@link Expense expense} list. This is done by recursively deep copying
    * every expense object in the list and putting them in a new list.
    *
    * @return a deep copy of the expense list
-   *
    * @see Expense#Expense(Expense)
    */
   public ArrayList<Expense> getExpenseList() {
@@ -176,7 +173,7 @@ public class Accounting implements Bookkeeping, Serializable {
   public double getTotalIncome() {
     return incomeList.stream().mapToDouble(Income::getAmount).sum();
   }
-
+  
   /**
    * Get the sum of all {@link Expense expense} amounts.
    *
@@ -185,7 +182,7 @@ public class Accounting implements Bookkeeping, Serializable {
   public double getTotalExpense() {
     return expenseList.stream().mapToDouble(Expense::getAmount).sum();
   }
-
+  
   /**
    * Determines if the Accounting object is equal to the specified object. Checks first if the
    * parameter object has the same reference as this object. If not, checks if the parameter
@@ -203,7 +200,7 @@ public class Accounting implements Bookkeeping, Serializable {
       return false;
     }
     
-    return incomeList
-        .equals(accounting.getIncomeList()) && expenseList.equals(accounting.getExpenseList());
+    return incomeList.equals(accounting.getIncomeList()) &&
+        expenseList.equals(accounting.getExpenseList());
   }
 }

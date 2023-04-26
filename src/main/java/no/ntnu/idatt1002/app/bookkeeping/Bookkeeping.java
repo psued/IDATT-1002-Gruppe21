@@ -27,8 +27,8 @@ public interface Bookkeeping {
    * @param newTransaction the new transaction to update to
    * @throws IllegalArgumentException if either transaction is null
    */
-  void updateTransaction(Transaction oldTransaction, Transaction newTransaction) throws
-      IllegalArgumentException;
+  void updateTransaction(Transaction oldTransaction, Transaction newTransaction)
+      throws IllegalArgumentException;
   
   /**
    * Remove a transaction from either the income or expense list.
@@ -72,7 +72,7 @@ public interface Bookkeeping {
    * @return the total expense amount
    */
   double getTotalExpense();
-
+  
   /**
    * Determines if the Bookkeeping object is equal to the specified object.
    *

@@ -1,7 +1,6 @@
 package no.ntnu.idatt1002.app.gui;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -39,53 +38,84 @@ public class ViewProjectController {
   private Project chosenProject;
   
   // The project information
-  @FXML private Label viewTitle;
-  @FXML private Label name;
-  @FXML private Label category;
-  @FXML private Label dueDate;
-  @FXML private Label status;
-  @FXML private Label description;
+  @FXML
+  private Label viewTitle;
+  @FXML
+  private Label name;
+  @FXML
+  private Label category;
+  @FXML
+  private Label dueDate;
+  @FXML
+  private Label status;
+  @FXML
+  private Label description;
   
   //Accounting and Budgeting toggle button
-  @FXML private ToggleButton toggleButton;
-  @FXML private Label toggleLabel;
+  @FXML
+  private ToggleButton toggleButton;
+  @FXML
+  private Label toggleLabel;
   
   //Income Table
-  @FXML private TableView<Income> incomeTable;
-  @FXML private TableColumn<Income, LocalDate> incomeDate;
-  @FXML private TableColumn<Income, String> incomeDescription;
-  @FXML private TableColumn<Income, String> incomeCategory;
-  @FXML private TableColumn<Income, Double> incomeAmount;
-
+  @FXML
+  private TableView<Income> incomeTable;
+  @FXML
+  private TableColumn<Income, LocalDate> incomeDate;
+  @FXML
+  private TableColumn<Income, String> incomeDescription;
+  @FXML
+  private TableColumn<Income, String> incomeCategory;
+  @FXML
+  private TableColumn<Income, Double> incomeAmount;
+  
   //Expense Table
-  @FXML private TableView<Expense> expenseTable;
-  @FXML private TableColumn<Expense, LocalDate> expenseDate;
-  @FXML private TableColumn<Expense, String> expenseDescription;
-  @FXML private TableColumn<Expense, String> expenseCategory;
-  @FXML private TableColumn<Expense, Double> expenseAmount;
-
+  @FXML
+  private TableView<Expense> expenseTable;
+  @FXML
+  private TableColumn<Expense, LocalDate> expenseDate;
+  @FXML
+  private TableColumn<Expense, String> expenseDescription;
+  @FXML
+  private TableColumn<Expense, String> expenseCategory;
+  @FXML
+  private TableColumn<Expense, Double> expenseAmount;
+  
   //Navigation icons and boxes
-  @FXML private ImageView iconLeft;
-  @FXML private ImageView iconRight;
-  @FXML private VBox previousProjectBox;
-  @FXML private VBox nextProjectBox;
+  @FXML
+  private ImageView iconLeft;
+  @FXML
+  private ImageView iconRight;
+  @FXML
+  private VBox previousProjectBox;
+  @FXML
+  private VBox nextProjectBox;
   
   //Image preview
-  @FXML private Button imageLeft;
-  @FXML private Button imageRight;
-  @FXML private ImageView imagePreview;
+  @FXML
+  private Button imageLeft;
+  @FXML
+  private Button imageRight;
+  @FXML
+  private ImageView imagePreview;
   
   //Total income, expense and amount overview
-  @FXML private Label totalIncome;
-  @FXML private Label totalExpense;
-  @FXML private Label totalAmount;
-
+  @FXML
+  private Label totalIncome;
+  @FXML
+  private Label totalExpense;
+  @FXML
+  private Label totalAmount;
+  
   //Pie charts
-  @FXML private PieChart pieIncome;
-  @FXML private PieChart pieExpense;
+  @FXML
+  private PieChart pieIncome;
+  @FXML
+  private PieChart pieExpense;
   
   //Warning message
-  @FXML private Label warningLabel = new Label();
+  @FXML
+  private Label warningLabel = new Label();
   
   /**
    * Initialize the view project controller. Sets all information to the project that is being
@@ -106,7 +136,8 @@ public class ViewProjectController {
     name.setText(chosenProject.getName());
     category.setText(chosenProject.getCategory());
     status.setText(chosenProject.getStatus());
-    dueDate.setText(chosenProject.getDueDate() == null ? "No due date" : chosenProject.getDueDate().toString());
+    dueDate.setText(
+        chosenProject.getDueDate() == null ? "No due date" : chosenProject.getDueDate().toString());
     description.setText(chosenProject.getDescription());
     
     // Accounting table
@@ -114,7 +145,7 @@ public class ViewProjectController {
     incomeDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
     incomeCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
     incomeAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-
+    
     // Budgeting table
     expenseDate.setCellValueFactory(new PropertyValueFactory<>("date"));
     expenseDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -126,20 +157,23 @@ public class ViewProjectController {
     imagePreview.setImage(images.isEmpty() ? null : new Image(images.get(0).toURI().toString()));
     
     // Set up navigation icons
-    int indexOfProject = User.getInstance().getProjectRegistry().getProjects().indexOf(getProject());
+    int indexOfProject =
+        User.getInstance().getProjectRegistry().getProjects().indexOf(getProject());
     iconLeft.setOpacity(indexOfProject == 0 ? 0 : 1);
-    iconRight.setOpacity(indexOfProject == User.getInstance().getProjectRegistry().getProjects().size() - 1 ? 0 : 1);
+    iconRight.setOpacity(
+        indexOfProject == User.getInstance().getProjectRegistry().getProjects().size() - 1 ? 0 : 1);
     
     previousProjectBox.setDisable(indexOfProject == 0);
-    nextProjectBox.setDisable(indexOfProject == User.getInstance().getProjectRegistry().getProjects().size() - 1);
+    nextProjectBox.setDisable(
+        indexOfProject == User.getInstance().getProjectRegistry().getProjects().size() - 1);
     
     // Set up the tables to display the transactions of the project that is being edited
     refreshOverview();
     refreshImages();
-
+    
   }
   
-
+  
   /**
    * Refreshes the local overview tables and totals. Updates the tables with the correct data
    * depending on the isAccounting boolean.
@@ -155,15 +189,15 @@ public class ViewProjectController {
     toggleLabel.setText(isAccounting ? "Accounting - " : "Budgeting - ");
     
     // Update the tables
-    Bookkeeping currentBookkeeping = isAccounting ? getProject().getAccounting() :
-        getProject().getBudgeting();
+    Bookkeeping currentBookkeeping =
+        isAccounting ? getProject().getAccounting() : getProject().getBudgeting();
     
     incomeTable.getItems().addAll(currentBookkeeping.getIncomeList());
     expenseTable.getItems().addAll(currentBookkeeping.getExpenseList());
     
     incomeTable.refresh();
     expenseTable.refresh();
-  
+    
     // Set total amounts
     totalIncome.setText(String.format("%.2f kr", currentBookkeeping.getTotalIncome()));
     totalExpense.setText(String.format("- %.2f kr", currentBookkeeping.getTotalExpense()));
@@ -173,7 +207,7 @@ public class ViewProjectController {
     clearWarning();
     updatePieCharts();
   }
-
+  
   /**
    * Update the pie charts with the correct data.
    *
@@ -183,54 +217,54 @@ public class ViewProjectController {
     // Update pieChart income
     ObservableList<PieChart.Data> pieChartDataIncome = FXCollections.observableArrayList();
     HashMap<String, Double> categoriesIncome = new HashMap<>();
-
+    
     for (int i = 0; i < incomeTable.getItems().size(); i++) {
       String categoryIncome = incomeTable.getItems().get(i).getCategory();
       Double amountIncome = incomeTable.getItems().get(i).getAmount();
-
-      if(categoriesIncome.containsKey(categoryIncome)){
+      
+      if (categoriesIncome.containsKey(categoryIncome)) {
         Double currentAmount = categoriesIncome.get(categoryIncome);
         categoriesIncome.put(categoryIncome, currentAmount + amountIncome);
-      }else{
+      } else {
         categoriesIncome.put(categoryIncome, amountIncome);
       }
     }
-
+    
     for (Map.Entry<String, Double> entry : categoriesIncome.entrySet()) {
       String categoryIncome = entry.getKey();
       Double amountIncome = entry.getValue();
-
+      
       pieChartDataIncome.add(new PieChart.Data(categoryIncome, amountIncome));
     }
-
-
+    
+    
     // Update pieChart Expense
     ObservableList<PieChart.Data> pieChartDataExpense = FXCollections.observableArrayList();
     HashMap<String, Double> categoriesExpense = new HashMap<>();
-
+    
     for (int i = 0; i < expenseTable.getItems().size(); i++) {
       String categoryExpense = expenseTable.getItems().get(i).getCategory();
       Double amountExpense = expenseTable.getItems().get(i).getAmount();
-
-      if(categoriesExpense.containsKey(categoryExpense)){
+      
+      if (categoriesExpense.containsKey(categoryExpense)) {
         Double currentAmount = categoriesExpense.get(categoryExpense);
         categoriesExpense.put(categoryExpense, currentAmount + amountExpense);
-      }else{
+      } else {
         categoriesExpense.put(categoryExpense, amountExpense);
       }
     }
-
+    
     for (Map.Entry<String, Double> entry : categoriesExpense.entrySet()) {
       String categoryExpense = entry.getKey();
       Double amountExpense = entry.getValue();
-
+      
       pieChartDataExpense.add(new PieChart.Data(categoryExpense, amountExpense));
     }
-
+    
     pieIncome.setData(pieChartDataIncome);
     pieExpense.setData(pieChartDataExpense);
   }
-
+  
   /**
    * Opens the edit project view of the current project.
    *
@@ -242,16 +276,16 @@ public class ViewProjectController {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditProject.fxml"));
       Parent root = loader.load();
-
+      
       EditProjectController controller = loader.getController();
       controller.initializeWithData(chosenProject);
-
+      
       BudgetAndAccountingApp.setRoot(root);
     } catch (Exception e) {
       setWarning("Could not edit project, error: " + e.getMessage());
     }
   }
-
+  
   /**
    * Opens the all projects page.
    *
@@ -261,8 +295,8 @@ public class ViewProjectController {
   @FXML
   public void allProjects() {
     try {
-      Parent root = FXMLLoader.load(
-              Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
+      Parent root =
+          FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (Exception e) {
       setWarning("Could not load projects, please restart the application");
@@ -276,7 +310,7 @@ public class ViewProjectController {
   public void nextProject() {
     int index = User.getInstance().getProjectRegistry().getProjects().indexOf(chosenProject);
     Project nextProject = User.getInstance().getProjectRegistry().getProjects().get(index + 1);
-
+    
     try {
       initializeWithData(nextProject);
     } catch (Exception e) {

@@ -22,14 +22,20 @@ import no.ntnu.idatt1002.app.registers.Project;
  */
 public class AllProjectsController {
   //Sets up the table and its columns
-  @FXML private TableView<Project> table;
-  @FXML private TableColumn<Project, String> name;
-  @FXML private TableColumn<Project, Date> dueDate;
-  @FXML private TableColumn<Project, String> category;
-  @FXML private TableColumn<Project, Double> totalAccounting;
-
+  @FXML
+  private TableView<Project> table;
+  @FXML
+  private TableColumn<Project, String> name;
+  @FXML
+  private TableColumn<Project, Date> dueDate;
+  @FXML
+  private TableColumn<Project, String> category;
+  @FXML
+  private TableColumn<Project, Double> totalAccounting;
+  
   //Sets up the warning label
-  @FXML private Label warningLabel = new Label();
+  @FXML
+  private Label warningLabel = new Label();
   
   /**
    * Sets up the table containing all the projects in the project registry.
@@ -55,7 +61,7 @@ public class AllProjectsController {
       table.getItems().addAll(User.getInstance().getProjectRegistry().getProjects());
     }
     table.refresh();
-
+    
     //Sets the color of each row depending on the status of the project
     table.setRowFactory(tv -> new TableRow<>() {
       @Override
@@ -84,8 +90,8 @@ public class AllProjectsController {
   @FXML
   public void newProject() {
     try {
-      Parent root = FXMLLoader.load(
-          Objects.requireNonNull(getClass().getResource("/NewProject.fxml")));
+      Parent root =
+          FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/NewProject.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (Exception e) {
       setWarning("Could not create new project, please restart the application.");
@@ -138,10 +144,10 @@ public class AllProjectsController {
       
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewProject.fxml"));
       Parent root = loader.load();
-    
+      
       ViewProjectController controller = loader.getController();
       controller.initializeWithData(selectedProject);
-    
+      
       BudgetAndAccountingApp.setRoot(root);
     } catch (IllegalArgumentException e) {
       setWarning(e.getMessage());
@@ -159,14 +165,14 @@ public class AllProjectsController {
   @FXML
   public void monthly() {
     try {
-      Parent root = FXMLLoader.load(
-        Objects.requireNonNull(getClass().getResource("/MonthlyOverview.fxml")));
+      Parent root =
+          FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/MonthlyOverview.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
       setWarning("Could not load monthly overview, please restart the application.");
     }
   }
-
+  
   /**
    * Loads the start page.
    *
@@ -176,8 +182,7 @@ public class AllProjectsController {
   @FXML
   public void start() {
     try {
-      Parent root = FXMLLoader.load(
-        Objects.requireNonNull(getClass().getResource("/Start.fxml")));
+      Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Start.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
       setWarning("Could not load start page, please restart the application.");

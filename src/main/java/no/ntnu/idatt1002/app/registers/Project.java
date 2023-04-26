@@ -24,23 +24,23 @@ import no.ntnu.idatt1002.app.transactions.Transaction;
  * @see Transaction
  */
 public class Project implements Serializable {
+  private final Accounting accounting;
+  private final Budgeting budgeting;
+  private final List<File> images;
   private String name;
   private String description;
   private String category;
   private String status;
   private LocalDate dueDate;
-  private final Accounting accounting;
-  private final Budgeting budgeting;
-  private final List<File> images;
-
+  
   /**
    * Constructs a Project object with the specified name, description, category, due date, and
    * status. The accounting and budgeting objects are initialized with empty lists.
    *
-   * @param name The name of the project.
+   * @param name        The name of the project.
    * @param description The description of the project.
-   * @param category The category of the project.
-   * @param dueDate The due date of the project.
+   * @param category    The category of the project.
+   * @param dueDate     The due date of the project.
    * @throws IllegalArgumentException If the name, category, or status is null or blank.
    */
   public Project(String name, String description, String category, LocalDate dueDate, String status)
@@ -54,7 +54,7 @@ public class Project implements Serializable {
     if (status == null || status.isBlank()) {
       throw new IllegalArgumentException("Status cannot be null or blank");
     }
-
+    
     this.name = name;
     this.description = description;
     this.category = category;
@@ -72,7 +72,6 @@ public class Project implements Serializable {
    *
    * @param project The project to be copied.
    * @throws IllegalArgumentException If the project is null.
-   *
    * @see Accounting#Accounting(Accounting)
    * @see Budgeting#Budgeting(Budgeting)
    * @see Transaction
@@ -90,7 +89,7 @@ public class Project implements Serializable {
     this.budgeting = new Budgeting(project.getBudgeting());
     this.images = project.getImages();
   }
-
+  
   /**
    * Get the name of the project.
    *
@@ -99,7 +98,21 @@ public class Project implements Serializable {
   public String getName() {
     return name;
   }
-
+  
+  /**
+   * Sets the name of the project.
+   *
+   * @param name The new name of the project.
+   * @throws IllegalArgumentException If the new name is null or blank.
+   */
+  public void setName(String name) throws IllegalArgumentException {
+    if (name == null || name.isBlank()) {
+      throw new IllegalArgumentException("name cannot be null or blank");
+    }
+    
+    this.name = name;
+  }
+  
   /**
    * Get the description of the project.
    *
@@ -108,7 +121,16 @@ public class Project implements Serializable {
   public String getDescription() {
     return description;
   }
-
+  
+  /**
+   * Sets the description of the project.
+   *
+   * @param description The new description of the project.
+   */
+  public void setDescription(String description) {
+    this.description = description;
+  }
+  
   /**
    * Get the category of the project.
    *
@@ -119,6 +141,19 @@ public class Project implements Serializable {
   }
   
   /**
+   * Sets the category of the project.
+   *
+   * @param category The new category of the project.
+   * @throws IllegalArgumentException If the new category is null or blank.
+   */
+  public void setCategory(String category) throws IllegalArgumentException {
+    if (category == null || category.isBlank()) {
+      throw new IllegalArgumentException("Category cannot be null or blank");
+    }
+    this.category = category;
+  }
+  
+  /**
    * Get the status of the project.
    *
    * @return The status of the project.
@@ -126,7 +161,20 @@ public class Project implements Serializable {
   public String getStatus() {
     return status;
   }
-
+  
+  /**
+   * Sets the status of the project.
+   *
+   * @param status The new status of the project.
+   * @throws IllegalArgumentException If the new status is null or blank.
+   */
+  public void setStatus(String status) throws IllegalArgumentException {
+    if (status == null || status.isBlank()) {
+      throw new IllegalArgumentException("Status cannot be null or blank");
+    }
+    this.status = status;
+  }
+  
   /**
    * Get the due date of the project.
    *
@@ -135,7 +183,11 @@ public class Project implements Serializable {
   public LocalDate getDueDate() {
     return dueDate;
   }
-
+  
+  public void setDueDate(LocalDate dueDate) {
+    this.dueDate = dueDate;
+  }
+  
   /**
    * Get the accounting object of the project.
    *
@@ -144,7 +196,7 @@ public class Project implements Serializable {
   public Accounting getAccounting() {
     return accounting;
   }
-
+  
   /**
    * Get the budgeting object of the project.
    *
@@ -168,7 +220,6 @@ public class Project implements Serializable {
     return imagesCopy;
   }
   
-  
   /**
    * Get the total income of the project.
    *
@@ -177,67 +228,13 @@ public class Project implements Serializable {
    * as the method is necessary for the allProjectsController to work.
    *
    * @return A double representing the total income of the project.
-   *
    * @see AllProjectsController
    */
   @SuppressWarnings("unused")
   public double getAccountingTotal() {
     return accounting.getTotalIncome() - accounting.getTotalExpense();
   }
-
-  /**
-   * Sets the name of the project.
-   *
-   * @param name The new name of the project.
-   * @throws IllegalArgumentException If the new name is null or blank.
-   */
-  public void setName(String name) throws IllegalArgumentException {
-    if (name == null || name.isBlank()) {
-      throw new IllegalArgumentException("name cannot be null or blank");
-    }
-
-    this.name = name;
-  }
   
-  /**
-   * Sets the description of the project.
-   *
-   * @param description The new description of the project.
-   */
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  /**
-   * Sets the category of the project.
-   *
-   * @param category The new category of the project.
-   * @throws IllegalArgumentException If the new category is null or blank.
-   */
-  public void setCategory(String category) throws IllegalArgumentException {
-    if (category == null || category.isBlank()) {
-      throw new IllegalArgumentException("Category cannot be null or blank");
-    }
-    this.category = category;
-  }
-  
-  public void setDueDate(LocalDate dueDate) {
-    this.dueDate = dueDate;
-  }
-  
-  /**
-   * Sets the status of the project.
-   *
-   * @param status The new status of the project.
-   * @throws IllegalArgumentException If the new status is null or blank.
-   */
-  public void setStatus(String status) throws IllegalArgumentException {
-    if (status == null || status.isBlank()) {
-      throw new IllegalArgumentException("Status cannot be null or blank");
-    }
-    this.status = status;
-  }
-
   /**
    * Adds an image to the project.
    *
@@ -263,7 +260,7 @@ public class Project implements Serializable {
     }
     images.remove(image);
   }
-
+  
   /**
    * Returns the index of the specified image.
    *
@@ -309,14 +306,13 @@ public class Project implements Serializable {
     
     // As these fields can be null, we need to check if they are null before using the equals
     // method, otherwise we will get an unnecessary NullPointerException.
-    boolean equalsDate = project.getDueDate() == null ? dueDate == null
-        : project.getDueDate().equals(dueDate);
-    boolean equalsDescription = project.getDescription() == null ? description == null
-        : project.getDescription().equals(description);
+    boolean equalsDate =
+        project.getDueDate() == null ? dueDate == null : project.getDueDate().equals(dueDate);
+    boolean equalsDescription = project.getDescription() == null ? description == null :
+        project.getDescription().equals(description);
     
-    return project.getName().equals(name) && equalsDescription
-        && project.getCategory().equals(category)
-        && project.getAccounting().equals(accounting)
-        && project.getBudgeting().equals(budgeting) && equalsDate;
+    return project.getName().equals(name) && equalsDescription &&
+        project.getCategory().equals(category) && project.getAccounting().equals(accounting) &&
+        project.getBudgeting().equals(budgeting) && equalsDate;
   }
 }

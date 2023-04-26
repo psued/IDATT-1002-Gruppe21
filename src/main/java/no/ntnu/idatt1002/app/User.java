@@ -23,16 +23,16 @@ import no.ntnu.idatt1002.app.registries.ProjectRegistry;
  * can be serialized and saved to a file.
  */
 public class User implements Serializable {
-
+  
   private static User instance;
   private final ProjectRegistry projectRegistry;
   private final MonthlyBookkeepingRegistry monthlyBookkeepingRegistry;
-
-  private User(){
+  
+  private User() {
     projectRegistry = new ProjectRegistry();
     monthlyBookkeepingRegistry = new MonthlyBookkeepingRegistry();
   }
-
+  
   /**
    * Get the user instance. If the instance is null, most likely because this is the first
    * time the method is called, a new instance is created.
@@ -66,7 +66,7 @@ public class User implements Serializable {
   public ProjectRegistry getProjectRegistry() {
     return projectRegistry;
   }
-
+  
   /**
    * Returns the user's monthly bookkeeping registry. Modifying this object with the
    * {@link User#getInstance()} method will modify the user instance.

@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
 import no.ntnu.idatt1002.app.User;
 
 /**
@@ -14,10 +13,10 @@ import no.ntnu.idatt1002.app.User;
  * from a file.
  */
 public class FileHandling {
-
-  private static final String file = System.getProperty("user.dir")
-      + "/src/main/resources/user.ser";
-
+  
+  private static final String file =
+      System.getProperty("user.dir") + "/src/main/resources/user.ser";
+  
   /**
    * Writes a given User object to a file. The file is located in the "src/main/resources"
    * directory and is named "user.ser".
@@ -28,27 +27,27 @@ public class FileHandling {
   public static void writeUserToFile(User user) throws IOException {
     FileOutputStream fileOutputStream = new FileOutputStream(file);
     ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
+    
     objectOutputStream.writeObject(user);
     objectOutputStream.flush();
     objectOutputStream.close();
   }
-
+  
   /**
    * Reads a User object from a file. The file is located in the "src/main/resources"
    * directory and is named "user.ser".
    *
    * @return A User object read from the file.
-   * @throws IOException If an error occurs during the file reading process.
+   * @throws IOException            If an error occurs during the file reading process.
    * @throws ClassNotFoundException If the serialized User class is not found.
    */
   public static User readUserFromFile() throws IOException, ClassNotFoundException {
     FileInputStream fileInputStream = new FileInputStream(file);
     ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
+    
     User user = (User) objectInputStream.readObject();
     objectInputStream.close();
-
+    
     return user;
   }
 }

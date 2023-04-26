@@ -19,16 +19,16 @@ public class MonthlyBookkeepingRegistry implements Serializable {
     monthMonthlyBookkeepingMap = new HashMap<>();
   }
   
-  public void addMonthlyBookkeeping(MonthlyBookkeeping bookkeeping) throws
-      IllegalArgumentException {
+  public void addMonthlyBookkeeping(MonthlyBookkeeping bookkeeping)
+      throws IllegalArgumentException {
     if (bookkeeping == null) {
       throw new IllegalArgumentException("bookkeeping cannot be null");
     }
     monthMonthlyBookkeepingMap.put(bookkeeping.getYearMonth(), bookkeeping);
   }
   
-  public void updateMonthlyBookkeeping(MonthlyBookkeeping bookkeeping) throws
-      IllegalArgumentException {
+  public void updateMonthlyBookkeeping(MonthlyBookkeeping bookkeeping)
+      throws IllegalArgumentException {
     if (bookkeeping == null) {
       throw new IllegalArgumentException("bookkeeping cannot be null");
     }
@@ -42,8 +42,8 @@ public class MonthlyBookkeepingRegistry implements Serializable {
     monthMonthlyBookkeepingMap.remove(yearMonth);
   }
   
-  public MonthlyBookkeeping getMonthlyBookkeeping(YearMonth yearMonth) throws
-      IllegalArgumentException {
+  public MonthlyBookkeeping getMonthlyBookkeeping(YearMonth yearMonth)
+      throws IllegalArgumentException {
     if (yearMonth == null) {
       throw new IllegalArgumentException("yearMonth cannot be null");
     }
@@ -56,8 +56,8 @@ public class MonthlyBookkeepingRegistry implements Serializable {
       throw new IllegalArgumentException("yearMonth cannot be null");
     }
     
-    List<Month> existingMonths =
-        monthMonthlyBookkeepingMap.keySet().stream().filter(month -> month.getYear() == month.getYear()).map(YearMonth::getMonth).toList();
+    List<Month> existingMonths = monthMonthlyBookkeepingMap.keySet().stream()
+        .filter(month -> month.getYear() == month.getYear()).map(YearMonth::getMonth).toList();
     
     for (Month month : existingMonths) {
       if (monthMonthlyBookkeepingMap.get(yearMonth.withMonth(month.getValue())) == null) {

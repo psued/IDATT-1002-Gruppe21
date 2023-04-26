@@ -13,7 +13,7 @@ import java.time.LocalDate;
  * @see Serializable
  */
 public class Expense implements Transaction, Serializable {
-
+  
   private LocalDate date;
   private String description;
   private String category;
@@ -22,10 +22,10 @@ public class Expense implements Transaction, Serializable {
   /**
    * Creates an expense that is an instance of Transaction.
    *
-   * @param date                      The date of the Expense.
-   * @param description               The description of the Expense.
-   * @param category                  The category of the Expense.
-   * @param amount                    The amount of the Expense.
+   * @param date        The date of the Expense.
+   * @param description The description of the Expense.
+   * @param category    The category of the Expense.
+   * @param amount      The amount of the Expense.
    * @throws IllegalArgumentException If description or category is null or blank
    *                                  or if amount is less than or equal to zero.
    */
@@ -46,7 +46,7 @@ public class Expense implements Transaction, Serializable {
     if (amount <= 0) {
       throw new IllegalArgumentException("amount cannot be less than or equal to zero");
     }
-
+    
     this.description = description;
     this.category = category;
     this.amount = amount;
@@ -70,7 +70,7 @@ public class Expense implements Transaction, Serializable {
     this.amount = expense.getAmount();
     this.date = expense.getDate();
   }
-
+  
   /**
    * Get the date of the Expense.
    *
@@ -78,8 +78,18 @@ public class Expense implements Transaction, Serializable {
    */
   @Override
   public LocalDate getDate() {
-    return date == null ? null : LocalDate.of(date.getYear(), date.getMonth(),
-        date.getDayOfMonth());
+    return date == null ? null :
+        LocalDate.of(date.getYear(), date.getMonth(), date.getDayOfMonth());
+  }
+  
+  /**
+   * Set a new amount for the Expense.
+   *
+   * @param date The new date of the Expense.
+   */
+  @Override
+  public void setDate(LocalDate date) {
+    this.date = date;
   }
   
   /**
@@ -91,37 +101,7 @@ public class Expense implements Transaction, Serializable {
   public String getDescription() {
     return description;
   }
-
-  /**
-   * Get the category of the Expense.
-   *
-   * @return category as String.
-   */
-  @Override
-  public String getCategory() {
-    return category;
-  }
-
-  /**
-   * Get the amount of the Expense.
-   *
-   * @return amount as int.
-   */
-  @Override
-  public double getAmount() {
-    return amount;
-  }
-
-  /**
-   * Set a new amount for the Expense.
-   *
-   * @param date The new date of the Expense.
-   */
-  @Override
-  public void setDate(LocalDate date) {
-    this.date = date;
-  }
-
+  
   /**
    * Set a new description for the Expense.
    *
@@ -139,7 +119,17 @@ public class Expense implements Transaction, Serializable {
     
     this.description = description;
   }
-
+  
+  /**
+   * Get the category of the Expense.
+   *
+   * @return category as String.
+   */
+  @Override
+  public String getCategory() {
+    return category;
+  }
+  
   /**
    * Set a new category for the Expense.
    *
@@ -156,7 +146,17 @@ public class Expense implements Transaction, Serializable {
     }
     this.category = category;
   }
-
+  
+  /**
+   * Get the amount of the Expense.
+   *
+   * @return amount as int.
+   */
+  @Override
+  public double getAmount() {
+    return amount;
+  }
+  
   /**
    * Set a new amount for the Expense.
    *
@@ -170,8 +170,8 @@ public class Expense implements Transaction, Serializable {
     }
     this.amount = amount;
   }
-
-
+  
+  
   /**
    * Determines if the Expense object is equal to the specified object. Checks first if the
    * object is the same instance, then checks if the object is an instance of Expense and
@@ -189,11 +189,10 @@ public class Expense implements Transaction, Serializable {
       return false;
     }
     
-    boolean equalsDate = expense.getDate() == null ? getDate() == null :
-        expense.getDate().equals(getDate());
-  
-    return expense.getDescription().equals(description)
-        && expense.getCategory().equals(category)
-        && expense.getAmount() == amount && equalsDate;
+    boolean equalsDate =
+        expense.getDate() == null ? getDate() == null : expense.getDate().equals(getDate());
+    
+    return expense.getDescription().equals(description) && expense.getCategory().equals(category) &&
+        expense.getAmount() == amount && equalsDate;
   }
 }

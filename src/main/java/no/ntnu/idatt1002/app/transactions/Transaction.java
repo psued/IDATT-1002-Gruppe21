@@ -17,27 +17,6 @@ public interface Transaction {
    * @return Date as LocalDate.
    */
   LocalDate getDate();
-
-  /**
-   * Get the description of a transaction.
-   *
-   * @return Description as String.
-   */
-  String getDescription();
-
-  /**
-   * Get the category of a transaction.
-   *
-   * @return Category as String.
-   */
-  String getCategory();
-
-  /**
-   * Get the amount of a transaction. Amount is always larger than zero.
-   *
-   * @return Amount as double.
-   */
-  double getAmount();
   
   /**
    * Set the date of a transaction.
@@ -47,13 +26,27 @@ public interface Transaction {
   void setDate(LocalDate date);
   
   /**
+   * Get the description of a transaction.
+   *
+   * @return Description as String.
+   */
+  String getDescription();
+  
+  /**
    * Set the description of a transaction.
    *
    * @param description The new description of the transaction.
    * @throws IllegalArgumentException if description is null or blank.
    */
   void setDescription(String description) throws IllegalArgumentException;
-
+  
+  /**
+   * Get the category of a transaction.
+   *
+   * @return Category as String.
+   */
+  String getCategory();
+  
   /**
    * Set the category of a transaction.
    *
@@ -61,7 +54,14 @@ public interface Transaction {
    * @throws IllegalArgumentException if category is null or blank.
    */
   void setCategory(String category) throws IllegalArgumentException;
-
+  
+  /**
+   * Get the amount of a transaction. Amount is always larger than zero.
+   *
+   * @return Amount as double.
+   */
+  double getAmount();
+  
   /**
    * Set the amount of a transaction.
    *
@@ -69,8 +69,8 @@ public interface Transaction {
    * @throws IllegalArgumentException if amount is less than or equal to zero.
    */
   void setAmount(double amount) throws IllegalArgumentException;
-
-
+  
+  
   /**
    * Determines if the Transaction object is equal to the specified object.
    *
@@ -78,5 +78,5 @@ public interface Transaction {
    * @return True if the transactions are equal, false otherwise.
    */
   boolean equals(Object obj);
-
+  
 }

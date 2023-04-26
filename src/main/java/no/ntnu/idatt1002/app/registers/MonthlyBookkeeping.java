@@ -53,12 +53,11 @@ public class MonthlyBookkeeping implements Serializable {
    * Get the chosen bookkeeping object based on the main and subcategory.
    *
    * @param isAccounting true if accounting, false if budgeting
-   * @param isPersonal true if personal, false if work
+   * @param isPersonal   true if personal, false if work
    * @return the chosen bookkeeping object
    */
   public Bookkeeping getBookkeeping(boolean isAccounting, boolean isPersonal) {
-    return isAccounting ?
-        (isPersonal ? accountingPersonal : accountingWork) :
+    return isAccounting ? (isPersonal ? accountingPersonal : accountingWork) :
         (isPersonal ? budgetingPersonal : budgetingWork);
   }
   

@@ -73,7 +73,7 @@ public class AllProjectsController {
         } else {
           switch (project.getStatus()) {
             case "Not started" -> setStyle("-fx-background-color: #ff5e5e;");
-            case "Doing" -> setStyle("-fx-background-color: orange;");
+            case "Doing" -> setStyle("-fx-background-color: #fdfd36;");
             case "Finished" -> setStyle("-fx-background-color: #77dd77");
             default -> setStyle("");
           }

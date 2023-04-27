@@ -522,8 +522,8 @@ public class MonthlyOverviewController {
     toggleType.setDisable(isTotal);
     
     // Set the table title
-    tableLabel.setText(isTotal ? "Total " :
-        (isPersonal ? "Personal " : "Work ") + (isAccounting ? "accounting " : "budgeting ")
+    tableLabel.setText((isTotal ? "Total " :
+        (isPersonal ? "Personal " : "Work ")) + (isAccounting ? "accounting " : "budgeting ")
             + "transactions");
     
     // Get the chosen bookkeeping

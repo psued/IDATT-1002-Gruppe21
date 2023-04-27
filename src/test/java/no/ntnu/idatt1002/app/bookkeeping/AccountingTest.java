@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import no.ntnu.idatt1002.app.bookkeeping.Accounting;
@@ -55,6 +56,7 @@ public class AccountingTest {
     }
 
     @Test
+
     public void testGetTotalExpense() {
         Expense expense1 = new Expense("test1", "test1", 100, LocalDate.now());
         Expense expense2 = new Expense("test2", "test2", 100, LocalDate.now());

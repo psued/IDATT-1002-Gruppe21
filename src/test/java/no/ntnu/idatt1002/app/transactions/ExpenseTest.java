@@ -28,6 +28,15 @@ public class ExpenseTest {
     }
 
     @Test
+    public void testExpenseDeepCopy() {
+        Expense expense2 = new Expense(expense);
+        assertEquals(expense.getAmount(), expense2.getAmount());
+        assertEquals(expense.getCategory(), expense2.getCategory());
+        assertEquals(expense.getDate(), expense2.getDate());
+        assertEquals(expense.getDescription(), expense2.getDescription());
+    }
+
+    @Test
     void testGetAmount() {
         assertEquals(100, expense.getAmount());
     }

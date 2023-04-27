@@ -36,7 +36,9 @@ public class StartController {
     try {
       User.getInstance().loadUser(FileHandling.readUserFromFile());
     } catch (IOException | ClassNotFoundException e) {
-      warningLabel.setText("Could not load user data, user has been reset");
+      warningLabel.setVisible(true);
+      warningLabel.setText("Could not load user data, user has been reset. Do not mind this "
+          + "warning if this is the first ever time you run this application.");
     }
   }
   
@@ -51,6 +53,7 @@ public class StartController {
           FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/AllProjects.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
+      warningLabel.setVisible(true);
       warningLabel.setText("Could not load projects, please restart the application");
     }
   }
@@ -66,6 +69,7 @@ public class StartController {
           FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/MonthlyOverview.fxml")));
       BudgetAndAccountingApp.setRoot(root);
     } catch (IOException e) {
+      warningLabel.setVisible(true);
       warningLabel.setText("Could not load monthly overview, please restart the application");
     }
   }

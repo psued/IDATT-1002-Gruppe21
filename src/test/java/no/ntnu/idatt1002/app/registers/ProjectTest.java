@@ -123,8 +123,8 @@ public class ProjectTest {
     @Test
     @DisplayName("Test Remove Image")
     void testRemoveImage() {
-        project.addImage(new File("/mountain.jpg"));
-        project.removeImage(new File("/mountain.jpg"));
+        project.addImage(new File("/chair.jpg"));
+        project.removeImage(new File("/chair.jpg"));
         assertEquals(0, project.getImages().size());
         assertThrows(IllegalArgumentException.class, () -> project.removeImage(null));
     }

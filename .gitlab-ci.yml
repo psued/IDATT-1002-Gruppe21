@@ -68,8 +68,8 @@ pages:
   stage: package
   script:
     - mvn clean package
-    - mvn javadoc:javadoc
     - mvn jacoco:prepare-agent install jacoco:report
+    - mvn javadoc:javadoc
     - mkdir .public
     - cd .public
     - mkdir apidocs

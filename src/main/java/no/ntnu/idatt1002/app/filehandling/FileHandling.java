@@ -1,11 +1,11 @@
 package no.ntnu.idatt1002.app.filehandling;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
 import no.ntnu.idatt1002.app.User;
 
 /**
@@ -16,8 +16,8 @@ import no.ntnu.idatt1002.app.User;
 public class FileHandling {
   
   private static final String FILE_NAME = "user.ser";
-  private static final String DATA_DIR = System.getProperty("user.home") + File.separator +
-      ".budgetingandaccountingappdata";
+  private static final String DATA_DIR = System.getProperty("user.home") + File.separator
+      + ".budgetingandaccountingappdata";
   private static final String FILE_PATH = DATA_DIR + File.separator + FILE_NAME;
   
   /**

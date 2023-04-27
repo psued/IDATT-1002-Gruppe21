@@ -15,6 +15,7 @@ test:
   stage: test
   script:
     - mvn clean test
+    - mvn jacoco:prepare-agent install jacoco:report
   artifacts:
     paths:
       - target/surefire-reports/

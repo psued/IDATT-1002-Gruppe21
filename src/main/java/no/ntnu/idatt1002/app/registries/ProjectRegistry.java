@@ -33,6 +33,7 @@ public class ProjectRegistry implements Serializable {
     statuses.add("Not started");
     statuses.add("Doing");
     statuses.add("Finished");
+    statuses.add("No status");
     
     projects = new ArrayList<>();
   }

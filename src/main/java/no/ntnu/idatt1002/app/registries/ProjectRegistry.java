@@ -29,11 +29,11 @@ public class ProjectRegistry implements Serializable {
     categories.add("Freelance");
     categories.add("Personal");
     categories.add("Miscellaneous");
-    
+
+    statuses.add("No status");
     statuses.add("Not started");
     statuses.add("Doing");
     statuses.add("Finished");
-    statuses.add("No status");
     
     projects = new ArrayList<>();
   }

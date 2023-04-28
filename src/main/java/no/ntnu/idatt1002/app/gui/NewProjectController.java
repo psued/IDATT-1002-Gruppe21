@@ -150,7 +150,7 @@ public class NewProjectController {
   public void initialize() {
     // Add empty project to user instance
     User.getInstance().getProjectRegistry().addProject(new Project("New Project", null,
-        User.getInstance().getProjectRegistry().getCategories().get(0), null, "Not started"));
+        User.getInstance().getProjectRegistry().getCategories().get(0), null, "No status"));
     
     // Add categories to category menu
     for (String category : User.getInstance().getProjectRegistry().getCategories()) {
@@ -198,7 +198,7 @@ public class NewProjectController {
     //Set default values to the empty project
     name.setPromptText("New project");
     category.setText(User.getInstance().getProjectRegistry().getCategories().get(0));
-    status.setText("Not started");
+    status.setText("No status");
     
     //Refresh the tables and update image buttons
     refreshOverview();

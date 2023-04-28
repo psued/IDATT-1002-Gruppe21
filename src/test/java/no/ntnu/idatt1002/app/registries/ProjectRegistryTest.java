@@ -83,8 +83,8 @@ public class ProjectRegistryTest {
     @DisplayName("Test Get Statuses")
     void testGetStatuses() {
         ArrayList<String> statuses = new ArrayList<>(projectRegistry.getStatuses());
-        assertEquals("Not started", statuses.get(0));
-        assertEquals("Doing", statuses.get(1));
+        assertEquals("No status", statuses.get(0));
+        assertEquals("Not started", statuses.get(1));
     }
 
     @Test

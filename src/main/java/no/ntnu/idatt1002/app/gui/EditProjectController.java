@@ -524,6 +524,7 @@ public class EditProjectController {
   @FXML
   public void addImage() {
     FileChooser fileChooser = new FileChooser();
+    fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg", "*.png", "*.gif"));
     fileChooser.setTitle("Select Image");
     File selectedFile = fileChooser.showOpenDialog(null);
     

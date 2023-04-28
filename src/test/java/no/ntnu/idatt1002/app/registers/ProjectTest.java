@@ -116,7 +116,7 @@ public class ProjectTest {
     @DisplayName("Test Add Image")
     void testAddImage() {
         project.addImage(new File("/chair.jpg"));
-        assertEquals(new File("C:/chair.jpg"), project.getImages().get(0));
+        assertEquals(new File("/chair.jpg"), project.getImages().get(0));
         assertThrows(IllegalArgumentException.class, () -> project.addImage(null));
     }
 

@@ -59,6 +59,7 @@ public class BudgetAndAccountingApp extends Application {
     //Delete all empty years when closing the program
     primaryStage.setOnCloseRequest(event -> {
       try {
+        User.getInstance().loadUser(FileHandling.readUserFromFile());
         for (MonthlyBookkeeping monthlyBookkeeping : User.getInstance()
             .getMonthlyBookkeepingRegistry().getMonthlyBookkeepingMap().values()) {
           if (User.getInstance().getMonthlyBookkeepingRegistry()

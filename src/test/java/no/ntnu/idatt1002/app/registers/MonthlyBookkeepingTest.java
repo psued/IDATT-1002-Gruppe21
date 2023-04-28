@@ -131,4 +131,12 @@ public class MonthlyBookkeepingTest {
       assertNotEquals(monthlyBookkeeping, monthlyBookkeeping2);
     }
   }
+
+  @Test
+  @DisplayName("Test Is Empty")
+  void testIsEmpty() {
+    assertTrue(monthlyBookkeeping.isEmpty());
+    monthlyBookkeeping.getBookkeeping(true, true).addTransaction(new Income("Description", "Category", 100, null));
+    assertFalse(monthlyBookkeeping.isEmpty());
+  }
 }
